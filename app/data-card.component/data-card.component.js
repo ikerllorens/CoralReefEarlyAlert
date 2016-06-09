@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(["@angular/core"], function(exports_1, context_1) {
+System.register(['@angular/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -16,35 +16,28 @@ System.register(["@angular/core"], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var SimpleComponent;
+    var DataCard;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            SimpleComponent = (function () {
-                function SimpleComponent() {
-                    this.name = "da";
-                    this.isCalling = true;
-                    this.testVar = "#hola";
-                    this.cosa = "fea";
+            DataCard = (function () {
+                function DataCard() {
+                    console.info('Data Card Component Mounted Successfully');
                 }
-                SimpleComponent.prototype.toggleCalling = function () {
-                    this.isCalling = !this.isCalling;
-                    this.testVar = "#adios";
-                };
-                SimpleComponent = __decorate([
+                DataCard = __decorate([
                     core_1.Component({
-                        selector: "simple-component",
-                        template: "\n \n        <h1>Hallo Angular 2!</h1>\n \n \n<div>\n            <label [hidden]=\"!isCalling\">Ich bin {{name}}.</label>\n \n<div>\n                <input [(ngModel)]=\"name\" >\n                <button (click)=\"toggleCalling()\">toggle Calling</button>;\n \n</div>\n        </div>\n <a [href]=\"testVar\">hola</a>  {{cosa}}\n        "
+                        selector: 'data-card',
+                        templateUrl: 'app/data-card.component/data-card.component.html'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], SimpleComponent);
-                return SimpleComponent;
+                ], DataCard);
+                return DataCard;
             }());
-            exports_1("SimpleComponent", SimpleComponent);
+            exports_1("DataCard", DataCard);
         }
     }
 });
-//# sourceMappingURL=simple.component.js.map
+//# sourceMappingURL=data-card.component.js.map

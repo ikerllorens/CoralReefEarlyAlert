@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/gulpfile.js</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/simple.component/simple.component.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/main-app/main-app.ts</file>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/boot/boot.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/simple.component/simple.component.js</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/tsconfig.json</file>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/package.json</file>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/index.html</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/main-app/main-app.html</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/data-card.component/data-card.component.ts</file>
         </group>
     </open-files>
 </project-private>

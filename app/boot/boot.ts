@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import {bootstrap}  from 'angular2/platform/browser'
-import {SimpleComponent} from '../simple.component/simple.component'
- 
-bootstrap(SimpleComponent);
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {Main} from '../main-app/main-app'
+
+bootstrap(Main);

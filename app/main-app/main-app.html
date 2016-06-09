@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<div class= "row">
+    <div>
+        <a href="http://ceakumal.org"><img class="col-xs-2 col-md-2"  src="img/cea.png"></a>
+        <div class="col-xs-6 col-md-8"></div>
+        <div class="col-xs-4 col-md-2">
+            <button class="btn btn-primary">Login</button>
+        </div>
+    </div>
+</div>
+
+<div>
+    <!-- 	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4"> -->
+    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: orange">
+        <div class="container-fluid">
+             <ul class="nav navbar-nav menuItems">
+                    <li *ngFor="let item of menuElements">
+                        <a role="button" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
+                    </li>
+            </ul> 
+        </div>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-xs-0 col-sm-2"></div>
+    <h1 class="col-xs-12 col-sm-8" style="text-align: center">{{title}}</h1>
+</div>
+<div class="row">
+    <div class="col-xs-3">
+        <data-card>Loading...</data-card>
+    </div>
+    <div class="col-xs-3">
+        <data-card>Loading...</data-card>
+    </div>
+    <div class="col-xs-3">
+        <data-card>Loading...</data-card>
+    </div>
+    <div class="col-xs-3">
+        <data-card>Loading...</data-card>
+    </div>
+</div>
+<!--  -->

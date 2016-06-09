@@ -1,6 +1,10 @@
 {
     "elements": {
-        "simple-component": {}
+        "main-app": {},
+        "simple-component": {},
+        "data-card": {}
     },
-    "attributes": {}
+    "attributes": {
+        "*ngfor": {}
+    }
 }
