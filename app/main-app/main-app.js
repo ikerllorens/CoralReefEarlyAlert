@@ -12,6 +12,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var data_card_component_1 = require('../data-card.component/data-card.component');
+var login_screen_component_1 = require('../login-screen.component/login-screen.component');
 var MenuElements = (function () {
     function MenuElements() {
     }
@@ -28,7 +29,7 @@ var Main = (function () {
     Main = __decorate([
         core_1.Component({
             selector: 'main-app',
-            directives: [data_card_component_1.DataCard],
+            directives: [data_card_component_1.DataCard, login_screen_component_1.LoginScreen],
             templateUrl: 'app/main-app/main-app.html'
         })
     ], Main);

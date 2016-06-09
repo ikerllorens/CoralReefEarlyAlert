@@ -16,28 +16,28 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1;
-    var DataCard;
+    var LoginScreen;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
             }],
         execute: function() {
-            DataCard = (function () {
-                function DataCard() {
-                    console.info('data-card module loaded');
+            LoginScreen = (function () {
+                function LoginScreen() {
+                    console.info("login-screen module loaded");
                 }
-                DataCard = __decorate([
+                LoginScreen = __decorate([
                     core_1.Component({
-                        selector: 'data-card',
-                        templateUrl: 'app/data-card.component/data-card.component.html'
+                        selector: 'login-screen',
+                        templateUrl: 'app/login-screen.component/login-screen.component.html'
                     }), 
                     __metadata('design:paramtypes', [])
-                ], DataCard);
-                return DataCard;
+                ], LoginScreen);
+                return LoginScreen;
             }());
-            exports_1("DataCard", DataCard);
+            exports_1("LoginScreen", LoginScreen);
         }
     }
 });
-//# sourceMappingURL=data-card.component.js.map
+//# sourceMappingURL=login-screen.component.js.map

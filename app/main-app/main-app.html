@@ -17,11 +17,11 @@ and open the template in the editor.
 
 <div>
     <!-- 	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4"> -->
-    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: orange">
+    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4">
         <div class="container-fluid">
              <ul class="nav navbar-nav menuItems">
                     <li *ngFor="let item of menuElements">
-                        <a role="button" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
+                        <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
                     </li>
             </ul> 
         </div>
@@ -46,4 +46,6 @@ and open the template in the editor.
         <data-card>Loading...</data-card>
     </div>
 </div>
+
+<login-screen>Loading...</login-screen>
 <!--  -->

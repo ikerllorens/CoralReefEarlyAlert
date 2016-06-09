@@ -6,6 +6,7 @@
 
 import {Component} from "@angular/core";
 import {DataCard} from '../data-card.component/data-card.component'
+import {LoginScreen} from '../login-screen.component/login-screen.component'
 
 export class MenuElements {
     menuName: String;
@@ -14,7 +15,7 @@ export class MenuElements {
 
 @Component({
     selector: 'main-app',
-    directives: [DataCard],
+    directives: [DataCard, LoginScreen],
     templateUrl: 'app/main-app/main-app.html'
 })
 
