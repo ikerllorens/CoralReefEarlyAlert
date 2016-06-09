@@ -12,12 +12,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var core_1 = require("@angular/core");
 var data_card_component_1 = require('../data-card.component/data-card.component');
-var MenuElements = (function () {
-    function MenuElements() {
-    }
-    return MenuElements;
-}());
-exports.MenuElements = MenuElements;
 var Main = (function () {
     function Main() {
         this.title = "Alerta Temprana de Arrecifes de Coral";

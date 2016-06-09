@@ -6,11 +6,7 @@
 
 import {Component} from "@angular/core";
 import {DataCard} from '../data-card.component/data-card.component'
-
-export class MenuElements {
-    menuName: String;
-    menuRef: String;
-}
+import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
 
 @Component({
     selector: 'main-app',
