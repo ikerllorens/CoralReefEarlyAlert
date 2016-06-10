@@ -24,44 +24,14 @@ and open the template in the editor.
         <div class="collapse navbar-collapse" [class.in]="navBarToggle">
             <ul class="nav navbar-nav">
                 <li *ngFor="let item of menuElements">
-                    <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
+                    <a role="button" style="color: whitesmoke" [routerLink]="[ item.menuRef ]"> {{ item.menuName }} <span class="sr-only"></span></a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ><a href="#" style="color: whitesmoke "><span class="glyphicon glyphicon-user "></span> Iniciar Sesión</a></li>
+                <li ><a [routerLink]="['Login']" style="color: whitesmoke "><span class="glyphicon glyphicon-user "></span> Iniciar Sesión</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-
-<div class="row">
-    <div class="col-xs-0 col-sm-2"></div>
-    <h1 class="col-xs-12 col-sm-8" style="text-align: center">{{title}}</h1>
-</div>
-<div class="row hidden-xs">
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-</div>
-
-<div class="row visible-xs-inline-block">
-    <div class="col-xs-6 ">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-6">
-        <data-card>Loading...</data-card>
-    </div>
-</div>
-
-<login-screen>Loading...</login-screen>
-<!--  -->
+<router-outlet></router-outlet>

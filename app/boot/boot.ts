@@ -6,5 +6,6 @@
 
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {Main} from '../main-app/main-app'
+import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
 
-bootstrap(Main);
+bootstrap(Main,  [ROUTER_PROVIDERS]);

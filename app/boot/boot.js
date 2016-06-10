@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(['@angular/platform-browser-dynamic', '../main-app/main-app'], function(exports_1, context_1) {
+System.register(['@angular/platform-browser-dynamic', '../main-app/main-app', '@angular/router-deprecated'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var platform_browser_dynamic_1, main_app_1;
+    var platform_browser_dynamic_1, main_app_1, router_deprecated_1;
     return {
         setters:[
             function (platform_browser_dynamic_1_1) {
@@ -14,9 +14,12 @@ System.register(['@angular/platform-browser-dynamic', '../main-app/main-app'], f
             },
             function (main_app_1_1) {
                 main_app_1 = main_app_1_1;
+            },
+            function (router_deprecated_1_1) {
+                router_deprecated_1 = router_deprecated_1_1;
             }],
         execute: function() {
-            platform_browser_dynamic_1.bootstrap(main_app_1.Main);
+            platform_browser_dynamic_1.bootstrap(main_app_1.Main, [router_deprecated_1.ROUTER_PROVIDERS]);
         }
     }
 });
