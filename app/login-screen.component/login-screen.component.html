@@ -5,6 +5,37 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <div class="row">
-    <div class="col-xs-4 col-sm-5"></div>
-    <img class="col-xs-4 col-sm-2 center-block" src="img/cea.png">
+    <div class="col-xs-0 col-sm-4"></div>
+    <div class="col-xs-12 col-sm-4 container-fluid">
+        <div class="row">
+            <div class="col-xs-4 col-sm-3"></div>
+            <a href="http://ceakumal.org"><img class="col-xs-4 col-sm-6 center-block" src="img/cea.png"></a>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-2 col-sm-0"></div>
+            <div class="form-group col-xs-8 col-sm-12  ">  
+                <div class="input-group" [class.has-success]="correctUsername" [class.has-warning]="emptyUsername">
+                    <span class="input-group-addon">Usuario</span>
+                    <input placeholder="Nombre de Usuario" type="text" class="form-control center-block">
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        
+        <div class="row">
+            <div class="col-xs-2 col-sm-0"></div>
+            <div class="form-group col-xs-8 col-sm-12  ">  
+                <a href="#">Olvidaste tu contraseña?</a>
+                <div class="input-group" [class.has-warning]="emptyPassword">
+                    <span class="input-group-addon">Contraseña</span>
+                    <input placeholder="Contraseña" type="text" class="form-control center-block">
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
 </div>
+
+has-success

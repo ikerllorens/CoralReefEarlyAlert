@@ -25,6 +25,9 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             LoginScreen = (function () {
                 function LoginScreen() {
+                    this.correctUsername = false;
+                    this.emptyUsername = true;
+                    this.emptyPassword = true;
                     console.info("login-screen module loaded");
                 }
                 LoginScreen = __decorate([

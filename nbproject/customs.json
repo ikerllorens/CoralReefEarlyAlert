@@ -5,6 +5,9 @@
         "data-card": {}
     },
     "attributes": {
-        "*ngfor": {}
+        "*ngfor": {},
+        "[class.nameofclass]": {
+            "context": "div"
+        }
     }
 }

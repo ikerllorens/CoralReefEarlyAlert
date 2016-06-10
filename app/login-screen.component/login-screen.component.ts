@@ -14,7 +14,11 @@ import {Component} from '@angular/core'
 
 export class LoginScreen {
     
+    correctUsername = false;
+    emptyUsername = true;
+    emptyPassword = true;
     constructor() {
         console.info("login-screen module loaded")
+        
     }
 }
