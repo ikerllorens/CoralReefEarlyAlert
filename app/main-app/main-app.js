@@ -36,10 +36,14 @@ System.register(["@angular/core", '../data-card.component/data-card.component'],
             Main = (function () {
                 function Main() {
                     this.title = "Alerta Temprana de Arrecifes de Coral";
+                    this.navBarToggle = false;
                     this.menuElements = [{ "menuName": "Home", "menuRef": "#" },
                         { "menuName": "Away", "menuRef": "#away" }];
                     console.info('main-app module loaded');
                 }
+                Main.prototype.toggleNavbarClick = function () {
+                    this.navBarToggle = !this.navBarToggle;
+                };
                 Main = __decorate([
                     core_1.Component({
                         selector: 'main-app',

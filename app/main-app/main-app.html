@@ -9,59 +9,19 @@ and open the template in the editor.
     <div>
         <a href="http://ceakumal.org"><img class="col-xs-2 col-md-2"  src="img/cea.png"></a>
         <div class="col-xs-6 col-md-8"></div>
-        <div class="col-xs-4 col-md-2">
-            <button class="btn btn-primary pull-right">Login</button>
-        </div>
     </div>
 </div>
-
-<!--<div>
-        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4"> 
-    <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav menuItems">
-                <li *ngFor="let item of menuElements">
-                    <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
-                </li>
-            </ul> 
-        </div>
-    </nav>
-</div>-->
-
-<!--<nav class="navbar navbar-default" style="background: #2D93D4">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" style="color: whitesmoke; ">
-                <img  style="max-height: 150px; max-width: 20%; overflow: visible; padding-top: 0; padding-bottom: 0; " alt="Brand" src="img/cea.png">
-                Alerta Temprana
-            </a>
-        </div>
-        <ul class="nav navbar-nav menuItems">
-            <li *ngFor="let item of menuElements">
-                <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
-            </li>
-        </ul> 
-        <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-    </ul>
-        <span class="navbar-right"></span>
-        <button type="button" class="btn btn-default navbar-btn navbar-right">Entrar</button>
-        
-    </div>
-</nav>-->
-
 <nav class="navbar navbar-default "  style="background: #2D93D4">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <button (click)="toggleNavbarClick()" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar" style="background:  whitesmoke"></span>
-        <span class="icon-bar" style="background:  whitesmoke"></span>
-        <span class="icon-bar" style="background:  whitesmoke"></span>                        
-      </button>
+                <span class="icon-bar" style="background:  whitesmoke"></span>
+                <span class="icon-bar" style="background:  whitesmoke"></span>                        
+            </button>
             <a class="navbar-brand" href="#" style="color: whitesmoke ">Alerta Temprana</a>
         </div>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" [class.in]="navBarToggle">
             <ul class="nav navbar-nav">
                 <li *ngFor="let item of menuElements">
                     <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>

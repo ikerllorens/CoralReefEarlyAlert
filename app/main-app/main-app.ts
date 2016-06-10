@@ -22,10 +22,15 @@ export class MenuElements {
 
 export class Main {
     private title: String = "Alerta Temprana de Arrecifes de Coral";
+    private navBarToggle: Boolean = false;
     private menuElements: MenuElements[] = [{ "menuName": "Home", "menuRef": "#" },
         { "menuName": "Away", "menuRef": "#away" }];
 
     constructor() {
         console.info('main-app module loaded');
+    }
+    
+    toggleNavbarClick() {
+        this.navBarToggle = !this.navBarToggle;
     }
 }
