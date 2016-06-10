@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(["@angular/core", '../data-card.component/data-card.component'], function(exports_1, context_1) {
+System.register(["@angular/core", '../data-card.component/data-card.component', '../login-screen.component/login-screen.component'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15,7 +15,7 @@ System.register(["@angular/core", '../data-card.component/data-card.component'],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, data_card_component_1;
+    var core_1, data_card_component_1, login_screen_component_1;
     var MenuElements, Main;
     return {
         setters:[
@@ -24,9 +24,11 @@ System.register(["@angular/core", '../data-card.component/data-card.component'],
             },
             function (data_card_component_1_1) {
                 data_card_component_1 = data_card_component_1_1;
+            },
+            function (login_screen_component_1_1) {
+                login_screen_component_1 = login_screen_component_1_1;
             }],
         execute: function() {
-            //import {LoginScreen} from '../login-screen.component/login-screen.component'
             MenuElements = (function () {
                 function MenuElements() {
                 }
@@ -47,7 +49,7 @@ System.register(["@angular/core", '../data-card.component/data-card.component'],
                 Main = __decorate([
                     core_1.Component({
                         selector: 'main-app',
-                        directives: [data_card_component_1.DataCard],
+                        directives: [data_card_component_1.DataCard, login_screen_component_1.LoginScreen],
                         templateUrl: 'app/main-app/main-app.html'
                     }), 
                     __metadata('design:paramtypes', [])
