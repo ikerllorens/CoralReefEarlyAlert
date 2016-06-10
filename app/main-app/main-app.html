@@ -19,14 +19,32 @@ and open the template in the editor.
     <!-- 	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4"> -->
     <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: orange">
         <div class="container-fluid">
-             <ul class="nav navbar-nav menuItems">
-                    <li *ngFor="let item of menuElements">
-                        <a role="button" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
-                    </li>
+            <ul class="nav navbar-nav menuItems">
+                <li *ngFor="let item of menuElements">
+                    <a role="button" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
+                </li>
+                <li class="navbar-right"><button class="btn btn-primary navbar-right">Login</button></li>
             </ul> 
         </div>
     </nav>
 </div>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://ceakumal.org">
+                <!--<img  style="max-height: 150px; max-width: 20%; overflow: visible; padding-top: 0; padding-bottom: 0; " alt="Brand" src="img/cea.png">-->
+                CEA
+            </a>
+        </div>
+        <ul class="nav navbar-nav menuItems">
+            <li *ngFor="let item of menuElements">
+                <a role="button" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
+            </li>
+        </ul> 
+        <button type="button" class="btn btn-primary navbar-btn navbar-right">Entrar</button>
+    </div>
+</nav>
 
 <div class="row">
     <div class="col-xs-0 col-sm-2"></div>
