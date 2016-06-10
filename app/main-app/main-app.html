@@ -15,8 +15,8 @@ and open the template in the editor.
     </div>
 </div>
 
-<div>
-    <!-- 	<nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4"> -->
+<!--<div>
+        <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4"> 
     <nav class="navbar navbar-fixed-top navbar-dark bg-inverse" style="position: static; background: #2D93D4">
         <div class="container-fluid">
             <ul class="nav navbar-nav menuItems">
@@ -26,14 +26,14 @@ and open the template in the editor.
             </ul> 
         </div>
     </nav>
-</div>
+</div>-->
 
-<nav class="navbar navbar-default" style="background: #2D93D4">
+<!--<nav class="navbar navbar-default" style="background: #2D93D4">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="http://ceakumal.org" style="color: whitesmoke; text-decoration: underline">
-                <!--<img  style="max-height: 150px; max-width: 20%; overflow: visible; padding-top: 0; padding-bottom: 0; " alt="Brand" src="img/cea.png">-->
-                CEA
+            <a class="navbar-brand" style="color: whitesmoke; ">
+                <img  style="max-height: 150px; max-width: 20%; overflow: visible; padding-top: 0; padding-bottom: 0; " alt="Brand" src="img/cea.png">
+                Alerta Temprana
             </a>
         </div>
         <ul class="nav navbar-nav menuItems">
@@ -41,11 +41,39 @@ and open the template in the editor.
                 <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
             </li>
         </ul> 
+        <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+      <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    </ul>
         <span class="navbar-right"></span>
         <button type="button" class="btn btn-default navbar-btn navbar-right">Entrar</button>
         
     </div>
+</nav>-->
+
+<nav class="navbar navbar-default "  style="background: #2D93D4">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar" style="background:  whitesmoke"></span>
+        <span class="icon-bar" style="background:  whitesmoke"></span>
+        <span class="icon-bar" style="background:  whitesmoke"></span>                        
+      </button>
+            <a class="navbar-brand" href="#" style="color: whitesmoke ">Alerta Temprana</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li *ngFor="let item of menuElements">
+                    <a role="button" style="color: whitesmoke" href="{{ item.menuRef }}">{{ item.menuName }} <span class="sr-only"></span></a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li ><a href="#" style="color: whitesmoke "><span class="glyphicon glyphicon-user "></span> Iniciar Sesión</a></li>
+            </ul>
+        </div>
+    </div>
 </nav>
+
 
 <div class="row">
     <div class="col-xs-0 col-sm-2"></div>
