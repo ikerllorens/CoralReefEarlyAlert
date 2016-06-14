@@ -33,7 +33,7 @@ import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
 })
 
 @RouteConfig([
-    { path: '/', name: 'Home', component: HomeScreen },
+    { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
     { path: '/login', name: 'Login', component: LoginScreen }
 ])
 
@@ -47,10 +47,16 @@ export class Main {
         { "menuName": "Búsqueda", "menuRef": "Home" },
     ];
 
-    constructor() {
+    constructor( ) {
         console.info('main-app module loaded');
     }
-
+    
+//    ngOnInit() {
+//        let id = this.routeParams.get('userType');
+//        console.info(id)
+//        //this.service.getHero(id).then(hero => this.hero = hero);
+//    }
+    
     toggleNavbarClick() {
         this.navBarToggle = !this.navBarToggle;
     }

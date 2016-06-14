@@ -50,6 +50,11 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     ];
                     console.info('main-app module loaded');
                 }
+                //    ngOnInit() {
+                //        let id = this.routeParams.get('userType');
+                //        console.info(id)
+                //        //this.service.getHero(id).then(hero => this.hero = hero);
+                //    }
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
                 };
@@ -63,7 +68,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                         templateUrl: 'app/main-app/main-app.html'
                     }),
                     router_deprecated_1.RouteConfig([
-                        { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen },
+                        { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen, useAsDefault: true },
                         { path: '/login', name: 'Login', component: login_screen_component_1.LoginScreen }
                     ]), 
                     __metadata('design:paramtypes', [])

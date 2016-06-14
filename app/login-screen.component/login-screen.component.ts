@@ -8,10 +8,13 @@
 import {Component} from '@angular/core'
 import {LoginObject, LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 import { LoginScreenService } from '../login-screen.service/login-screen.service';
+import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+
 
 @Component({
     selector: 'login-screen',
     providers: [],
+    directives: [ROUTER_DIRECTIVES],
     templateUrl: 'app/login-screen.component/login-screen.component.html'
 })
 
@@ -24,10 +27,8 @@ export class LoginScreen {
     emptyUsername = true;
     emptyPassword = true;
     
-    private loginScreenService: LoginScreenService;
 
-    constructor(loginScreenService: LoginScreenService) {
-        this.loginScreenService = loginScreenService
+    constructor(private loginScreenService: LoginScreenService,  private router:Router) {
         console.info("login-screen module loaded");
     }
     
@@ -53,7 +54,6 @@ export class LoginScreen {
         } else {
             this.emptyPassword = false
         }        
-        //console.info("Password: " + this.password + "\n UserName: " + this.username)
     }
     
     login() {
@@ -64,7 +64,12 @@ export class LoginScreen {
             error => console.info(<any>error));  
     }
     
-    successfulLogin(login_success: LoginResponse) {
-        console.info(login_success.reason)
+    successfulLogin(login_response: LoginResponse) {
+        if (login_response.success == true) {
+            console.info(login_response.name)
+            this.router.navigate(['Home', { userType: login_response.userType}])
+        } else {
+            console.info("Failed login because: " + login_response.reason)
+        }        
     }
 }

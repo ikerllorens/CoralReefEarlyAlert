@@ -53,14 +53,13 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
                     var body = JSON.stringify(loginData);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    console.info('Request body: ' + body);
                     return this.http.post(this.url, body, options)
                         .map(this.extractData)
                         .catch(this.handleError);
                 };
                 LoginScreenService.prototype.extractData = function (res) {
-                    var body = res.json();
-                    return body;
+                    var responseJSON = res.json();
+                    return responseJSON;
                 };
                 LoginScreenService.prototype.handleError = function (error) {
                     // In a real world app, we might use a remote logging infrastructure

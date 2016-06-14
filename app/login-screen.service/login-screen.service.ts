@@ -33,20 +33,19 @@ export class LoginScreenService {
     }
 
     tryLogin(loginData: LoginObject): Observable<LoginResponse> {
-
-        let body = JSON.stringify(loginData );
+        let body = JSON.stringify(loginData);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        console.info('Request body: ' + body)
         
         return this.http.post(this.url, body, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
+
     private extractData(res: Response) {
-        let body = res.json();
-        return body;
+        let responseJSON = res.json();
+        return responseJSON;
     }
     
     private handleError(error: any) {

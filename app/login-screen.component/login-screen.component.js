@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.class', '../login-screen.service/login-screen.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.class', '../login-screen.service/login-screen.service', '@angular/router-deprecated'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15,7 +15,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, LoginObject_class_1, login_screen_service_1;
+    var core_1, LoginObject_class_1, login_screen_service_1, router_deprecated_1;
     var LoginScreen;
     return {
         setters:[
@@ -27,16 +27,20 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
             },
             function (login_screen_service_1_1) {
                 login_screen_service_1 = login_screen_service_1_1;
+            },
+            function (router_deprecated_1_1) {
+                router_deprecated_1 = router_deprecated_1_1;
             }],
         execute: function() {
             LoginScreen = (function () {
-                function LoginScreen(loginScreenService) {
+                function LoginScreen(loginScreenService, router) {
+                    this.loginScreenService = loginScreenService;
+                    this.router = router;
                     this.password = "";
                     this.username = "";
                     this.correctUsername = false;
                     this.emptyUsername = true;
                     this.emptyPassword = true;
-                    this.loginScreenService = loginScreenService;
                     console.info("login-screen module loaded");
                 }
                 LoginScreen.prototype.preventCharacters = function (event) {
@@ -61,7 +65,6 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     else {
                         this.emptyPassword = false;
                     }
-                    //console.info("Password: " + this.password + "\n UserName: " + this.username)
                 };
                 LoginScreen.prototype.login = function () {
                     var _this = this;
@@ -69,16 +72,23 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     var login_object = new LoginObject_class_1.LoginObject(this.username, this.password);
                     this.loginScreenService.tryLogin(login_object).subscribe(function (login_success) { return _this.successfulLogin(login_success); }, function (error) { return console.info(error); });
                 };
-                LoginScreen.prototype.successfulLogin = function (login_success) {
-                    console.info(login_success.reason);
+                LoginScreen.prototype.successfulLogin = function (login_response) {
+                    if (login_response.success == true) {
+                        console.info(login_response.name);
+                        this.router.navigate(['Home', { userType: login_response.userType }]);
+                    }
+                    else {
+                        console.info("Failed login because: " + login_response.reason);
+                    }
                 };
                 LoginScreen = __decorate([
                     core_1.Component({
                         selector: 'login-screen',
                         providers: [],
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES],
                         templateUrl: 'app/login-screen.component/login-screen.component.html'
                     }), 
-                    __metadata('design:paramtypes', [login_screen_service_1.LoginScreenService])
+                    __metadata('design:paramtypes', [login_screen_service_1.LoginScreenService, router_deprecated_1.Router])
                 ], LoginScreen);
                 return LoginScreen;
             }());
