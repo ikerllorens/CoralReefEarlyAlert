@@ -15,9 +15,9 @@ and open the template in the editor.
         <div class="row">
             <div class="col-xs-2 col-sm-0"></div>
             <div class="form-group col-xs-8 col-sm-12  ">  
-                <div class="input-group" [class.has-success]="correctUsername" [class.has-warning]="emptyUsername">
+                <div class="input-group" [class.has-success]="!emptyUsername" [class.has-warning]="emptyUsername">
                     <span class="input-group-addon">Usuario</span>
-                    <input placeholder="Nombre de Usuario" type="text" class="form-control center-block">
+                    <input (keyup)="onFieldUpdate($event)" (keydown)="preventCharacters($event)" [(ngModel)]="username" placeholder="Nombre de Usuario" type="text" class="form-control center-block">
                 </div>
             </div>
         </div>
@@ -28,24 +28,21 @@ and open the template in the editor.
             <div class="col-xs-2 col-sm-0"></div>
             <div class="form-group col-xs-8 col-sm-12  ">  
                 <a href="#">Olvidaste tu contraseña?</a>
-                <div class="input-group" [class.has-warning]="emptyPassword">
+                <div class="input-group" [class.has-warning]="emptyPassword" [class.has-success]="!emptyPassword" >
                     <span class="input-group-addon">Contraseña</span>
-                    <input placeholder="Contraseña" type="text" class="form-control center-block">
+                    <input (keyup)="onFieldUpdate($event)" (keydown)="preventCharacters($event)" [(ngModel)]="password" placeholder="Contraseña" type="password" class="form-control center-block">
                 </div>
             </div>
         </div>
         <hr>
         
-                
         <div class="row">
             <div class="col-xs-2 col-sm-0"></div>
             <div class="form-group col-xs-8 col-sm-12  ">  
-                <button class="btn btn-success">Iniciar Sesión</button>
+                <button (click) ="login()" class="btn btn-success">Iniciar Sesión</button>
                 <button class="btn btn-danger pull-right">Regresar</button>
             </div>
         </div>
 
     </div>
 </div>
-
-has-success

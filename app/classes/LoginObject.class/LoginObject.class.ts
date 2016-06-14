@@ -16,7 +16,19 @@
  */
 
 
-export class MenuElements {
-    menuName: String;
-    menuRef: String
+export class LoginObject {
+    username: String = ""
+    password: String = ""
+    
+    constructor(username: String, password: String) {
+        this.username = username
+        this.password = password
+    }
+}
+
+export class LoginResponse {
+    success: boolean
+    userType: number
+    name: string
+    reason: string
 }
