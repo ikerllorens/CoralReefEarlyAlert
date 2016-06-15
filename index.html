@@ -6,7 +6,7 @@
         <link rel="shortcut icon" href="favicon.ico">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
+        <!--<script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>-->
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <!--<link rel="stylesheet" href="bootstrap.css">-->
 
@@ -18,9 +18,27 @@
         <script src="node_modules/zone.js/dist/zone.js"></script>
         <script src="node_modules/reflect-metadata/Reflect.js"></script>
         <script src="node_modules/systemjs/dist/system.src.js"></script>
+        <script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
+        <!--<script src="node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>-->
         <!-- 2. Configure SystemJS -->
         <script src="systemjs.config.js"></script>
         <script>
+            System.config({
+                packages: {
+                    app: {
+                        format: 'register',
+                        defaultExtension: 'js'
+                    },                                  
+                    'node_modules/ng2-bootstrap': {}
+                },
+                paths: {
+                    "ng2-bootstrap": "node_modules/ng2-bootstrap/ng2-bootstrap"
+                },
+                map: {
+                    moment: 'node_modules/moment/moment.js'
+                }
+            });
+
             System.import('app/boot/boot').catch(function (err) {
                 console.error(err);
             });

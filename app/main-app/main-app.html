@@ -28,6 +28,16 @@ and open the template in the editor.
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li   dropdown (on-toggle)="toggled($event)">
+                      <a role="button" style="color: whitesmoke" href id="simple-dropdown" dropdownToggle>
+                        Click me for a dropdown, yo!
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
+                        <li *ngFor="let choice of items">
+                            <a class="dropdown-item" href="#">{{choice}}</a>
+                        </li>
+                    </ul>
+                </li>
                 <li ><a [routerLink]="['Login']" style="color: whitesmoke "><span class="glyphicon glyphicon-user "></span> Iniciar Sesión</a></li>
             </ul>
         </div>

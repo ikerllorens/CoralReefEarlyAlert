@@ -18,6 +18,9 @@ import {DataCard} from '../data-card.component/data-card.component';
 import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
 import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
+import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+//import { Progressbar } from "ng2-bootstrap/ng2-bootstrap";
+
 
 
 /*
@@ -27,7 +30,7 @@ import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
  */
 @Component({
     selector: 'main-app',
-    directives: [DataCard, ROUTER_DIRECTIVES],
+    directives: [DataCard, ROUTER_DIRECTIVES, DROPDOWN_DIRECTIVES],
     providers: [ROUTER_PROVIDERS],
     templateUrl: 'app/main-app/main-app.html'
 })
@@ -38,26 +41,45 @@ import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
 ])
 
 export class Main {
-//    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
+    //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
     public static serverUrl: String = "http://localhost:8888/php/"
     private title: String = "Alerta Temprana de Arrecifes de Coral";
     private navBarToggle: Boolean = false;
+
     private menuElements: MenuElements[] = [
         { "menuName": "Home", "menuRef": "Home" },
         { "menuName": "Búsqueda", "menuRef": "Home" },
     ];
 
-    constructor( ) {
+    constructor() {
         console.info('main-app module loaded');
-    }
-    
-//    ngOnInit() {
-//        let id = this.routeParams.get('userType');
-//        console.info(id)
-//        //this.service.getHero(id).then(hero => this.hero = hero);
+        }
+
+//    ngOnInit(    ) {
+//        let id = this.routeParams.get('userType    ');
+//        console.info(    id)
+//        //this.service.getHero(id).then(hero => this.hero = her    o);
 //    }
-    
+
     toggleNavbarClick() {
         this.navBarToggle = !this.navBarToggle;
+    }
+
+
+    //Dropdown
+
+    public disabled: boolean = false;
+    public status: { isopen: boolean } = { isopen: false };
+    public items: Array<string> = ['The first choice!',
+        'And another choice for you.', 'but wait! A third!'];
+
+    public toggled(open: boolean): void {
+        console.log('Dropdown is now: ', open);
+    }
+
+    public toggleDropdown($event: MouseEvent): void {
+        $event.preventDefault();
+        $event.stopPropagation();
+        this.status.isopen = !this.status.isopen;
     }
 }

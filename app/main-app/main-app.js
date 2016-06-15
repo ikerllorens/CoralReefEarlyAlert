@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', 'ng2-bootstrap/ng2-bootstrap'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15,7 +15,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1;
+    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, ng2_bootstrap_1;
     var Main;
     return {
         setters:[
@@ -33,8 +33,12 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
             },
             function (home_screen_component_1_1) {
                 home_screen_component_1 = home_screen_component_1_1;
+            },
+            function (ng2_bootstrap_1_1) {
+                ng2_bootstrap_1 = ng2_bootstrap_1_1;
             }],
         execute: function() {
+            //import { Progressbar } from "ng2-bootstrap/ng2-bootstrap";
             /*
              * Declaración del Component de Angular 2. El selector es el tag HTML que será
              * asociado a este componente. Las diretivas son las clases y/o bibliotecas que
@@ -48,22 +52,35 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                         { "menuName": "Home", "menuRef": "Home" },
                         { "menuName": "Búsqueda", "menuRef": "Home" },
                     ];
+                    //Dropdown
+                    this.disabled = false;
+                    this.status = { isopen: false };
+                    this.items = ['The first choice!',
+                        'And another choice for you.', 'but wait! A third!'];
                     console.info('main-app module loaded');
                 }
-                //    ngOnInit() {
-                //        let id = this.routeParams.get('userType');
-                //        console.info(id)
-                //        //this.service.getHero(id).then(hero => this.hero = hero);
+                //    ngOnInit(    ) {
+                //        let id = this.routeParams.get('userType    ');
+                //        console.info(    id)
+                //        //this.service.getHero(id).then(hero => this.hero = her    o);
                 //    }
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
+                };
+                Main.prototype.toggled = function (open) {
+                    console.log('Dropdown is now: ', open);
+                };
+                Main.prototype.toggleDropdown = function ($event) {
+                    $event.preventDefault();
+                    $event.stopPropagation();
+                    this.status.isopen = !this.status.isopen;
                 };
                 //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
                 Main.serverUrl = "http://localhost:8888/php/";
                 Main = __decorate([
                     core_1.Component({
                         selector: 'main-app',
-                        directives: [data_card_component_1.DataCard, router_deprecated_1.ROUTER_DIRECTIVES],
+                        directives: [data_card_component_1.DataCard, router_deprecated_1.ROUTER_DIRECTIVES, ng2_bootstrap_1.DROPDOWN_DIRECTIVES],
                         providers: [router_deprecated_1.ROUTER_PROVIDERS],
                         templateUrl: 'app/main-app/main-app.html'
                     }),
