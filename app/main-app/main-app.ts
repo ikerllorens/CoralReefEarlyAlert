@@ -11,18 +11,14 @@ import {Component} from "@angular/core";
  * oficial ni documentación de el nuevo Router
  * 
  */
- 
- 
+
+
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {DataCard} from '../data-card.component/data-card.component';
 import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
+import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
 
-export class MenuElements {
-    menuName: String;
-    menuRef: String;
-
-}
 
 /*
  * Declaración del Component de Angular 2. El selector es el tag HTML que será
@@ -37,20 +33,30 @@ export class MenuElements {
 })
 
 @RouteConfig([
-    {path: '/', name:'Home', component: HomeScreen},
-    {path: '/login', name: 'Login', component: LoginScreen}
+    { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
+    { path: '/login', name: 'Login', component: LoginScreen }
 ])
 
 export class Main {
+//    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
+    public static serverUrl: String = "http://localhost:8888/php/"
     private title: String = "Alerta Temprana de Arrecifes de Coral";
     private navBarToggle: Boolean = false;
-    private menuElements: MenuElements[] = [{ "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Away", "menuRef": "Home" }];
+    private menuElements: MenuElements[] = [
+        { "menuName": "Home", "menuRef": "Home" },
+        { "menuName": "Búsqueda", "menuRef": "Home" },
+    ];
 
-    constructor() {
+    constructor( ) {
         console.info('main-app module loaded');
     }
-
+    
+//    ngOnInit() {
+//        let id = this.routeParams.get('userType');
+//        console.info(id)
+//        //this.service.getHero(id).then(hero => this.hero = hero);
+//    }
+    
     toggleNavbarClick() {
         this.navBarToggle = !this.navBarToggle;
     }

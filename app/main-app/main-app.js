@@ -16,7 +16,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1;
-    var MenuElements, Main;
+    var Main;
     return {
         setters:[
             function (core_1_1) {
@@ -35,12 +35,6 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 home_screen_component_1 = home_screen_component_1_1;
             }],
         execute: function() {
-            MenuElements = (function () {
-                function MenuElements() {
-                }
-                return MenuElements;
-            }());
-            exports_1("MenuElements", MenuElements);
             /*
              * Declaración del Component de Angular 2. El selector es el tag HTML que será
              * asociado a este componente. Las diretivas son las clases y/o bibliotecas que
@@ -50,13 +44,22 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 function Main() {
                     this.title = "Alerta Temprana de Arrecifes de Coral";
                     this.navBarToggle = false;
-                    this.menuElements = [{ "menuName": "Home", "menuRef": "Home" },
-                        { "menuName": "Away", "menuRef": "Home" }];
+                    this.menuElements = [
+                        { "menuName": "Home", "menuRef": "Home" },
+                        { "menuName": "Búsqueda", "menuRef": "Home" },
+                    ];
                     console.info('main-app module loaded');
                 }
+                //    ngOnInit() {
+                //        let id = this.routeParams.get('userType');
+                //        console.info(id)
+                //        //this.service.getHero(id).then(hero => this.hero = hero);
+                //    }
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
                 };
+                //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
+                Main.serverUrl = "http://localhost:8888/php/";
                 Main = __decorate([
                     core_1.Component({
                         selector: 'main-app',
@@ -65,7 +68,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                         templateUrl: 'app/main-app/main-app.html'
                     }),
                     router_deprecated_1.RouteConfig([
-                        { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen },
+                        { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen, useAsDefault: true },
                         { path: '/login', name: 'Login', component: login_screen_component_1.LoginScreen }
                     ]), 
                     __metadata('design:paramtypes', [])
