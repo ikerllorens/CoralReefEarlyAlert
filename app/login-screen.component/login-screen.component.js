@@ -93,6 +93,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                 LoginScreen.prototype.successfulLoginRequest = function (login_response) {
                     if (login_response.success == true) {
                         console.info(login_response.name);
+                        localStorage.setItem("token", login_response.name);
                         this.router.navigate(['Home', { userType: login_response.userType }]);
                     }
                     else {

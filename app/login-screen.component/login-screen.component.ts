@@ -84,8 +84,9 @@ export class LoginScreen {
     successfulLoginRequest(login_response: LoginResponse) {
         if (login_response.success == true) {
             console.info(login_response.name)
-            this.router.navigate(['Home', { userType: login_response.userType }])
-        } else {
+            localStorage.setItem("token", login_response.name)
+            this.router.navigate(['Home', { userType: login_response.userType }]) 
+       } else {
             console.info("Failed login because: " + login_response.reason)
         }
     }
