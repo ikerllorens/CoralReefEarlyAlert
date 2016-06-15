@@ -11,6 +11,8 @@ import { LoginScreenService } from '../login-screen.service/login-screen.service
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 
+//TODO: Añadir funciónalidad al estar logeado 
+
 @Component({
     selector: 'login-screen',
     providers: [],
@@ -20,18 +22,23 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 export class LoginScreen {
 
+    minimumLenUsername: number = 8;
+    minimumLenPassword: number = 8;
+
     password: String = "";
     username: String = "";
 
     correctUsername = false;
     emptyUsername = true;
     emptyPassword = true;
-    
 
-    constructor(private loginScreenService: LoginScreenService,  private router:Router) {
+    validLogin = false;
+
+
+    constructor(private loginScreenService: LoginScreenService, private router: Router) {
         console.info("login-screen module loaded");
     }
-    
+
     preventCharacters(event) {
         if (event.key == "<" || event.key == ">" || event.key == '"' ||
             event.key == " " || event.key == "&" || event.key == "|" ||
@@ -43,33 +50,43 @@ export class LoginScreen {
     }
 
     onFieldUpdate(event) {
-        if (this.username.length < 8) {
+        if (this.username.length < this.minimumLenUsername) {
             this.emptyUsername = true
         } else {
             this.emptyUsername = false
         }
 
-        if (this.password.length < 8) { 
+        if (this.password.length < this.minimumLenPassword) {
             this.emptyPassword = true
         } else {
             this.emptyPassword = false
-        }        
+        }
+
+        if ((this.emptyUsername === false) && (this.emptyPassword === false)) {
+            this.validLogin = true;
+        } else {
+            this.validLogin = false;
+        }
     }
-    
-    login() {
+
+    login(event) {
         console.info("Trying to login...")
-        var login_object = new LoginObject(this.username, this.password)
-        this.loginScreenService.tryLogin(login_object).subscribe(
-            login_success => this.successfulLogin(login_success),
-            error => console.info(<any>error));  
+        if (this.username.length < this.minimumLenUsername) {
+            event.preventDefault();
+        } else if (this.password.length < this.minimumLenPassword) {
+            event.preventDefault();
+        } else {
+            var login_object = new LoginObject(this.username, this.password)
+            this.loginScreenService.tryLogin(login_object).subscribe(login_success => this.successfulLoginRequest(login_success), error => console.info(<any>error));
+        }
     }
-    
-    successfulLogin(login_response: LoginResponse) {
+
+    successfulLoginRequest(login_response: LoginResponse) {
         if (login_response.success == true) {
             console.info(login_response.name)
-            this.router.navigate(['Home', { userType: login_response.userType}])
+            this.router.navigate(['Home', { userType: login_response.userType }])
         } else {
             console.info("Failed login because: " + login_response.reason)
-        }        
+        }
     }
 }

@@ -32,15 +32,19 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                 router_deprecated_1 = router_deprecated_1_1;
             }],
         execute: function() {
+            //TODO: Añadir funciónalidad al estar logeado 
             LoginScreen = (function () {
                 function LoginScreen(loginScreenService, router) {
                     this.loginScreenService = loginScreenService;
                     this.router = router;
+                    this.minimumLenUsername = 8;
+                    this.minimumLenPassword = 8;
                     this.password = "";
                     this.username = "";
                     this.correctUsername = false;
                     this.emptyUsername = true;
                     this.emptyPassword = true;
+                    this.validLogin = false;
                     console.info("login-screen module loaded");
                 }
                 LoginScreen.prototype.preventCharacters = function (event) {
@@ -53,26 +57,40 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     }
                 };
                 LoginScreen.prototype.onFieldUpdate = function (event) {
-                    if (this.username.length < 8) {
+                    if (this.username.length < this.minimumLenUsername) {
                         this.emptyUsername = true;
                     }
                     else {
                         this.emptyUsername = false;
                     }
-                    if (this.password.length < 8) {
+                    if (this.password.length < this.minimumLenPassword) {
                         this.emptyPassword = true;
                     }
                     else {
                         this.emptyPassword = false;
                     }
+                    if ((this.emptyUsername === false) && (this.emptyPassword === false)) {
+                        this.validLogin = true;
+                    }
+                    else {
+                        this.validLogin = false;
+                    }
                 };
-                LoginScreen.prototype.login = function () {
+                LoginScreen.prototype.login = function (event) {
                     var _this = this;
                     console.info("Trying to login...");
-                    var login_object = new LoginObject_class_1.LoginObject(this.username, this.password);
-                    this.loginScreenService.tryLogin(login_object).subscribe(function (login_success) { return _this.successfulLogin(login_success); }, function (error) { return console.info(error); });
+                    if (this.username.length < this.minimumLenUsername) {
+                        event.preventDefault();
+                    }
+                    else if (this.password.length < this.minimumLenPassword) {
+                        event.preventDefault();
+                    }
+                    else {
+                        var login_object = new LoginObject_class_1.LoginObject(this.username, this.password);
+                        this.loginScreenService.tryLogin(login_object).subscribe(function (login_success) { return _this.successfulLoginRequest(login_success); }, function (error) { return console.info(error); });
+                    }
                 };
-                LoginScreen.prototype.successfulLogin = function (login_response) {
+                LoginScreen.prototype.successfulLoginRequest = function (login_response) {
                     if (login_response.success == true) {
                         console.info(login_response.name);
                         this.router.navigate(['Home', { userType: login_response.userType }]);
