@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', 'ng2-bootstrap/ng2-bootstrap'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', 'ng2-bootstrap/ng2-bootstrap', '../main-app.service/main-app.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15,7 +15,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, ng2_bootstrap_1;
+    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, ng2_bootstrap_1, main_app_service_1;
     var Main;
     return {
         setters:[
@@ -36,6 +36,9 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
             },
             function (ng2_bootstrap_1_1) {
                 ng2_bootstrap_1 = ng2_bootstrap_1_1;
+            },
+            function (main_app_service_1_1) {
+                main_app_service_1 = main_app_service_1_1;
             }],
         execute: function() {
             //import { Progressbar } from "ng2-bootstrap/ng2-bootstrap";
@@ -45,19 +48,24 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
              * son utilizadas, al igual que se importan los tags HTML de dichos componentes.
              */
             Main = (function () {
-                function Main() {
+                function Main(mainScreenService) {
+                    var _this = this;
+                    this.mainScreenService = mainScreenService;
                     this.title = "Alerta Temprana de Arrecifes de Coral";
                     this.navBarToggle = false;
                     this.loggedIn = false;
                     this.name = "Iker";
                     this.menuElements = [
                         { "menuName": "Home", "menuRef": "Home" },
-                        { "menuName": "Búsqueda", "menuRef": "Home" }
+                        { "menuName": "Búsqueda", "menuRef": "Home" },
+                        { "menuName": "Away", "menuRef": "Home" }
                     ];
                     //Variables Dropdown
                     this.disabled = false;
                     this.status = { isopen: false };
                     console.info('main-app module loaded');
+                    //        mainScreenService.loginInfo.subscribe()
+                    this.mainScreenService.loginInfo$.subscribe(function (loginInfo) { return _this.logInMode(loginInfo); });
                 }
                 //    ngOnInit(    ) {
                 //        let id = this.routeParams.get('userType    ');
@@ -66,6 +74,10 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 //    }
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
+                };
+                Main.prototype.logInMode = function (loginInfo) {
+                    console.log('Cambiando nombre');
+                    this.name = loginInfo.name;
                 };
                 //Dropdown
                 Main.prototype.toggled = function (open) {
@@ -82,14 +94,14 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     core_1.Component({
                         selector: 'main-app',
                         directives: [data_card_component_1.DataCard, router_deprecated_1.ROUTER_DIRECTIVES, ng2_bootstrap_1.DROPDOWN_DIRECTIVES],
-                        providers: [router_deprecated_1.ROUTER_PROVIDERS],
+                        providers: [router_deprecated_1.ROUTER_PROVIDERS, main_app_service_1.MainScreenService],
                         templateUrl: 'app/main-app/main-app.html'
                     }),
                     router_deprecated_1.RouteConfig([
                         { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen, useAsDefault: true },
                         { path: '/login', name: 'Login', component: login_screen_component_1.LoginScreen }
                     ]), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [main_app_service_1.MainScreenService])
                 ], Main);
                 return Main;
             }());

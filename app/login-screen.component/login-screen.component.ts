@@ -5,10 +5,11 @@
  */
 
 
-import {Component} from '@angular/core'
+import {Component, Output, EventEmitter } from '@angular/core'
 import {LoginObject, LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 import { LoginScreenService } from '../login-screen.service/login-screen.service';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import {MainScreenService} from '../main-app.service/main-app.service'
 
 
 //TODO: Añadir funciónalidad al estar logeado 
@@ -21,10 +22,12 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 })
 
 export class LoginScreen {
+//    
+//    @Output() onLogin = new EventEmitter<LoginResponse>();
 
     minimumLenUsername: number = 8;
     minimumLenPassword: number = 8;
-
+    
     password: String = "";
     username: String = "";
 
@@ -32,10 +35,10 @@ export class LoginScreen {
     emptyUsername = true;
     emptyPassword = true;
 
-    validLogin = false;
+    validLoginFields = false;
 
 
-    constructor(private loginScreenService: LoginScreenService, private router: Router) {
+    constructor(private loginScreenService: LoginScreenService, private router: Router, private mainScreenService: MainScreenService) {
         console.info("login-screen module loaded");
     }
 
@@ -63,14 +66,15 @@ export class LoginScreen {
         }
 
         if ((this.emptyUsername === false) && (this.emptyPassword === false)) {
-            this.validLogin = true;
+            this.validLoginFields = true;
         } else {
-            this.validLogin = false;
+            this.validLoginFields = false;
         }
     }
 
     login(event): void {
         console.info("Trying to login...")
+        
         if (this.username.length < this.minimumLenUsername) {
             event.preventDefault();
         } else if (this.password.length < this.minimumLenPassword) {
@@ -84,8 +88,11 @@ export class LoginScreen {
     successfulLoginRequest(login_response: LoginResponse): void {
         if (login_response.success == true) {
             console.info(login_response.name)
+            this.mainScreenService.setLoginInfo(login_response)
             localStorage.setItem("token", login_response.name)
             this.router.navigate(['Home', { userType: login_response.userType }]) 
+            
+//            this.onLogin.emit(login_response);
        } else {
             console.info("Failed login because: " + login_response.reason)
         }

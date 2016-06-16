@@ -19,6 +19,10 @@ import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
 import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+
+import {MainScreenService} from '../main-app.service/main-app.service'
+
+import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 //import { Progressbar } from "ng2-bootstrap/ng2-bootstrap";
 
 
@@ -31,7 +35,7 @@ import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 @Component({
     selector: 'main-app',
     directives: [DataCard, ROUTER_DIRECTIVES, DROPDOWN_DIRECTIVES],
-    providers: [ROUTER_PROVIDERS],
+    providers: [ROUTER_PROVIDERS, MainScreenService],
     templateUrl: 'app/main-app/main-app.html'
 })
 
@@ -51,9 +55,9 @@ export class Main {
     
     
     private menuElements: MenuElements[] = [
-    
         { "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Búsqueda", "menuRef": "Home"}
+        { "menuName": "Búsqueda", "menuRef": "Home"},
+        { "menuName": "Away", "menuRef": "Home"}
     ];
     
     //Variables Dropdown
@@ -62,8 +66,12 @@ export class Main {
    
 
 
-    constructor() {
+    constructor(private mainScreenService: MainScreenService) {
         console.info('main-app module loaded');
+//        mainScreenService.loginInfo.subscribe()
+        this.mainScreenService.loginInfo$.subscribe(
+            loginInfo => this.logInMode(loginInfo)
+        )
     }
 
     //    ngOnInit(    ) {
@@ -75,8 +83,11 @@ export class Main {
     toggleNavbarClick(): void {
         this.navBarToggle = !this.navBarToggle;
     }
-
-
+    
+    logInMode(loginInfo: LoginResponse) {
+        console.log('Cambiando nombre')
+        this.name = loginInfo.name
+    }
     //Dropdown
        
     public toggled(open: boolean): void {
@@ -88,5 +99,7 @@ export class Main {
         $event.stopPropagation();
         this.status.isopen = !this.status.isopen;
     }
+
+    
 
 }
