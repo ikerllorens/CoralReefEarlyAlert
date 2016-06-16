@@ -46,33 +46,39 @@ export class Main {
     private title: String = "Alerta Temprana de Arrecifes de Coral";
     private navBarToggle: Boolean = false;
 
+    private loggedIn: Boolean = false;
+    private name: String = "Iker"
+    
+    
     private menuElements: MenuElements[] = [
+    
         { "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Búsqueda", "menuRef": "Home" },
+        { "menuName": "Búsqueda", "menuRef": "Home"}
     ];
+    
+    //Variables Dropdown
+    private disabled: boolean = false;
+    private status: { isopen: boolean } = { isopen: false }; 
+   
+
 
     constructor() {
         console.info('main-app module loaded');
-        }
+    }
 
-//    ngOnInit(    ) {
-//        let id = this.routeParams.get('userType    ');
-//        console.info(    id)
-//        //this.service.getHero(id).then(hero => this.hero = her    o);
-//    }
+    //    ngOnInit(    ) {
+    //        let id = this.routeParams.get('userType    ');
+    //        console.info(    id)
+    //        //this.service.getHero(id).then(hero => this.hero = her    o);
+    //    }
 
-    toggleNavbarClick() {
+    toggleNavbarClick(): void {
         this.navBarToggle = !this.navBarToggle;
     }
 
 
     //Dropdown
-
-    public disabled: boolean = false;
-    public status: { isopen: boolean } = { isopen: false };
-    public items: Array<string> = ['The first choice!',
-        'And another choice for you.', 'but wait! A third!'];
-
+       
     public toggled(open: boolean): void {
         console.log('Dropdown is now: ', open);
     }
@@ -82,4 +88,5 @@ export class Main {
         $event.stopPropagation();
         this.status.isopen = !this.status.isopen;
     }
+
 }

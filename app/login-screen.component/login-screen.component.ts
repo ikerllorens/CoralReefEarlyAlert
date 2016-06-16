@@ -39,7 +39,7 @@ export class LoginScreen {
         console.info("login-screen module loaded");
     }
 
-    preventCharacters(event) {
+    preventCharacters(event): void {
         if (event.key == "<" || event.key == ">" || event.key == '"' ||
             event.key == " " || event.key == "&" || event.key == "|" ||
             event.key == "#" || event.key == "!" || event.key == "¡" ||
@@ -49,7 +49,7 @@ export class LoginScreen {
         }
     }
 
-    onFieldUpdate(event) {
+    onFieldUpdate(event): void {
         if (this.username.length < this.minimumLenUsername) {
             this.emptyUsername = true
         } else {
@@ -69,7 +69,7 @@ export class LoginScreen {
         }
     }
 
-    login(event) {
+    login(event): void {
         console.info("Trying to login...")
         if (this.username.length < this.minimumLenUsername) {
             event.preventDefault();
@@ -81,7 +81,7 @@ export class LoginScreen {
         }
     }
 
-    successfulLoginRequest(login_response: LoginResponse) {
+    successfulLoginRequest(login_response: LoginResponse): void {
         if (login_response.success == true) {
             console.info(login_response.name)
             localStorage.setItem("token", login_response.name)

@@ -48,15 +48,15 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 function Main() {
                     this.title = "Alerta Temprana de Arrecifes de Coral";
                     this.navBarToggle = false;
+                    this.loggedIn = false;
+                    this.name = "Iker";
                     this.menuElements = [
                         { "menuName": "Home", "menuRef": "Home" },
-                        { "menuName": "Búsqueda", "menuRef": "Home" },
+                        { "menuName": "Búsqueda", "menuRef": "Home" }
                     ];
-                    //Dropdown
+                    //Variables Dropdown
                     this.disabled = false;
                     this.status = { isopen: false };
-                    this.items = ['The first choice!',
-                        'And another choice for you.', 'but wait! A third!'];
                     console.info('main-app module loaded');
                 }
                 //    ngOnInit(    ) {
@@ -67,6 +67,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
                 };
+                //Dropdown
                 Main.prototype.toggled = function (open) {
                     console.log('Dropdown is now: ', open);
                 };
