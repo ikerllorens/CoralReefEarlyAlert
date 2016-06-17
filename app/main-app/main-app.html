@@ -29,7 +29,7 @@ and open the template in the editor.
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li *ngIf="!loggedIn" dropdown (on-toggle)="toggled($event)">
+                <li *ngIf="loggedIn" dropdown (on-toggle)="toggled($event)">
                     <a role="button" style="color: whitesmoke" href id="simple-dropdown" dropdownToggle>
                         <span style="margin-right: 5px" class="glyphicon glyphicon-user"></span><span> {{name}} </span> <span class="caret"></span>
                     </a>
@@ -37,9 +37,10 @@ and open the template in the editor.
                         <li> 
                             <a role="button" class="dropdown-item" [routerLink] = "['Home']">Perfil</a>
                         </li>
-                        <li> <a role="button" class="dropdown-item" (click)="logOut()">Cerrar Sesión</a></li>
-<!--                        <li> <a class="dropdown-item" (click)="logOut()">Cerrar Sesión</li>-->
-                        
+                        <br>
+                        <li><a role="button" class="dropdown-item" (click)="logOut()"><span class="glyphicon glyphicon-log-out"> </span> Cerrar Sesión</a></li>
+                        <!--                        <li> <a class="dropdown-item" (click)="logOut()">Cerrar Sesión</li>-->
+
                     </ul>
                 </li>
 

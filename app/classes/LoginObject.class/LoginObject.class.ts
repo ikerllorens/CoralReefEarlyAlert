@@ -31,4 +31,5 @@ export class LoginResponse {
     userType: number
     name: string
     reason: string
+    token: string
 }

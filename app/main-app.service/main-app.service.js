@@ -43,12 +43,28 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', '../rxjs-oper
         execute: function() {
             MainScreenService = (function () {
                 function MainScreenService(http) {
+                    var _this = this;
                     this.http = http;
-                    this.loginInfo = new Subject_1.Subject();
-                    this.loginInfo$ = this.loginInfo.asObservable();
+                    this.loggedInObservable = new Subject_1.Subject();
+                    this.loginInfoObservable = new Subject_1.Subject();
+                    this.loggedInObservable$ = this.loggedInObservable.asObservable();
+                    this.loginInfoObservable$ = this.loginInfoObservable.asObservable();
+                    this.loggedInObservable$.subscribe(function (loggedIn) { return _this.loggedIn = loggedIn; });
+                    this.loginInfoObservable$.subscribe(function (loginInfo) { return _this.loginInfo = loginInfo; });
                 }
                 MainScreenService.prototype.setLoginInfo = function (loginInfo) {
-                    this.loginInfo.next(loginInfo);
+                    localStorage.setItem("token_CEA", loginInfo.token);
+                    this.loginInfoObservable.next(loginInfo);
+                    this.loggedInObservable.next(true);
+                };
+                MainScreenService.prototype.checkLogin = function () {
+                    var token = localStorage.getItem("token_CEA");
+                    console.info("token: " + token);
+                    if (token != null) {
+                        // TODO: PHP login_check con Service
+                        console.info(".|.");
+                        this.loggedInObservable.next(true);
+                    }
                 };
                 MainScreenService = __decorate([
                     core_1.Injectable(), 

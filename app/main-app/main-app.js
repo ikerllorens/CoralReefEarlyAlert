@@ -54,7 +54,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.title = "Alerta Temprana de Arrecifes de Coral";
                     this.navBarToggle = false;
                     this.loggedIn = false;
-                    this.name = "Iker";
+                    this.name = "Identifícate";
                     this.menuElements = [
                         { "menuName": "Home", "menuRef": "Home" },
                         { "menuName": "Búsqueda", "menuRef": "Home" },
@@ -65,8 +65,17 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.status = { isopen: false };
                     console.info('main-app module loaded');
                     //        mainScreenService.loginInfo.subscribe()
-                    this.mainScreenService.loginInfo$.subscribe(function (loginInfo) { return _this.logInMode(loginInfo); });
+                    this.mainScreenService.loginInfoObservable$.subscribe(function (loginInfo) {
+                        console.info("Your token is: " + loginInfo.token);
+                        _this.logInMode(loginInfo);
+                    });
+                    this.mainScreenService.loggedInObservable$.subscribe(function (loggedIn) {
+                        _this.loggedIn = loggedIn;
+                    });
                 }
+                Main.prototype.ngOnInit = function () {
+                    this.mainScreenService.checkLogin();
+                };
                 //    ngOnInit(    ) {
                 //        let id = this.routeParams.get('userType    ');
                 //        console.info(    id)
@@ -76,8 +85,11 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.navBarToggle = !this.navBarToggle;
                 };
                 Main.prototype.logInMode = function (loginInfo) {
-                    console.log('Cambiando nombre');
                     this.name = loginInfo.name;
+                };
+                Main.prototype.logOut = function () {
+                    this.loggedIn = false;
+                    localStorage.removeItem("token_CEA");
                 };
                 //Dropdown
                 Main.prototype.toggled = function (open) {
@@ -89,7 +101,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.status.isopen = !this.status.isopen;
                 };
                 //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
-                Main.serverUrl = "http://localhost:8888/php/";
+                Main.serverUrl = "http://localhost/php/";
                 Main = __decorate([
                     core_1.Component({
                         selector: 'main-app',

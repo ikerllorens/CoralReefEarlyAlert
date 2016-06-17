@@ -4,15 +4,13 @@
  * and open the template in the editor.
  */
 
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+
 //import {ROUTER_DIRECTIVES, Router} from '@angular/router';
 /*
  * Pronto será depreciado el Router de Angular 2, no hay aún algún anuncio
- * oficial ni documentación de el nuevo Router
- * 
+ * oficial ni documentación del nuevo Router
  */
-
-
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {DataCard} from '../data-card.component/data-card.component';
 import {LoginScreen} from '../login-screen.component/login-screen.component';
@@ -44,14 +42,14 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
     { path: '/login', name: 'Login', component: LoginScreen }
 ])
 
-export class Main {
+export class Main implements OnInit {
     //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
-    public static serverUrl: String = "http://localhost:8888/php/"
+    public static serverUrl: String = "http://localhost/php/"
     private title: String = "Alerta Temprana de Arrecifes de Coral";
     private navBarToggle: Boolean = false;
 
     private loggedIn: Boolean = false;
-    private name: String = "Iker"
+    private name: String = "Identifícate"
     
     
     private menuElements: MenuElements[] = [
@@ -68,10 +66,27 @@ export class Main {
 
     constructor(private mainScreenService: MainScreenService) {
         console.info('main-app module loaded');
+        
+        
 //        mainScreenService.loginInfo.subscribe()
-        this.mainScreenService.loginInfo$.subscribe(
-            loginInfo => this.logInMode(loginInfo)
+        this.mainScreenService.loginInfoObservable$.subscribe(
+            loginInfo => {
+                console.info("Your token is: " + loginInfo.token)
+                this.logInMode(loginInfo)
+                
+            }
         )
+        
+        this.mainScreenService.loggedInObservable$.subscribe(
+            loggedIn => {
+                
+                this.loggedIn = loggedIn     
+            }
+        )
+    }
+    
+    ngOnInit () {
+        this.mainScreenService.checkLogin()
     }
 
     //    ngOnInit(    ) {
@@ -85,8 +100,12 @@ export class Main {
     }
     
     logInMode(loginInfo: LoginResponse) {
-        console.log('Cambiando nombre')
-        this.name = loginInfo.name
+        this.name = loginInfo.name     
+    }
+    
+    logOut() {
+        this.loggedIn = false
+        localStorage.removeItem("token_CEA")
     }
     //Dropdown
        

@@ -98,10 +98,8 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                 };
                 LoginScreen.prototype.successfulLoginRequest = function (login_response) {
                     if (login_response.success == true) {
-                        console.info(login_response.name);
                         this.mainScreenService.setLoginInfo(login_response);
-                        localStorage.setItem("token", login_response.name);
-                        this.router.navigate(['Home', { userType: login_response.userType }]);
+                        this.router.navigate(['Home']);
                     }
                     else {
                         console.info("Failed login because: " + login_response.reason);

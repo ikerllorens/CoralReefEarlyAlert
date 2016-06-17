@@ -16,9 +16,8 @@
  */
 
 import {Injectable} from '@angular/core'
-import { Http, Response, Headers, RequestOptions } from '@angular/http'
+import { Http} from '@angular/http'
 
-import { Observable } from 'rxjs/Observable';
 import { Subject }    from 'rxjs/Subject';
 import '../rxjs-operators'
 
@@ -26,16 +25,41 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 
 @Injectable()
 export class MainScreenService {
-    
-    private loginInfo: Subject<LoginResponse> = new Subject<LoginResponse>()
-    loginInfo$ = this.loginInfo.asObservable();
-    
-    constructor(private http: Http) {
-       
+    private loggedInObservable: Subject<boolean> = new Subject<boolean>()
+    private loginInfoObservable: Subject<LoginResponse> = new Subject<LoginResponse>()
+    loggedInObservable$ = this.loggedInObservable.asObservable()
+    loginInfoObservable$ = this.loginInfoObservable.asObservable();
+    private loggedIn: boolean
+    private loginInfo: LoginResponse
 
-    }   
+    constructor(private http: Http) {
+        
+        this.loggedInObservable$.subscribe(
+            loggedIn => this.loggedIn = loggedIn
+        )
+        this.loginInfoObservable$.subscribe(
+            loginInfo => this.loginInfo = loginInfo
+        )
+        
+    }
     
-    setLoginInfo(loginInfo: LoginResponse): void{
-        this.loginInfo.next(loginInfo)
+    
+    
+
+
+    setLoginInfo(loginInfo: LoginResponse): void {
+        localStorage.setItem("token_CEA", loginInfo.token)
+        this.loginInfoObservable.next(loginInfo)
+        this.loggedInObservable.next(true)
+    }
+
+    checkLogin(): void {
+        var token = localStorage.getItem("token_CEA")
+        console.info("token: " + token)
+        if (token != null) {
+            // TODO: PHP login_check con Service
+            console.info(".|.") 
+            this.loggedInObservable.next(true);
+        }
     }
 }
