@@ -17,7 +17,7 @@ and open the template in the editor.
             <div class="form-group col-xs-8 col-sm-12  ">  
                 <div class="input-group" [class.has-success]="!emptyUsername" [class.has-warning]="emptyUsername">
                     <span class="input-group-addon">Usuario</span>
-                    <input (keyup)="onFieldUpdate($event)" (keydown)="preventCharacters($event)" [(ngModel)]="username" placeholder="Nombre de Usuario" type="text" class="form-control center-block">
+                    <input (keyup)="onFieldUpdate()" (keydown)="preventCharacters($event)" [(ngModel)]="username" autofocus="true" autocomplete="off" placeholder="Nombre de Usuario" type="email" class="form-control center-block">
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ and open the template in the editor.
                 <a href="#">Olvidaste tu contraseña?</a>
                 <div class="input-group" [class.has-warning]="emptyPassword" [class.has-success]="!emptyPassword" >
                     <span class="input-group-addon">Contraseña</span>
-                    <input (keyup)="onFieldUpdate($event)" (keydown)="preventCharacters($event)" [(ngModel)]="password" placeholder="Contraseña" type="password" class="form-control center-block">
+                    <input (keyup)="onFieldUpdate()" (keydown)="preventCharacters($event)" [(ngModel)]="password" autocomplete="off" placeholder="Contraseña" type="password" class="form-control center-block">
                 </div>
             </div>
         </div>
