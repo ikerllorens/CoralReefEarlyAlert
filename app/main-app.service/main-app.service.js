@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/http', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observable', '../rxjs-operators', '../main-app/main-app'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', '../rxjs-oper
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Subject_1;
+    var core_1, http_1, Subject_1, Observable_1, main_app_1;
     var MainScreenService;
     return {
         setters:[
@@ -39,7 +39,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', '../rxjs-oper
             function (Subject_1_1) {
                 Subject_1 = Subject_1_1;
             },
-            function (_1) {}],
+            function (Observable_1_1) {
+                Observable_1 = Observable_1_1;
+            },
+            function (_1) {},
+            function (main_app_1_1) {
+                main_app_1 = main_app_1_1;
+            }],
         execute: function() {
             MainScreenService = (function () {
                 function MainScreenService(http) {
@@ -49,8 +55,16 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', '../rxjs-oper
                     this.loginInfoObservable = new Subject_1.Subject();
                     this.loggedInObservable$ = this.loggedInObservable.asObservable();
                     this.loginInfoObservable$ = this.loginInfoObservable.asObservable();
+                    this.checkLoginObservable$ = new Observable_1.Observable();
+                    this.valid_tokenObservable$ = new Observable_1.Observable();
                     this.loggedInObservable$.subscribe(function (loggedIn) { return _this.loggedIn = loggedIn; });
                     this.loginInfoObservable$.subscribe(function (loginInfo) { return _this.loginInfo = loginInfo; });
+                    //        this.checkLoginObservable$.sub        scribe(
+                    //            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
+                    //                )
+                    //        this.valid_tokenObservable$.sub        scribe(
+                    //            loginInfo => this.loginInfoObservable.next(log        inInfo)
+                    //        )
                 }
                 MainScreenService.prototype.setLoginInfo = function (loginInfo) {
                     localStorage.setItem("token_CEA", loginInfo.token);
@@ -58,13 +72,40 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', '../rxjs-oper
                     this.loggedInObservable.next(true);
                 };
                 MainScreenService.prototype.checkLogin = function () {
+                    var _this = this;
                     var token = localStorage.getItem("token_CEA");
-                    console.info("token: " + token);
+                    //console.info("token: " + token)
                     if (token != null) {
-                        // TODO: PHP login_check con Service
-                        console.info(".|.");
+                        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                        var options = new http_1.RequestOptions({ headers: headers });
+                        this.token = token;
+                        var body = { "token": this.token };
+                        //console.log('Request: ' + JSON.stringify(body))
+                        this.http.post(main_app_1.Main.serverUrl + 'checklog.php', JSON.stringify(body), options)
+                            .map(this.extractData)
+                            .subscribe(function (loginInfo) { return _this.fetchUserInfo(loginInfo.success); });
+                    }
+                };
+                MainScreenService.prototype.fetchUserInfo = function (valid_token) {
+                    var _this = this;
+                    if (valid_token) {
+                        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                        var options = new http_1.RequestOptions({ headers: headers });
+                        var body = { "token": this.token };
+                        console.log('Request: ' + JSON.stringify(body));
+                        this.http.post(main_app_1.Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
+                            .map(this.extractData)
+                            .subscribe(function (loginInfo) { return _this.loginInfoObservable.next(loginInfo); });
                         this.loggedInObservable.next(true);
                     }
+                    else {
+                        this.loggedInObservable.next(false);
+                    }
+                };
+                MainScreenService.prototype.extractData = function (res) {
+                    var responseJSON = res.json();
+                    console.info(res.text());
+                    return responseJSON;
                 };
                 MainScreenService = __decorate([
                     core_1.Injectable(), 
