@@ -100,6 +100,7 @@ export class Main implements OnInit {
     }
     
     logInMode(loginInfo: LoginResponse) {
+        console.info('Name: ' + loginInfo.name)
         this.name = loginInfo.name     
     }
     

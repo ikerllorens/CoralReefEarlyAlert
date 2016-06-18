@@ -74,16 +74,16 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                 MainScreenService.prototype.checkLogin = function () {
                     var _this = this;
                     var token = localStorage.getItem("token_CEA");
-                    console.info("token: " + token);
+                    //console.info("token: " + token)
                     if (token != null) {
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                         var options = new http_1.RequestOptions({ headers: headers });
                         this.token = token;
-                        this.http.post(main_app_1.Main.serverUrl + 'checklog.php', JSON.stringify(token), options)
+                        var body = { "token": this.token };
+                        //console.log('Request: ' + JSON.stringify(body))
+                        this.http.post(main_app_1.Main.serverUrl + 'checklog.php', JSON.stringify(body), options)
                             .map(this.extractData)
                             .subscribe(function (loginInfo) { return _this.fetchUserInfo(loginInfo.success); });
-                        // TODO: PHP login_check con Service
-                        console.info(".|.");
                     }
                 };
                 MainScreenService.prototype.fetchUserInfo = function (valid_token) {
@@ -91,7 +91,9 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                     if (valid_token) {
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                         var options = new http_1.RequestOptions({ headers: headers });
-                        this.http.post(main_app_1.Main.serverUrl + 'tokenInfo.php', JSON.stringify(this.token), options)
+                        var body = { "token": this.token };
+                        console.log('Request: ' + JSON.stringify(body));
+                        this.http.post(main_app_1.Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
                             .map(this.extractData)
                             .subscribe(function (loginInfo) { return _this.loginInfoObservable.next(loginInfo); });
                         this.loggedInObservable.next(true);
@@ -102,6 +104,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                 };
                 MainScreenService.prototype.extractData = function (res) {
                     var responseJSON = res.json();
+                    console.info(res.text());
                     return responseJSON;
                 };
                 MainScreenService = __decorate([

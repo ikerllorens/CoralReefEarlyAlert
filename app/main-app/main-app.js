@@ -85,6 +85,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.navBarToggle = !this.navBarToggle;
                 };
                 Main.prototype.logInMode = function (loginInfo) {
+                    console.info('Name: ' + loginInfo.name);
                     this.name = loginInfo.name;
                 };
                 Main.prototype.logOut = function () {

@@ -44,7 +44,7 @@ export class MainScreenService {
         )
         this.loginInfoObservable$.subscribe(
             loginInfo => this.loginInfo = loginInfo
-                )
+        )
 //        this.checkLoginObservable$.sub        scribe(
 //            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
 //                )
@@ -63,20 +63,20 @@ export class MainScreenService {
     checkLogin(): void {
         var token = localStorage.getItem("token_CEA")
 
-        console.info("token: " + token)
+        //console.info("token: " + token)
         if (token != null) {
             let headers = new Headers({ 'Content-Type': 'application/json' });
             let options = new RequestOptions({ headers: headers });
 
             this.token = token
-            this.http.post(Main.serverUrl + 'checklog.php', JSON.stringify(token), options)
+            let body = { "token": this.token}
+            //console.log('Request: ' + JSON.stringify(body))
+            this.http.post(Main.serverUrl + 'checklog.php', JSON.stringify(body) , options)
                 .map(this.extractData)
                 .subscribe(
                     loginInfo => this.fetchUserInfo(loginInfo.success)
                 )
-
             // TODO: PHP login_check con Service
-            console.info(".|.")
             //this.loggedInObservable.next(true);
         }
     }
@@ -85,10 +85,13 @@ export class MainScreenService {
         if (valid_token) {
             let headers = new Headers({ 'Content-Type': 'application/json' });
             let options = new RequestOptions({ headers: headers });
-            this.http.post(Main.serverUrl + 'tokenInfo.php', JSON.stringify(this.token), options)
+            
+            let body = { "token": this.token}
+            console.log('Request: ' + JSON.stringify(body))
+            this.http.post(Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
                 .map(this.extractData)
                 .subscribe(
-                    loginInfo => this.loginInfoObservable.next(loginInfo)
+                    loginInfo =>  this.loginInfoObservable.next(loginInfo)
                 )
             this.loggedInObservable.next(true)
         } else {
@@ -99,6 +102,8 @@ export class MainScreenService {
 
     private extractData(res: Response) {
         let responseJSON = res.json();
+        console.info(res.text())
+       
         return responseJSON;
     }
 
