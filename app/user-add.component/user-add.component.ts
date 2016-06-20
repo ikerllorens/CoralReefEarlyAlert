@@ -20,9 +20,12 @@ import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated'
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {UserAddService} from '../user-add.service/user-add.service'
 
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
+import {BUTTON_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+
 @Component({
     selector: 'luser-add',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, BUTTON_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
     templateUrl: 'app/user-add.component/user-add.component.html'
 })
 
@@ -31,6 +34,7 @@ export class UserAddScreen implements OnInit {
     private password: string = ""
     private name: string = ""
     private surname: string =""
+    private userType: number = 1
     
     /*
      * Variable de control que evita que se pueda realizar alguna acción en lo que se 

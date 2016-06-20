@@ -14,22 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
- import {Injectable} from '@angular/core'
- import { Http, Response, Headers, RequestOptions } from '@angular/http'
 
-@Injectable ()
-export class UserAddService {
-    constructor(private http: Http) {
-        
-    }
+
+export class UserAddObject {
+    name: string = ""
+    surname: string =""
     
-    public addUser() {
-        
-    }
+}
+
+export class UserAddResponse {
     
-    private extractData(res: Response) {
-        let responseJSON = res.json();    
-        return responseJSON;
-    }
 }

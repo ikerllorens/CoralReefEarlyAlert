@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/router-deprecated', '../main-app.service/main-app.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router-deprecated', '../main-app.service/main-app.service', '@angular/common', 'ng2-bootstrap/ng2-bootstrap'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, main_app_service_1;
+    var core_1, router_deprecated_1, main_app_service_1, common_1, ng2_bootstrap_1;
     var UserAddScreen;
     return {
         setters:[
@@ -38,6 +38,12 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
             },
             function (main_app_service_1_1) {
                 main_app_service_1 = main_app_service_1_1;
+            },
+            function (common_1_1) {
+                common_1 = common_1_1;
+            },
+            function (ng2_bootstrap_1_1) {
+                ng2_bootstrap_1 = ng2_bootstrap_1_1;
             }],
         execute: function() {
             UserAddScreen = (function () {
@@ -48,6 +54,7 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
                     this.password = "";
                     this.name = "";
                     this.surname = "";
+                    this.userType = 1;
                     /*
                      * Variable de control que evita que se pueda realizar alguna acción en lo que se
                      * comprueba si el usuario es administrador con el servidor. Est variable cambiara a true
@@ -72,7 +79,7 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
                 UserAddScreen = __decorate([
                     core_1.Component({
                         selector: 'luser-add',
-                        directives: [router_deprecated_1.ROUTER_DIRECTIVES],
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_bootstrap_1.BUTTON_DIRECTIVES, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES],
                         templateUrl: 'app/user-add.component/user-add.component.html'
                     }), 
                     __metadata('design:paramtypes', [main_app_service_1.MainScreenService, router_deprecated_1.Router])

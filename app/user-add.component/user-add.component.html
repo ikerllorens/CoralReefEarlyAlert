@@ -33,8 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="col-xs-2 col-sm-1"></div>
                 <div class="form-group col-xs-8 col-sm-10 ">  
                     <div class="input-group">
-                        <span class="input-group-addon">Usario</span>
-                        <input [(ngModel)]="username" [disabled]= "editing" placeholder="Nombre de Usuario" type="text" class="form-control center-block">
+                        <span class="input-group-addon">email</span>
+                        <input [(ngModel)]="username" [disabled]= "!editing" placeholder="email" type="text" class="form-control center-block">
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="form-group col-xs-8 col-sm-10 ">  
                     <div class="input-group">
                         <span class="input-group-addon">Contraseña</span>
-                        <input [(ngModel)]="password" [disabled]= "editing" placeholder="Contraseña" type="text" class="form-control center-block">
+                        <input [(ngModel)]="password" [disabled]= "!editing" placeholder="Contraseña" type="text" class="form-control center-block">
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="form-group col-xs-8 col-sm-10 ">  
                     <div class="input-group">
                         <span class="input-group-addon">Nombre</span>
-                        <input [(ngModel)]="name" [disabled]= "editing" placeholder="Nombre" type="text" class="form-control center-block">
+                        <input [(ngModel)]="name" [disabled]= "!editing" placeholder="Nombre" type="text" class="form-control center-block">
                     </div>
                 </div>
             </div>
@@ -61,30 +61,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="form-group col-xs-8 col-sm-10 ">  
                     <div class="input-group">
                         <span class="input-group-addon">Apellidos</span>
-                        <input [(ngModel)]="surname" [disabled]= "editing" placeholder="Apellidos" type="text" class="form-control center-block">
+                        <input [(ngModel)]="surname" [disabled]= "!editing" placeholder="Apellidos" type="text" class="form-control center-block">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-2 col-sm-1"></div>
                 <div class="form-group col-xs-8 col-sm-10 ">  
-                    <div class="input-group">
-                        <label class="radio-inline">
-                            <input [disabled]= "editing" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" > Usuario
-                        </label>
-                        <label class="radio-inline">
-                            <input [disabled]= "editing" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Administrador
-                        </label>
+                    <div class="btn-group">
+                        <label class="btn btn-info" [(ngModel)]="userType" btnRadio="1">Usuario</label>
+                        <label class="btn btn-warning" [(ngModel)]="userType" btnRadio="2">Administrador</label>
                     </div>
                 </div>
             </div>
+            <div *ngIf="userType==2">
+                <p class="bg-warning">
+                    Este tipo de usuario podrá agregar, modificar y eliminar usuarios y posts
+                </p>
+            </div>
+            <hr>
             <div class="row">
                 <div class="col-xs-2 col-sm-1"></div>
                 <div class="form-group col-xs-8 col-sm-10  ">  
-                    <button  class="btn btn-success">Iniciar Sesión</button>
+                    <button  class="btn btn-success">Registrar Usuario</button>
                     <button [routerLink]="['Home']" class="btn btn-danger pull-right">Regresar</button>
                 </div>
             </div>
         </form>
     </div>
 </div>
+
+{{userType}}

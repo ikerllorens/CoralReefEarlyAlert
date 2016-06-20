@@ -41,6 +41,8 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                 function UserAddService(http) {
                     this.http = http;
                 }
+                UserAddService.prototype.addUser = function () {
+                };
                 UserAddService.prototype.extractData = function (res) {
                     var responseJSON = res.json();
                     return responseJSON;
