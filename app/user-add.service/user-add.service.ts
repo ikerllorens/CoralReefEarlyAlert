@@ -14,23 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ 
+ import {Injectable} from '@angular/core'
+ import { Http, Response, Headers, RequestOptions } from '@angular/http'
 
-
-export class LoginObject {
-    username: String = ""
-    password: String = ""
+@Injectable ()
+export class UserAddService {
+    constructor(private http: Http) {
+        
+    }
     
-    constructor(username: String, password: String) {
-        this.username = username
-        this.password = password
+    public 
+    
+    private extractData(res: Response) {
+        let responseJSON = res.json();    
+        return responseJSON;
     }
 }
-
-export class LoginResponse {
-    success: boolean = false
-    userType: number = 0
-    name: string = ""
-    reason: string = ""
-    token: string = ""
-}
-

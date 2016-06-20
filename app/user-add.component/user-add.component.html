@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2016 ikerllorens
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="row">
+    <div class="col-xs-0 col-sm-3"></div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Agregar Usuario
+                    <br>
+                    <small>Llena el siguiente formulario para agregar a un usuario. Todos los campos son requeridos</small>
+                </h1>
+            </div>
+        </div>
+        <hr>
+        <form class="form-horizontal" >
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10 ">  
+                    <div class="input-group">
+                        <span class="input-group-addon">Usario</span>
+                        <input [(ngModel)]="username" [disabled]= "editing" placeholder="Nombre de Usuario" type="text" class="form-control center-block">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10 ">  
+                    <div class="input-group">
+                        <span class="input-group-addon">Contraseña</span>
+                        <input [(ngModel)]="password" [disabled]= "editing" placeholder="Contraseña" type="text" class="form-control center-block">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10 ">  
+                    <div class="input-group">
+                        <span class="input-group-addon">Nombre</span>
+                        <input [(ngModel)]="name" [disabled]= "editing" placeholder="Nombre" type="text" class="form-control center-block">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10 ">  
+                    <div class="input-group">
+                        <span class="input-group-addon">Apellidos</span>
+                        <input [(ngModel)]="surname" [disabled]= "editing" placeholder="Apellidos" type="text" class="form-control center-block">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10 ">  
+                    <div class="input-group">
+                        <label class="radio-inline">
+                            <input [disabled]= "editing" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" > Usuario
+                        </label>
+                        <label class="radio-inline">
+                            <input [disabled]= "editing" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Administrador
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10  ">  
+                    <button  class="btn btn-success">Iniciar Sesión</button>
+                    <button [routerLink]="['Home']" class="btn btn-danger pull-right">Regresar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

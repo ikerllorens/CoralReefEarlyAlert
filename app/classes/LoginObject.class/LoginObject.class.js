@@ -33,6 +33,11 @@ System.register([], function(exports_1, context_1) {
             exports_1("LoginObject", LoginObject);
             LoginResponse = (function () {
                 function LoginResponse() {
+                    this.success = false;
+                    this.userType = 0;
+                    this.name = "";
+                    this.reason = "";
+                    this.token = "";
                 }
                 return LoginResponse;
             }());

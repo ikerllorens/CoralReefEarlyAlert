@@ -12,14 +12,15 @@ import {Component, OnInit} from "@angular/core";
  * oficial ni documentación del nuevo Router
  */
 import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from '@angular/router-deprecated';
+
 import {DataCard} from '../data-card.component/data-card.component';
 import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
-import {MenuElements} from '../classes/MenuElements.class/MenuElements.class'
+import {UserAddScreen} from '../user-add.component/user-add.component';
+import {MenuElements} from '../classes/MenuElements.class/MenuElements.class';
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 import {MainScreenService} from '../main-app.service/main-app.service'
-
 import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 //import { Progressbar } from "ng2-bootstrap/ng2-bootstrap";
 
@@ -38,8 +39,10 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 })
 
 @RouteConfig([
-    { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
-    { path: '/login', name: 'Login', component: LoginScreen }
+    { path: '/home', name: 'Home', component: HomeScreen, useAsDefault: false },
+    { path: '/', name: 'UserAdd', component: UserAddScreen, useAsDefault: true },
+    { path: '/login', name: 'Login', component: LoginScreen },
+    { path: '/user-add', name: 'UserAdd', component: UserAddScreen }
 ])
 
 export class Main implements OnInit {
@@ -50,42 +53,41 @@ export class Main implements OnInit {
 
     private loggedIn: Boolean = false;
     private name: String = "Identifícate"
-    
-    
+
+
     private menuElements: MenuElements[] = [
         { "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Búsqueda", "menuRef": "Home"},
-        { "menuName": "Away", "menuRef": "Home"}
+        { "menuName": "Búsqueda", "menuRef": "Home" },
+        { "menuName": "Away", "menuRef": "Home" },
+        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" }
     ];
-    
+
     //Variables Dropdown
     private disabled: boolean = false;
-    private status: { isopen: boolean } = { isopen: false }; 
-   
+    private status: { isopen: boolean } = { isopen: false };
+
 
 
     constructor(private mainScreenService: MainScreenService) {
         console.info('main-app module loaded');
+
         
-        
-//        mainScreenService.loginInfo.subscribe()
+        //        mainScreenService.loginInfo.subscribe()
         this.mainScreenService.loginInfoObservable$.subscribe(
             loginInfo => {
-                console.info("Your token is: " + loginInfo.token)
                 this.logInMode(loginInfo)
-                
             }
         )
-        
+
         this.mainScreenService.loggedInObservable$.subscribe(
             loggedIn => {
-                
-                this.loggedIn = loggedIn     
+
+                this.loggedIn = loggedIn
             }
         )
     }
-    
-    ngOnInit () {
+
+    ngOnInit() {
         this.mainScreenService.checkLogin()
     }
 
@@ -98,18 +100,18 @@ export class Main implements OnInit {
     toggleNavbarClick(): void {
         this.navBarToggle = !this.navBarToggle;
     }
-    
+
     logInMode(loginInfo: LoginResponse) {
-        console.info('Name: ' + loginInfo.name)
-        this.name = loginInfo.name     
+        console.info('Name: ' + loginInfo.name + " with token: " + this.mainScreenService.getLoginInfo().token)
+        this.name = loginInfo.name
     }
-    
+
     logOut() {
         this.loggedIn = false
         localStorage.removeItem("token_CEA")
     }
     //Dropdown
-       
+
     public toggled(open: boolean): void {
         console.log('Dropdown is now: ', open);
     }
@@ -120,6 +122,6 @@ export class Main implements OnInit {
         this.status.isopen = !this.status.isopen;
     }
 
-    
+
 
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observable', '../rxjs-operators', '../main-app/main-app'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observable', '../rxjs-operators', '../classes/LoginObject.class/LoginObject.class', '../main-app/main-app'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, Subject_1, Observable_1, main_app_1;
+    var core_1, http_1, Subject_1, Observable_1, LoginObject_class_1, main_app_1;
     var MainScreenService;
     return {
         setters:[
@@ -43,6 +43,9 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                 Observable_1 = Observable_1_1;
             },
             function (_1) {},
+            function (LoginObject_class_1_1) {
+                LoginObject_class_1 = LoginObject_class_1_1;
+            },
             function (main_app_1_1) {
                 main_app_1 = main_app_1_1;
             }],
@@ -57,8 +60,10 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                     this.loginInfoObservable$ = this.loginInfoObservable.asObservable();
                     this.checkLoginObservable$ = new Observable_1.Observable();
                     this.valid_tokenObservable$ = new Observable_1.Observable();
+                    this.loggedIn = false;
+                    this.loginInfo = new LoginObject_class_1.LoginResponse();
                     this.loggedInObservable$.subscribe(function (loggedIn) { return _this.loggedIn = loggedIn; });
-                    this.loginInfoObservable$.subscribe(function (loginInfo) { return _this.loginInfo = loginInfo; });
+                    this.loginInfoObservable$.subscribe(function (loginInfo) { _this.loginInfo = loginInfo; _this.loginInfo.token = _this.token; });
                     //        this.checkLoginObservable$.sub        scribe(
                     //            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
                     //                )
@@ -92,7 +97,6 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                         var options = new http_1.RequestOptions({ headers: headers });
                         var body = { "token": this.token };
-                        console.log('Request: ' + JSON.stringify(body));
                         this.http.post(main_app_1.Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
                             .map(this.extractData)
                             .subscribe(function (loginInfo) { return _this.loginInfoObservable.next(loginInfo); });
@@ -104,8 +108,10 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                 };
                 MainScreenService.prototype.extractData = function (res) {
                     var responseJSON = res.json();
-                    console.info(res.text());
                     return responseJSON;
+                };
+                MainScreenService.prototype.getLoginInfo = function () {
+                    return this.loginInfo;
                 };
                 MainScreenService = __decorate([
                     core_1.Injectable(), 
