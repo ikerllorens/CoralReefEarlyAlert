@@ -5,9 +5,9 @@
         <group>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/main-app/main-app.ts</file>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/user-add.component/user-add.component.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/user-add.component/user-add.component.html</file>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/main-app.service/main-app.service.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/login-screen.component/login-screen.component.html</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/user-add.service/user-add.service.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/classes/UserAddObject.class/UserAddObject.class.ts</file>
         </group>
     </open-files>
 </project-private>

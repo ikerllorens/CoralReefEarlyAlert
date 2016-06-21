@@ -22,15 +22,20 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             UserAddObject = (function () {
-                function UserAddObject() {
+                function UserAddObject(username, password, name, surname, userType) {
                     this.name = "";
                     this.surname = "";
+                    this.username = "";
+                    this.password = "";
+                    this.userType = 1;
                 }
                 return UserAddObject;
             }());
             exports_1("UserAddObject", UserAddObject);
             UserAddResponse = (function () {
                 function UserAddResponse() {
+                    this.success = false;
+                    this.reason = "";
                 }
                 return UserAddResponse;
             }());
@@ -38,4 +43,4 @@ System.register([], function(exports_1, context_1) {
         }
     }
 });
-//# sourceMappingURL=UserAddObjetc.class.js.map
+//# sourceMappingURL=UserAddObject.class.js.map

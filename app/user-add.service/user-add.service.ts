@@ -17,14 +17,37 @@
  
  import {Injectable} from '@angular/core'
  import { Http, Response, Headers, RequestOptions } from '@angular/http'
+ 
+ import {UserAddObject, UserAddResponse} from '../classes/UserAddObject.class/UserAddObject.class'
+ import {Main} from '../main-app/main-app'
+
+import { Subject }    from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable'
+import '../rxjs-operators'
 
 @Injectable ()
 export class UserAddService {
+    
+    private userAddObservable: Subject<UserAddResponse> = new Subject<UserAddResponse>()
+    public userAddObservable$ = this.userAddObservable.asObservable()
+    
     constructor(private http: Http) {
         
     }
     
-    public addUser() {
+    public addUser(username: string, password: string, name: string, surname: string, userType: number) {
+        let newUser = new UserAddObject(username, password, name, surname, userType)
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let url = Main.serverUrl + ''
+        
+        this.http.post(url, JSON.stringify(newUser), options)
+            .map(this.extractData)
+            .subscribe(
+                userAddResponse => {
+                    this.userAddObservable.next(userAddResponse)
+                }
+            )
         
     }
     

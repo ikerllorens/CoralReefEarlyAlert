@@ -19,13 +19,15 @@ import {Component, OnInit} from '@angular/core';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated'
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {UserAddService} from '../user-add.service/user-add.service'
+import {UserAddResponse} from '../classes/UserAddObject.class/UserAddObject.class'
 
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from '@angular/common';
-import {BUTTON_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {BUTTON_DIRECTIVES, AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
 
 @Component({
-    selector: 'luser-add',
-    directives: [ROUTER_DIRECTIVES, BUTTON_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES],
+    selector: 'user-add',
+    providers: [UserAddService],
+    directives: [ROUTER_DIRECTIVES, BUTTON_DIRECTIVES, CORE_DIRECTIVES, FORM_DIRECTIVES, AlertComponent],
     templateUrl: 'app/user-add.component/user-add.component.html'
 })
 
@@ -44,9 +46,13 @@ export class UserAddScreen implements OnInit {
      */
     private editing: boolean = false; 
     
-    constructor(private mainScreenService: MainScreenService, private router: Router) {
+    constructor(private mainScreenService: MainScreenService,  private userAddService: UserAddService, private router: Router) {
         console.info("user-add module loaded")
+        this.userAddService.userAddObservable$.subscribe(
+            userAddResponse => this.userAdded(userAddResponse)
+        )
         // TODO: Subscribir a main screen Service
+        
     }
     
     ngOnInit () {
@@ -59,5 +65,21 @@ export class UserAddScreen implements OnInit {
             this.editing = false
             //this.router.navigate(['Home']);
         }
-    }   
+    }
+    
+    addUserButtonClicked (event) {
+        if (this.mainScreenService.getLoginInfo().userType == 2) {
+            this.router.navigate(['Home'])
+        } else {
+            console.info("Not Logged in as Admin")
+        }
+    }
+    
+    private userAdded(userAddResponse: UserAddResponse)  {
+        if (userAddResponse.success) {
+            
+        } else {
+            console.info("Failed to add user because: " + userAddResponse.reason)
+        }
+    }
 }

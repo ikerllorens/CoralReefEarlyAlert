@@ -16,7 +16,7 @@ import {MainScreenService} from '../main-app.service/main-app.service'
 
 @Component({
     selector: 'login-screen',
-    providers: [],
+    providers: [LoginScreenService],
     directives: [ROUTER_DIRECTIVES],
     templateUrl: 'app/login-screen.component/login-screen.component.html'
 })

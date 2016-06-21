@@ -19,9 +19,18 @@
 export class UserAddObject {
     name: string = ""
     surname: string =""
+    username: string =""
+    password: string = ""
+    userType: number = 1
     
+    constructor(username: string, password: string, name: string, surname: string, userType: number) {
+        
+    }
 }
 
+
+
 export class UserAddResponse {
-    
+    success: boolean = false
+    reason: string = ""
 }

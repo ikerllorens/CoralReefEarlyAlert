@@ -94,16 +94,14 @@ export class MainScreenService {
         } else {
             this.loggedInObservable.next(false)
         }
-
     }
 
     private extractData(res: Response) {
         let responseJSON = res.json();    
         return responseJSON;
     }
-
+    
     public getLoginInfo(): LoginResponse {
         return this.loginInfo
     }
-
 }
