@@ -10,4 +10,4 @@ import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {HTTP_BINDINGS} from '@angular/http';
 import {LoginScreenService} from '../login-screen.service/login-screen.service'
 
-bootstrap(Main, [ROUTER_PROVIDERS, HTTP_BINDINGS, LoginScreenService]);
+bootstrap(Main, [ROUTER_PROVIDERS, HTTP_BINDINGS]);

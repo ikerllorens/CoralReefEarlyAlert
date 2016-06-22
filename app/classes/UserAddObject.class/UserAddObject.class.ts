@@ -16,21 +16,25 @@
  */
 
 
-export class LoginObject {
-    username: String = ""
-    password: String = ""
+export class UserAddObject {
+    name: string = ""
+    surname: string =""
+    username: string =""
+    password: string = ""
+    userType: number = 1
     
-    constructor(username: String, password: String) {
+    constructor(username: string, password: string, name: string, surname: string, userType: number) {
         this.username = username
         this.password = password
+        this.name = name
+        this.surname = surname
+        this.userType = userType
     }
 }
 
-export class LoginResponse {
-    success: boolean = false
-    userType: number = 0
-    name: string = ""
-    reason: string = ""
-    token: string = ""
-}
 
+
+export class UserAddResponse {
+    success: boolean = false
+    reason: string = ""
+}

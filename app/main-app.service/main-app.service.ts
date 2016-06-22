@@ -34,23 +34,23 @@ export class MainScreenService {
     public checkLoginObservable$: Observable<LoginResponse> = new Observable<LoginResponse>()
     public valid_tokenObservable$: Observable<LoginResponse> = new Observable<LoginResponse>()
 
-    private loggedIn: boolean
-    private loginInfo: LoginResponse
-    private token: string
+    private loggedIn: boolean = false
+    private loginInfo: LoginResponse = new LoginResponse()
+    private token: string 
 
     constructor(private http: Http) {
         this.loggedInObservable$.subscribe(
             loggedIn => this.loggedIn = loggedIn
         )
         this.loginInfoObservable$.subscribe(
-            loginInfo => this.loginInfo = loginInfo
+            loginInfo => { this.loginInfo = loginInfo; this.loginInfo.token = this.token}
         )
-//        this.checkLoginObservable$.sub        scribe(
-//            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
-//                )
-//        this.valid_tokenObservable$.sub        scribe(
-//            loginInfo => this.loginInfoObservable.next(log        inInfo)
-//        )
+        //        this.checkLoginObservable$.sub        scribe(
+        //            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
+        //                )
+        //        this.valid_tokenObservable$.sub        scribe(
+        //            loginInfo => this.loginInfoObservable.next(log        inInfo)
+        //        )
 
     }
 
@@ -69,15 +69,13 @@ export class MainScreenService {
             let options = new RequestOptions({ headers: headers });
 
             this.token = token
-            let body = { "token": this.token}
+            let body = { "token": this.token }
             //console.log('Request: ' + JSON.stringify(body))
-            this.http.post(Main.serverUrl + 'checklog.php', JSON.stringify(body) , options)
+            this.http.post(Main.serverUrl + 'checklog.php', JSON.stringify(body), options)
                 .map(this.extractData)
                 .subscribe(
-                    loginInfo => this.fetchUserInfo(loginInfo.success)
+                loginInfo => this.fetchUserInfo(loginInfo.success)
                 )
-            // TODO: PHP login_check con Service
-            //this.loggedInObservable.next(true);
         }
     }
 
@@ -85,26 +83,25 @@ export class MainScreenService {
         if (valid_token) {
             let headers = new Headers({ 'Content-Type': 'application/json' });
             let options = new RequestOptions({ headers: headers });
-            
-            let body = { "token": this.token}
-            console.log('Request: ' + JSON.stringify(body))
+
+            let body = { "token": this.token }
             this.http.post(Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
                 .map(this.extractData)
                 .subscribe(
-                    loginInfo =>  this.loginInfoObservable.next(loginInfo)
+                    loginInfo => this.loginInfoObservable.next(loginInfo)
                 )
             this.loggedInObservable.next(true)
         } else {
             this.loggedInObservable.next(false)
         }
-
     }
 
     private extractData(res: Response) {
-        let responseJSON = res.json();
-        console.info(res.text())
-       
+        let responseJSON = res.json();    
         return responseJSON;
     }
-
+    
+    public getLoginInfo(): LoginResponse {
+        return this.loginInfo
+    }
 }

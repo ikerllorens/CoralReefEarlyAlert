@@ -127,7 +127,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                 LoginScreen = __decorate([
                     core_1.Component({
                         selector: 'login-screen',
-                        providers: [],
+                        providers: [login_screen_service_1.LoginScreenService],
                         directives: [router_deprecated_1.ROUTER_DIRECTIVES],
                         templateUrl: 'app/login-screen.component/login-screen.component.html'
                     }), 
