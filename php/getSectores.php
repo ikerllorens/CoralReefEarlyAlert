@@ -12,13 +12,14 @@ if ($conn->connect_error) {
 } 
 else{
     
-    $sql = "SELECT nombre FROM Sector;";
+    $sql = "SELECT id, nombre FROM Sector;";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
     // output data of each row
         while($row = $result->fetch_assoc()) { 
             $response = [
-                "nombreObservador" => $row["nombre"] 
+               "id" => $row["id"], 
+                "nombre" => $row["nombre"] 
              ];
         }
     }

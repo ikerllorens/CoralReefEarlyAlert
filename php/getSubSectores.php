@@ -14,13 +14,14 @@ if ($conn->connect_error) {
 } 
 else{
     
-    $sql = "SELECT nombre FROM SubSector WHERE Sector_id = '.$data->SectorId .'";
+    $sql = "SELECT id, nombre FROM SubSector WHERE Sector_id = '.$data->SectorId .'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
     // output data of each row
         while($row = $result->fetch_assoc()) { 
             $response = [
-                "nombreObservador" => $row["nombre"] 
+                "id" => $row["id"], 
+                "nombre" => $row["nombre"] 
              ];
         }
     }
