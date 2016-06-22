@@ -25,3 +25,5 @@ if ($conn->query($sql) === TRUE) {
 ];
 }
 }
+echo json_encode($response); 
+?>
