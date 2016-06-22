@@ -28,6 +28,11 @@ System.register([], function(exports_1, context_1) {
                     this.username = "";
                     this.password = "";
                     this.userType = 1;
+                    this.username = username;
+                    this.password = password;
+                    this.name = name;
+                    this.surname = surname;
+                    this.userType = userType;
                 }
                 return UserAddObject;
             }());

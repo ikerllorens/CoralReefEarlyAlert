@@ -39,10 +39,9 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 })
 
 @RouteConfig([
-    { path: '/home', name: 'Home', component: HomeScreen, useAsDefault: false },
-    { path: '/', name: 'UserAdd', component: UserAddScreen, useAsDefault: true },
+    { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
     { path: '/login', name: 'Login', component: LoginScreen },
-    { path: '/user-add', name: 'UserAdd', component: UserAddScreen }
+    { path: '/userAdd', name: 'UserAdd', component: UserAddScreen }
 ])
 
 export class Main implements OnInit {

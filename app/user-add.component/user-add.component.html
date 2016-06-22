@@ -86,7 +86,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div class="row">
                 <div class="col-xs-2 col-sm-1"></div>
                 <div class="form-group col-xs-8 col-sm-10  ">  
-                    <button  class="btn btn-success">Registrar Usuario</button>
+                    <button  (click)="addUserButtonClicked($event)" class="btn btn-success">Registrar Usuario</button>
                     <button [routerLink]="['Home']" class="btn btn-danger pull-right">Regresar</button>
                 </div>
             </div>

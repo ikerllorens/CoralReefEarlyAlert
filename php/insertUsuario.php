@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 } 
 
 else{
-$sql = "INSERT INTO Usuario (fecha, nombre, apellido, mail, pass, Perfil_id) VALUES (NOW(), '".$info->nombre."','".$info->apellido."', ".$info->mail."'".$info->password."','".$info->perfilid."'";
+$sql = "INSERT INTO Usuario (fecha, nombre, apellido, mail, pass, Perfil_id) VALUES (NOW(), '".$info->name."','".$info->surname."', '".$info->username."' , '".$info->password."',".$info->userType.")";
 if ($conn->query($sql) === TRUE) {
      $response = [
     "success" => true,
@@ -21,7 +21,7 @@ if ($conn->query($sql) === TRUE) {
 } else {
      $response = [
     "success" => false,
-    "reason" => "Connection failed: " . $conn->error
+    "reason" => "Connection failed: " . $conn->error . " SQL: " . $sql . " info: " . $data
 ];
 }
 }

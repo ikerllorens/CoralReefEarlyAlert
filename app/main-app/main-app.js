@@ -114,10 +114,9 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                         templateUrl: 'app/main-app/main-app.html'
                     }),
                     router_deprecated_1.RouteConfig([
-                        { path: '/home', name: 'Home', component: home_screen_component_1.HomeScreen, useAsDefault: false },
-                        { path: '/', name: 'UserAdd', component: user_add_component_1.UserAddScreen, useAsDefault: true },
+                        { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen, useAsDefault: true },
                         { path: '/login', name: 'Login', component: login_screen_component_1.LoginScreen },
-                        { path: '/user-add', name: 'UserAdd', component: user_add_component_1.UserAddScreen }
+                        { path: '/userAdd', name: 'UserAdd', component: user_add_component_1.UserAddScreen }
                     ]), 
                     __metadata('design:paramtypes', [main_app_service_1.MainScreenService])
                 ], Main);
