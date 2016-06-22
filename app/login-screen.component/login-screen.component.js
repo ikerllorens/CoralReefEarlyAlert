@@ -53,6 +53,14 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     this.validLoginFields = false;
                     console.info("login-screen module loaded");
                 }
+                LoginScreen.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.onFieldUpdate();
+                    setTimeout(function () {
+                        console.info("Entrando...");
+                        _this.onFieldUpdate();
+                    }, 50);
+                };
                 LoginScreen.prototype.preventCharacters = function (event) {
                     if (event.key == "<" || event.key == ">" || event.key == '"' ||
                         event.key == " " || event.key == "&" || event.key == "|" ||
@@ -62,7 +70,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                         console.info("Prohibited character: " + event.key);
                     }
                 };
-                LoginScreen.prototype.onFieldUpdate = function (event) {
+                LoginScreen.prototype.onFieldUpdate = function () {
                     if (this.username.length < this.minimumLenUsername) {
                         this.emptyUsername = true;
                     }
