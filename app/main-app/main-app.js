@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', '../user-add.component/user-add.component', 'ng2-bootstrap/ng2-bootstrap', '../main-app.service/main-app.service'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', '../user-add.component/user-add.component', '../new-post.component/new-post.component', 'ng2-bootstrap/ng2-bootstrap', '../main-app.service/main-app.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15,7 +15,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, user_add_component_1, ng2_bootstrap_1, main_app_service_1;
+    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, user_add_component_1, new_post_component_1, ng2_bootstrap_1, main_app_service_1;
     var Main;
     return {
         setters:[
@@ -36,6 +36,9 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
             },
             function (user_add_component_1_1) {
                 user_add_component_1 = user_add_component_1_1;
+            },
+            function (new_post_component_1_1) {
+                new_post_component_1 = new_post_component_1_1;
             },
             function (ng2_bootstrap_1_1) {
                 ng2_bootstrap_1 = ng2_bootstrap_1_1;
@@ -61,8 +64,8 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.menuElements = [
                         { "menuName": "Home", "menuRef": "Home" },
                         { "menuName": "Búsqueda", "menuRef": "Home" },
-                        { "menuName": "Away", "menuRef": "Home" },
-                        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" }
+                        { "menuName": "Registrar Observación", "menuRef": "NewPost" },
+                        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" },
                     ];
                     //Variables Dropdown
                     this.disabled = false;
@@ -116,7 +119,8 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     router_deprecated_1.RouteConfig([
                         { path: '/', name: 'Home', component: home_screen_component_1.HomeScreen, useAsDefault: true },
                         { path: '/login', name: 'Login', component: login_screen_component_1.LoginScreen },
-                        { path: '/userAdd', name: 'UserAdd', component: user_add_component_1.UserAddScreen }
+                        { path: '/userAdd', name: 'UserAdd', component: user_add_component_1.UserAddScreen },
+                        { path: '/newPost', name: 'NewPost', component: new_post_component_1.NewPostScreen }
                     ]), 
                     __metadata('design:paramtypes', [main_app_service_1.MainScreenService])
                 ], Main);

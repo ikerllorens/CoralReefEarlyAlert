@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<!--Copyright (C) 2016 ikerllorens
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
+
+
+<div class="row">
+    <div class="col-xs-0 col-sm-3"></div>
+    <div class="col-xs-12 col-sm-6">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Registrar Observación
+                    <br>
+                    <small>Llena el siguiente formulario para agregar una observación</small>
+                </h1>
+            </div>
+        </div>
+        <hr>
+        <form class="form-horizontal" > 
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10  ">  
+                    <h2 class="centered">Selecciona una enfermedad y un porcentaje</h2>
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <ng-select [allowClear]="false"
+                                [items]="items"
+                                [disabled]="disabled"
+                                (data)="refreshValue($event)"
+                                (selected)="selected($event)"
+                                (removed)="removed($event)"
+                                (typed)="typed($event)"
+                                placeholder="Ninguna">
+                            </ng-select>
+                        </div> 
+                        <div class="col-xs-3">
+                            <input placeholder="%" type="number" min="0" max="100" step="5" class="form-control center-block ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-xs-2 col-sm-1"></div>
+                <div class="form-group col-xs-8 col-sm-10  ">  
+                    <button class="btn btn-success">Registrar Usuario</button>
+                    <button [routerLink]="['Home']" class="btn btn-danger pull-right">Regresar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px;">
+    <h3>Select a single city</h3>
+    <ng-select 
+        [items]="items"
+        [disabled]="disabled"
+        (data)="refreshValue($event)"
+        (selected)="selected($event)"
+        (removed)="removed($event)"
+        (typed)="typed($event)"
+        placeholder="No city selected">
+    </ng-select>
+</div>
+
+token,  id_tipoCoral, id_especie, id_enfermedad (JSON), id_blanqueamineto (JSON), porcentaje_enfermedad, porcentaje_blanq, id_sector, id_subsector, comentarios, fotos
