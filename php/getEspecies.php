@@ -14,18 +14,19 @@ if ($conn->connect_error) {
     ];
 } else {
 
-    $sql = "SELECT id, nombre FROM Especie WHERE TipCoral_id = '.$info->id .'";
+    $sql = "SELECT id, nombre FROM Especie WHERE TipCoral_id = ". $info->id ;
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $arreglodatos = array();
         $i = 0;
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            $datos =  $row;
+            $datos['text'] =  $row['nombre'];
+            $datos['id'] = $row['id'];
             $arreglodatos[$i] = $datos;
             $i++;
         }
-        $response = array("succes" => true, "datos" => $arreglodatos);
+        $response = array("success" => true, "datos" => $arreglodatos);
     } else {
         $response = [
             "success" => false,

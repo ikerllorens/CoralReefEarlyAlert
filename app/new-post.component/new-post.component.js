@@ -64,8 +64,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
                     });
-                    this.newPostService.coralSpeciesObservable$.subscribe(function (items) {
-                        _this.CoralSpecies = items.datos;
+                    this.newPostService.coralSpeciesObservable$.subscribe(function (itemsSpecies) {
+                        _this.CoralSpecies = itemsSpecies.datos;
+                        _this.disabledSpecies = false;
                     });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
@@ -73,8 +74,12 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                 };
                 NewPostScreen.prototype.selectedType = function (value) {
                     console.log('Selected value is: ', value);
-                    this.disabledSpecies = false;
+                    this.CoralSpecies = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.disabledSpecies = true;
                     this.newPostService.getCoralSpecies(value.id);
+                    this.refreshValueSpecies({});
                 };
                 NewPostScreen.prototype.refreshValueType = function (value) {
                     this.valueType = value;

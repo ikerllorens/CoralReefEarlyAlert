@@ -55,8 +55,9 @@ export class NewPostScreen implements OnInit {
             })
 
         this.newPostService.coralSpeciesObservable$.subscribe(
-            items => {
-                this.CoralSpecies = items.datos
+            itemsSpecies => {
+                this.CoralSpecies = itemsSpecies.datos
+                this.disabledSpecies = false               
             })
     }
 
@@ -65,15 +66,19 @@ export class NewPostScreen implements OnInit {
     }
     public selectedType(value: SelectElement): void {
         console.log('Selected value is: ', value);
-        this.disabledSpecies = false
+        this.CoralSpecies = [
+            { "id": -1, "text": "cargando..." }
+        ]
+        this.disabledSpecies =true
         this.newPostService.getCoralSpecies(value.id)
+        this.refreshValueSpecies({})
     }
     public refreshValueType(value: any): void {
         this.valueType = value;
     }
 
 
-    public selectedSpecies(value: any): void {
+    public selectedSpecies(value: SelectElement): void {
         console.log('Selected value is: ', value);
     }
     public refreshValueSpecies(value: any): void {
