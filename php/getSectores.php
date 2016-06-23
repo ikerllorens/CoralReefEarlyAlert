@@ -19,7 +19,8 @@ if ($conn->connect_error) {
         $i = 0;
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            $datos = $row;
+            $datos['text'] = $row['nombre'];
+            $date['id']= $row['id'];
             $arreglodatos[$i] = $datos;
             $i++;
         }
