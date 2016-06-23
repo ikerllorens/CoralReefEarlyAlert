@@ -15,13 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {NewPostService} from '../new-post.service/new-post.service'
+//import {SelectOptions} from '../select-options.component/select-options.component'
+
+import {SelectElement} from '../classes/PostObject.class/PostObject.class'
 
 import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated'
 
-import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgClass} from '@angular/common';
 import {BUTTON_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
 
@@ -29,44 +31,28 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
     selector: 'new-post',
     templateUrl: 'app/new-post.component/new-post.component.html',
     providers: [NewPostService],
-    directives: [SELECT_DIRECTIVES, NgClass, CORE_DIRECTIVES, FORM_DIRECTIVES, BUTTON_DIRECTIVES, ROUTER_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES, SELECT_DIRECTIVES]
 })
 
-export class NewPostScreen {
-    constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService) {
-
-    }
-
-    public items: Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
-        'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
-        'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin',
-        'Düsseldorf', 'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg',
-        'Hamburg', 'Hannover', 'Helsinki', 'Kraków', 'Leeds', 'Leipzig', 'Lisbon',
-        'London', 'Madrid', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Málaga',
-        'Naples', 'Palermo', 'Paris', 'Poznań', 'Prague', 'Riga', 'Rome',
-        'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
-        'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
-        'Zagreb', 'Zaragoza', 'Łódź'];
-
+export class NewPostScreen implements OnInit {
+    public CoralType: Array<SelectElement> = [
+        { "id": -1, "text": 'Cargando...' }
+    ]
     private value: any = {};
-    private _disabledV: string = '0';
-    private disabled: boolean = false;
 
-    private get disabledV(): string {
-        return this._disabledV;
+    constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
+        console.info('new-post module loaded')
+        this.newPostService.coralTypesObservable$.subscribe(
+            items => {
+                this.CoralType = items.datos
+            })
     }
 
-    private set disabledV(value: string) {
-        this._disabledV = value;
-        this.disabled = this._disabledV === '1';
+    ngOnInit() {
+        this.newPostService.getCoralTypes()
     }
-
     public selected(value: any): void {
         console.log('Selected value is: ', value);
-    }
-
-    public removed(value: any): void {
-        console.log('Removed value is: ', value);
     }
 
     public typed(value: any): void {
@@ -76,7 +62,4 @@ export class NewPostScreen {
     public refreshValue(value: any): void {
         this.value = value;
     }
-
-
-
 }

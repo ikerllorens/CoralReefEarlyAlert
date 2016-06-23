@@ -32,22 +32,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
             <div class="row">
                 <div class="col-xs-2 col-sm-1"></div>
                 <div class="form-group col-xs-8 col-sm-10  ">  
-                    <h2 class="centered">Selecciona una enfermedad y un porcentaje</h2>
+                    <h2 class="centered">Selecciona un tipo de coral</h2>
                     <div class="row">
-                        <div class="col-xs-9">
+                        <div class="col-xs-12">
                             <ng-select [allowClear]="false"
-                                [items]="items"
+                                [items]="CoralType"
                                 [disabled]="disabled"
                                 (data)="refreshValue($event)"
-                                (selected)="selected($event)"
-                                (removed)="removed($event)"
-                                (typed)="typed($event)"
+                                (selected)="selected($event)"                          
+
                                 placeholder="Ninguna">
                             </ng-select>
                         </div> 
-                        <div class="col-xs-3">
-                            <input placeholder="%" type="number" min="0" max="100" step="5" class="form-control center-block ">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -63,17 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
     </div>
 </div>
 
-<div style="margin-bottom: 20px;">
-    <h3>Select a single city</h3>
-    <ng-select 
-        [items]="items"
-        [disabled]="disabled"
-        (data)="refreshValue($event)"
-        (selected)="selected($event)"
-        (removed)="removed($event)"
-        (typed)="typed($event)"
-        placeholder="No city selected">
-    </ng-select>
-</div>
-
+<!--                        <div class="col-xs-3">
+                            <input placeholder="%" type="number" min="0" max="100" step="5" class="form-control center-block ">
+                        </div>-->
 token,  id_tipoCoral, id_especie, id_enfermedad (JSON), id_blanqueamineto (JSON), porcentaje_enfermedad, porcentaje_blanq, id_sector, id_subsector, comentarios, fotos

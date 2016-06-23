@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/http'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../main-app.service/main-app.service', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1;
+    var core_1, http_1, main_app_1, main_app_service_1, Subject_1;
     var NewPostService;
     return {
         setters:[
@@ -35,15 +35,47 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
             },
             function (http_1_1) {
                 http_1 = http_1_1;
-            }],
+            },
+            function (main_app_1_1) {
+                main_app_1 = main_app_1_1;
+            },
+            function (main_app_service_1_1) {
+                main_app_service_1 = main_app_service_1_1;
+            },
+            function (Subject_1_1) {
+                Subject_1 = Subject_1_1;
+            },
+            function (_1) {}],
         execute: function() {
             NewPostService = (function () {
-                function NewPostService(http) {
+                function NewPostService(http, mainScreenService) {
                     this.http = http;
+                    this.coralTypesObservable = new Subject_1.Subject();
+                    this.coralTypesObservable$ = this.coralTypesObservable.asObservable();
                 }
+                //TODO: hacer prototipo de funcion en MainScreenService
+                NewPostService.prototype.extractData = function (res) {
+                    console.info('Response: ' + res.text());
+                    var responseJSON = res.json();
+                    return responseJSON;
+                };
+                NewPostService.prototype.getCoralTypes = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'getTipCorales.php', options).map(this.extractData).subscribe(function (CoralTypes) {
+                        if (CoralTypes.success) {
+                            //console.info('CoralTypes.data: ' + CoralTypes.datos[0].text)
+                            _this.coralTypesObservable.next(CoralTypes);
+                        }
+                        else {
+                            console.error("Could not fetch CoralTypes because: " + CoralTypes.reason);
+                        }
+                    });
+                };
                 NewPostService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http])
+                    __metadata('design:paramtypes', [http_1.Http, main_app_service_1.MainScreenService])
                 ], NewPostService);
                 return NewPostService;
             }());

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '@angular/router-deprecated', '@angular/common', 'ng2-bootstrap/ng2-bootstrap', 'ng2-select/ng2-select'], function(exports_1, context_1) {
+System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '@angular/router-deprecated', 'ng2-select/ng2-select'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, main_app_service_1, new_post_service_1, router_deprecated_1, common_1, ng2_bootstrap_1, ng2_select_1;
+    var core_1, main_app_service_1, new_post_service_1, router_deprecated_1, ng2_select_1;
     var NewPostScreen;
     return {
         setters:[
@@ -42,50 +42,30 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
             function (router_deprecated_1_1) {
                 router_deprecated_1 = router_deprecated_1_1;
             },
-            function (common_1_1) {
-                common_1 = common_1_1;
-            },
-            function (ng2_bootstrap_1_1) {
-                ng2_bootstrap_1 = ng2_bootstrap_1_1;
-            },
             function (ng2_select_1_1) {
                 ng2_select_1 = ng2_select_1_1;
             }],
         execute: function() {
             NewPostScreen = (function () {
-                function NewPostScreen(mainScreenService, newPostService) {
+                function NewPostScreen(mainScreenService, newPostService, router) {
+                    var _this = this;
                     this.mainScreenService = mainScreenService;
                     this.newPostService = newPostService;
-                    this.items = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
-                        'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
-                        'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin',
-                        'Düsseldorf', 'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg',
-                        'Hamburg', 'Hannover', 'Helsinki', 'Kraków', 'Leeds', 'Leipzig', 'Lisbon',
-                        'London', 'Madrid', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Málaga',
-                        'Naples', 'Palermo', 'Paris', 'Poznań', 'Prague', 'Riga', 'Rome',
-                        'Rotterdam', 'Seville', 'Sheffield', 'Sofia', 'Stockholm', 'Stuttgart',
-                        'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
-                        'Zagreb', 'Zaragoza', 'Łódź'];
+                    this.router = router;
+                    this.CoralType = [
+                        { "id": -1, "text": 'Cargando...' }
+                    ];
                     this.value = {};
-                    this._disabledV = '0';
-                    this.disabled = false;
+                    console.info('new-post module loaded');
+                    this.newPostService.coralTypesObservable$.subscribe(function (items) {
+                        _this.CoralType = items.datos;
+                    });
                 }
-                Object.defineProperty(NewPostScreen.prototype, "disabledV", {
-                    get: function () {
-                        return this._disabledV;
-                    },
-                    set: function (value) {
-                        this._disabledV = value;
-                        this.disabled = this._disabledV === '1';
-                    },
-                    enumerable: true,
-                    configurable: true
-                });
+                NewPostScreen.prototype.ngOnInit = function () {
+                    this.newPostService.getCoralTypes();
+                };
                 NewPostScreen.prototype.selected = function (value) {
                     console.log('Selected value is: ', value);
-                };
-                NewPostScreen.prototype.removed = function (value) {
-                    console.log('Removed value is: ', value);
                 };
                 NewPostScreen.prototype.typed = function (value) {
                     console.log('New search input: ', value);
@@ -98,9 +78,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         selector: 'new-post',
                         templateUrl: 'app/new-post.component/new-post.component.html',
                         providers: [new_post_service_1.NewPostService],
-                        directives: [ng2_select_1.SELECT_DIRECTIVES, common_1.NgClass, common_1.CORE_DIRECTIVES, common_1.FORM_DIRECTIVES, ng2_bootstrap_1.BUTTON_DIRECTIVES, router_deprecated_1.ROUTER_DIRECTIVES]
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES]
                     }), 
-                    __metadata('design:paramtypes', [main_app_service_1.MainScreenService, new_post_service_1.NewPostService])
+                    __metadata('design:paramtypes', [main_app_service_1.MainScreenService, new_post_service_1.NewPostService, router_deprecated_1.Router])
                 ], NewPostScreen);
                 return NewPostScreen;
             }());
