@@ -1,5 +1,6 @@
 
 <?php
+
 include_once 'config.php';
 include_once 'token.php';
 $data = file_get_contents("php://input");
@@ -8,29 +9,29 @@ $info = json_decode($data);
 // Check connection
 if ($conn->connect_error) {
     $response = [
-    "success" => false,
-    "reason" => "Csonnection failed: " . $conn->connect_error
-];
-} 
-else{
-    
-    $sql = "SELECT id, nombre FROM Especie WHERE TipCoral_id = '.$data->TipCoralId .'";
+        "success" => false,
+        "reason" => "Connection failed: " . $conn->connect_error
+    ];
+} else {
+
+    $sql = "SELECT id, nombre FROM Especie WHERE TipCoral_id = '.$info->id .'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-    // output data of each row
-        while($row = $result->fetch_assoc()) { 
-            $response = [
-                 "id" => $row["id"], 
-                "nombre" => $row["nombre"] 
-             ];
+        $arreglodatos = array();
+        $i = 0;
+        // output data of each row
+        while ($row = $result->fetch_assoc()) {
+            $datos =  $row;
+            $arreglodatos[$i] = $datos;
+            $i++;
         }
-    }
-    else {
+        $response = array("succes" => true, "datos" => $arreglodatos);
+    } else {
         $response = [
-        "success" => false,
-        "reason" => "SQL Especies:".$sql
-    ];
+            "success" => false,
+            "reason" => "SQL Especies:" . $sql
+        ];
     }
 }
-echo json_encode($response); 
+echo json_encode($response,JSON_UNESCAPED_UNICODE);
 ?>
