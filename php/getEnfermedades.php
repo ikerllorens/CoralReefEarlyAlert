@@ -8,11 +8,11 @@ include_once 'token.php';
 if ($conn->connect_error) {
     $response = [
         "success" => false,
-        "reason" => "Csonnection failed: " . $conn->connect_error
+        "reason" => "Connection failed: " . $conn->connect_error
     ];
 } else {
 
-    $sql = "SELECT id, nombre FROM Sector;";
+    $sql = "SELECT id, nombre FROM Enfermedad;";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $arreglodatos = array();
@@ -28,11 +28,9 @@ if ($conn->connect_error) {
     } else {
         $response = [
             "success" => false,
-            "reason" => "SQL Sectores:" . $sql
+            "reason" => "SQL Enfermedad:" . $sql
         ];
     }
 }
 echo json_encode($response,JSON_UNESCAPED_UNICODE);
 ?>
-
-

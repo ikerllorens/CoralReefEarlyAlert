@@ -26,7 +26,7 @@ if ($conn->connect_error) {
             $arreglodatos[$i] = $datos;
             $i++;
         }
-        $response = array("succes" => true, "datos" => $arreglodatos);
+        $response = array("success" => true, "datos" => $arreglodatos);
     } else {
         $response = [
             "success" => false,
