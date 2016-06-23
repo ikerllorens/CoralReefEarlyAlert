@@ -22,7 +22,24 @@ export class CoralTypeResponse {
         
     }
 }
+
+export class CoralSpeciesResponse {
+    success: boolean
+    datos: Array<SelectElement>
+    constructor() {
+        
+    }
+}
+
 export class SelectElement {
     id: number
     text: string
+}
+
+export class CoralSpeciesRequest {
+    id: number
+    
+    constructor(id: number) {
+        this.id = id
+    }
 }

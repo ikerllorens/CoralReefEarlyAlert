@@ -38,7 +38,14 @@ export class NewPostScreen implements OnInit {
     public CoralType: Array<SelectElement> = [
         { "id": -1, "text": 'Cargando...' }
     ]
-    private value: any = {};
+    private valueType: any = {};
+
+    public CoralSpecies: Array<SelectElement> = [
+        { "id": -1, "text": "cargando..." }
+    ]
+    private valueSpecies: SelectElement;
+    public disabledSpecies: boolean = true
+
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -46,20 +53,30 @@ export class NewPostScreen implements OnInit {
             items => {
                 this.CoralType = items.datos
             })
+
+        this.newPostService.coralSpeciesObservable$.subscribe(
+            items => {
+                this.CoralSpecies = items.datos
+            })
     }
 
     ngOnInit() {
         this.newPostService.getCoralTypes()
     }
-    public selected(value: any): void {
+    public selectedType(value: SelectElement): void {
+        console.log('Selected value is: ', value);
+        this.disabledSpecies = false
+        this.newPostService.getCoralSpecies(value.id)
+    }
+    public refreshValueType(value: any): void {
+        this.valueType = value;
+    }
+
+
+    public selectedSpecies(value: any): void {
         console.log('Selected value is: ', value);
     }
-
-    public typed(value: any): void {
-        console.log('New search input: ', value);
-    }
-
-    public refreshValue(value: any): void {
-        this.value = value;
+    public refreshValueSpecies(value: any): void {
+        this.valueSpecies = value;
     }
 }

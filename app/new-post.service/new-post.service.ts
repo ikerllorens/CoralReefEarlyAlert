@@ -20,7 +20,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http'
 
 import {Main} from '../main-app/main-app'
 import {MainScreenService} from '../main-app.service/main-app.service'
-import {CoralTypeResponse} from '../classes/PostObject.class/PostObject.class'
+import {CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse} from '../classes/PostObject.class/PostObject.class'
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable'
@@ -32,6 +32,8 @@ import '../rxjs-operators'
 export class NewPostService {
   private coralTypesObservable: Subject<CoralTypeResponse> = new Subject < CoralTypeResponse>()
     coralTypesObservable$: Observable<CoralTypeResponse> = this.coralTypesObservable.asObservable()
+    private coralSpeciesObservable: Subject<CoralSpeciesResponse> = new Subject < CoralSpeciesResponse>()
+    coralSpeciesObservable$: Observable<CoralSpeciesResponse> = this.coralSpeciesObservable.asObservable()
     
     constructor(private http: Http, mainScreenService: MainScreenService) {
         
@@ -62,6 +64,21 @@ export class NewPostService {
         });
     }
     
-      
-
+    public getCoralSpecies(typeID: number) {
+        let coralType = new CoralSpeciesRequest(typeID)
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8'});
+        let options = new RequestOptions({ headers: headers });
+        
+        console.warn(JSON.stringify(coralType))
+        this.http.post(Main.serverUrl + 'getEspecies.php', JSON.stringify(coralType), options)
+            .map(this.extractData)
+            .subscribe(
+            coralSpecies => {
+                if(coralSpecies.success) {
+                    this.coralSpeciesObservable.next(coralSpecies)
+                } else {
+                     console.error("Could not fetch CoralSpecies because: " + coralSpecies.reason)
+                }
+            })
+    }
 } 

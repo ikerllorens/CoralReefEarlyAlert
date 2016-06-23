@@ -55,23 +55,35 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.CoralType = [
                         { "id": -1, "text": 'Cargando...' }
                     ];
-                    this.value = {};
+                    this.valueType = {};
+                    this.CoralSpecies = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.disabledSpecies = true;
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
+                    });
+                    this.newPostService.coralSpeciesObservable$.subscribe(function (items) {
+                        _this.CoralSpecies = items.datos;
                     });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
                     this.newPostService.getCoralTypes();
                 };
-                NewPostScreen.prototype.selected = function (value) {
+                NewPostScreen.prototype.selectedType = function (value) {
+                    console.log('Selected value is: ', value);
+                    this.disabledSpecies = false;
+                    this.newPostService.getCoralSpecies(value.id);
+                };
+                NewPostScreen.prototype.refreshValueType = function (value) {
+                    this.valueType = value;
+                };
+                NewPostScreen.prototype.selectedSpecies = function (value) {
                     console.log('Selected value is: ', value);
                 };
-                NewPostScreen.prototype.typed = function (value) {
-                    console.log('New search input: ', value);
-                };
-                NewPostScreen.prototype.refreshValue = function (value) {
-                    this.value = value;
+                NewPostScreen.prototype.refreshValueSpecies = function (value) {
+                    this.valueSpecies = value;
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({

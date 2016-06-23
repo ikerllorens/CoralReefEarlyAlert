@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../main-app.service/main-app.service', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../main-app.service/main-app.service', '../classes/PostObject.class/PostObject.class', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, main_app_1, main_app_service_1, Subject_1;
+    var core_1, http_1, main_app_1, main_app_service_1, PostObject_class_1, Subject_1;
     var NewPostService;
     return {
         setters:[
@@ -42,6 +42,9 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
             function (main_app_service_1_1) {
                 main_app_service_1 = main_app_service_1_1;
             },
+            function (PostObject_class_1_1) {
+                PostObject_class_1 = PostObject_class_1_1;
+            },
             function (Subject_1_1) {
                 Subject_1 = Subject_1_1;
             },
@@ -52,6 +55,8 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     this.http = http;
                     this.coralTypesObservable = new Subject_1.Subject();
                     this.coralTypesObservable$ = this.coralTypesObservable.asObservable();
+                    this.coralSpeciesObservable = new Subject_1.Subject();
+                    this.coralSpeciesObservable$ = this.coralSpeciesObservable.asObservable();
                 }
                 //TODO: hacer prototipo de funcion en MainScreenService
                 NewPostService.prototype.extractData = function (res) {
@@ -69,6 +74,23 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                         }
                         else {
                             console.error("Could not fetch CoralTypes because: " + CoralTypes.reason);
+                        }
+                    });
+                };
+                NewPostService.prototype.getCoralSpecies = function (typeID) {
+                    var _this = this;
+                    var coralType = new PostObject_class_1.CoralSpeciesRequest(typeID);
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    console.warn(JSON.stringify(coralType));
+                    this.http.post(main_app_1.Main.serverUrl + 'getEspecies.php', JSON.stringify(coralType), options)
+                        .map(this.extractData)
+                        .subscribe(function (coralSpecies) {
+                        if (coralSpecies.success) {
+                            _this.coralSpeciesObservable.next(coralSpecies);
+                        }
+                        else {
+                            console.error("Could not fetch CoralSpecies because: " + coralSpecies.reason);
                         }
                     });
                 };
