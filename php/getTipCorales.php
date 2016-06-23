@@ -8,7 +8,7 @@ include_once 'token.php';
 if ($conn->connect_error) {
     $response = [
         "success" => false,
-        "reason" => "Csonnection failed: " . $conn->connect_error
+        "reason" => "Connection failed: " . $conn->connect_error
     ];
 } else {
 
@@ -20,11 +20,10 @@ if ($conn->connect_error) {
         // output data of each row
         while ($row = $result->fetch_assoc()) {
             $datos = array_map('utf8_encode', $row);
-            $arreglodatos[$i]=$datos;
+            $arreglodatos[$i] = $datos;
             $i++;
-        } 
-        $response=array("succes"=> true, "datos" => $arreglodatos);
-        
+        }
+        $response = array("succes" => true, "datos" => $arreglodatos);
     } else {
         $response = [
             "success" => false,
