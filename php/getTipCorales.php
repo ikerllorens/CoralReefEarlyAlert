@@ -19,11 +19,13 @@ if ($conn->connect_error) {
         $i = 0;
         // output data of each row
         while ($row = $result->fetch_assoc()) {
-            $datos = array_map('utf8_encode', $row);
+            //$datos = array_map('utf8_encode', $row);
+            $datos['text'] = $row['nombre'];
+            $datos['id'] = $row['id'];
             $arreglodatos[$i]=$datos;
             $i++;
         } 
-        $response=array("succes"=> true, "datos" => $arreglodatos);
+        $response=array("success"=> true, "datos" => $arreglodatos);
         
     } else {
         $response = [
@@ -32,5 +34,5 @@ if ($conn->connect_error) {
         ];
     }
 }
-echo json_encode($response);
+echo json_encode($response, JSON_UNESCAPED_UNICODE);
 ?>

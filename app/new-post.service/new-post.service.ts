@@ -53,9 +53,8 @@ export class NewPostService {
         
         this.http.get(Main.serverUrl + 'getTipCorales.php', options).map(this.extractData).subscribe(
         CoralTypes => {
-          
+            
             if(CoralTypes.success) {
-                //console.info('CoralTypes.data: ' + CoralTypes.datos[0].text)
                 this.coralTypesObservable.next(CoralTypes)
             } else {
                 console.error("Could not fetch CoralTypes because: " + CoralTypes.reason)

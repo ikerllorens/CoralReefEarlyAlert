@@ -65,7 +65,6 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     var options = new http_1.RequestOptions({ headers: headers });
                     this.http.get(main_app_1.Main.serverUrl + 'getTipCorales.php', options).map(this.extractData).subscribe(function (CoralTypes) {
                         if (CoralTypes.success) {
-                            //console.info('CoralTypes.data: ' + CoralTypes.datos[0].text)
                             _this.coralTypesObservable.next(CoralTypes);
                         }
                         else {
