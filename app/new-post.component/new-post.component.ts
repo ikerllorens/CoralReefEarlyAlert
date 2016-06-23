@@ -46,6 +46,20 @@ export class NewPostScreen implements OnInit {
     private valueSpecies: SelectElement;
     public disabledSpecies: boolean = true
 
+    public diseases: Array<SelectElement> = [
+        { "id": -1, "text": "cargando..." }
+    ]
+    private valuesDiseases: SelectElement[]
+
+    public bleaching: Array<SelectElement> = [
+        { "id": -1, "text": "cargando..." }
+    ]
+    private valuesBleaching: SelectElement[] =
+     [{ "id": -1, "text": "cargando..." },
+      { "id": -1, "text": "cargando..." },
+       { "id": -1, "text": "cargando..." },
+        { "id": -1, "text": "cargando..." },
+         { "id": -1, "text": "cargando..." }]
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -57,22 +71,24 @@ export class NewPostScreen implements OnInit {
         this.newPostService.coralSpeciesObservable$.subscribe(
             itemsSpecies => {
                 this.CoralSpecies = itemsSpecies.datos
-                this.disabledSpecies = false               
+                this.disabledSpecies = false
             })
     }
 
     ngOnInit() {
         this.newPostService.getCoralTypes()
     }
+
     public selectedType(value: SelectElement): void {
         console.log('Selected value is: ', value);
         this.CoralSpecies = [
             { "id": -1, "text": "cargando..." }
         ]
-        this.disabledSpecies =true
+        this.disabledSpecies = true
         this.newPostService.getCoralSpecies(value.id)
         this.refreshValueSpecies({})
     }
+
     public refreshValueType(value: any): void {
         this.valueType = value;
     }

@@ -57,6 +57,10 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     this.coralTypesObservable$ = this.coralTypesObservable.asObservable();
                     this.coralSpeciesObservable = new Subject_1.Subject();
                     this.coralSpeciesObservable$ = this.coralSpeciesObservable.asObservable();
+                    this.bleachingObservable = new Subject_1.Subject();
+                    this.bleachingObservable$ = this.bleachingObservable.asObservable();
+                    this.diseasesObservable = new Subject_1.Subject();
+                    this.diseasesObservable$ = this.bleachingObservable.asObservable();
                 }
                 //TODO: hacer prototipo de funcion en MainScreenService
                 NewPostService.prototype.extractData = function (res) {
@@ -91,6 +95,36 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                         }
                         else {
                             console.error("Could not fetch CoralSpecies because: " + coralSpecies.reason);
+                        }
+                    });
+                };
+                NewPostService.prototype.getBleaching = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'getBlanqueamiento.php', options)
+                        .map(this.extractData)
+                        .subscribe(function (bleachings) {
+                        if (bleachings.success) {
+                            _this.bleachingObservable.next(bleachings);
+                        }
+                        else {
+                            console.error("Could not fetch bleaching because: " + bleachings.reason);
+                        }
+                    });
+                };
+                NewPostService.prototype.getDiseases = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'getEnfermedades.php', options)
+                        .map(this.extractData)
+                        .subscribe(function (bleachings) {
+                        if (bleachings.success) {
+                            _this.bleachingObservable.next(bleachings);
+                        }
+                        else {
+                            console.error("Could not fetch diseases because: " + bleachings.reason);
                         }
                     });
                 };

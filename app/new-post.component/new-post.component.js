@@ -60,6 +60,17 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         { "id": -1, "text": "cargando..." }
                     ];
                     this.disabledSpecies = true;
+                    this.diseases = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.bleaching = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.valuesBleaching = [{ "id": -1, "text": "cargando..." },
+                        { "id": -1, "text": "cargando..." },
+                        { "id": -1, "text": "cargando..." },
+                        { "id": -1, "text": "cargando..." },
+                        { "id": -1, "text": "cargando..." }];
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;

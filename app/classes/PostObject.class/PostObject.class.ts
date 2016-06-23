@@ -18,17 +18,21 @@
 export class CoralTypeResponse {
     success: boolean
     datos: Array<SelectElement>
-    constructor() {
-        
-    }
 }
 
 export class CoralSpeciesResponse {
     success: boolean
     datos: Array<SelectElement>
-    constructor() {
-        
-    }
+}
+
+export class BleachingResponse {
+    success: boolean
+    datos: Array<SelectElement>
+}
+
+export class DiseasesResponse {
+    success: boolean
+    datos: Array<SelectElement>
 }
 
 export class SelectElement {
