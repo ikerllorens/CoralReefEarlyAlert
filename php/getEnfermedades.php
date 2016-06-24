@@ -12,7 +12,7 @@ if ($conn->connect_error) {
     ];
 } else {
 
-    $sql = "SELECT id, nombre FROM Enfermedad;";
+    $sql = "SELECT id, nombre FROM Enfermedad ORDER BY nombre;";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $arreglodatos = array();
