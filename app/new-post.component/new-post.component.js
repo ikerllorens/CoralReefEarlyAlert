@@ -63,14 +63,11 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.diseases = [
                         { "id": -1, "text": "cargando..." }
                     ];
+                    this.valuesDiseases = [];
                     this.bleaching = [
                         { "id": -1, "text": "cargando..." }
                     ];
-                    this.valuesBleaching = [{ "id": -1, "text": "cargando..." },
-                        { "id": -1, "text": "cargando..." },
-                        { "id": -1, "text": "cargando..." },
-                        { "id": -1, "text": "cargando..." },
-                        { "id": -1, "text": "cargando..." }];
+                    this.valuesBleaching = [];
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
@@ -79,9 +76,17 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         _this.CoralSpecies = itemsSpecies.datos;
                         _this.disabledSpecies = false;
                     });
+                    this.newPostService.bleachingObservable$.subscribe(function (itemsBleaching) {
+                        _this.bleaching = itemsBleaching.datos;
+                    });
+                    this.newPostService.diseasesObservable$.subscribe(function (itemsDiseases) {
+                        _this.diseases = itemsDiseases.datos;
+                    });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
                     this.newPostService.getCoralTypes();
+                    this.newPostService.getBleaching();
+                    this.newPostService.getDiseases();
                 };
                 NewPostScreen.prototype.selectedType = function (value) {
                     console.log('Selected value is: ', value);
@@ -95,11 +100,35 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                 NewPostScreen.prototype.refreshValueType = function (value) {
                     this.valueType = value;
                 };
+                NewPostScreen.prototype.addBleaching = function () {
+                    this.valuesBleaching.push({ "id": -1, "text": "" });
+                };
+                NewPostScreen.prototype.addDisease = function () {
+                    this.valuesDiseases.push({ "id": -1, "text": "" });
+                };
                 NewPostScreen.prototype.selectedSpecies = function (value) {
                     console.log('Selected value is: ', value);
                 };
                 NewPostScreen.prototype.refreshValueSpecies = function (value) {
                     this.valueSpecies = value;
+                };
+                NewPostScreen.prototype.removedSpecies = function (value) {
+                };
+                NewPostScreen.prototype.selectedBleaching = function (value, index) {
+                    console.log('Selected value is: ' + value + ' from index: ' + index);
+                };
+                NewPostScreen.prototype.refreshValueBleaching = function (value, index) {
+                    this.valueSpecies = value;
+                };
+                NewPostScreen.prototype.removedBleaching = function (value, index) {
+                };
+                NewPostScreen.prototype.selectedDisease = function (value, index) {
+                    console.log('Selected value is: ' + value.id + ' from index: ' + index);
+                };
+                NewPostScreen.prototype.refreshValueDisease = function (value, index) {
+                    this.valueSpecies = value;
+                };
+                NewPostScreen.prototype.removedDisease = function (value, index) {
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({

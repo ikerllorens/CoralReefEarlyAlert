@@ -60,7 +60,7 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     this.bleachingObservable = new Subject_1.Subject();
                     this.bleachingObservable$ = this.bleachingObservable.asObservable();
                     this.diseasesObservable = new Subject_1.Subject();
-                    this.diseasesObservable$ = this.bleachingObservable.asObservable();
+                    this.diseasesObservable$ = this.diseasesObservable.asObservable();
                 }
                 //TODO: hacer prototipo de funcion en MainScreenService
                 NewPostService.prototype.extractData = function (res) {
@@ -102,7 +102,7 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     var _this = this;
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.get(main_app_1.Main.serverUrl + 'getBlanqueamiento.php', options)
+                    this.http.get(main_app_1.Main.serverUrl + 'getCatBlanq.php', options)
                         .map(this.extractData)
                         .subscribe(function (bleachings) {
                         if (bleachings.success) {
@@ -119,12 +119,12 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     var options = new http_1.RequestOptions({ headers: headers });
                     this.http.get(main_app_1.Main.serverUrl + 'getEnfermedades.php', options)
                         .map(this.extractData)
-                        .subscribe(function (bleachings) {
-                        if (bleachings.success) {
-                            _this.bleachingObservable.next(bleachings);
+                        .subscribe(function (diseases) {
+                        if (diseases.success) {
+                            _this.diseasesObservable.next(diseases);
                         }
                         else {
-                            console.error("Could not fetch diseases because: " + bleachings.reason);
+                            console.error("Could not fetch diseases because: " + diseases.reason);
                         }
                     });
                 };

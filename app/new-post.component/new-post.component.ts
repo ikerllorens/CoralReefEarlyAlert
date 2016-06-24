@@ -24,7 +24,6 @@ import {SelectElement} from '../classes/PostObject.class/PostObject.class'
 
 import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated'
 
-import {BUTTON_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
 
 @Component({
@@ -49,17 +48,12 @@ export class NewPostScreen implements OnInit {
     public diseases: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
     ]
-    private valuesDiseases: SelectElement[]
+    private valuesDiseases: SelectElement[] = []
 
     public bleaching: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
     ]
-    private valuesBleaching: SelectElement[] =
-     [{ "id": -1, "text": "cargando..." },
-      { "id": -1, "text": "cargando..." },
-       { "id": -1, "text": "cargando..." },
-        { "id": -1, "text": "cargando..." },
-         { "id": -1, "text": "cargando..." }]
+    private valuesBleaching: SelectElement[] = []
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -73,10 +67,22 @@ export class NewPostScreen implements OnInit {
                 this.CoralSpecies = itemsSpecies.datos
                 this.disabledSpecies = false
             })
+            
+        this.newPostService.bleachingObservable$.subscribe(
+        itemsBleaching => {
+            this.bleaching = itemsBleaching.datos
+        })
+        
+        this.newPostService.diseasesObservable$.subscribe(
+        itemsDiseases => {
+            this.diseases = itemsDiseases.datos
+        })
     }
 
     ngOnInit() {
         this.newPostService.getCoralTypes()
+        this.newPostService.getBleaching()
+        this.newPostService.getDiseases()
     }
 
     public selectedType(value: SelectElement): void {
@@ -93,11 +99,43 @@ export class NewPostScreen implements OnInit {
         this.valueType = value;
     }
 
+    public addBleaching() {
+        this.valuesBleaching.push({ "id": -1, "text": "" })
+    }
+
+    public addDisease() {
+        this.valuesDiseases.push({ "id": -1, "text": "" })
+    }
 
     public selectedSpecies(value: SelectElement): void {
         console.log('Selected value is: ', value);
     }
     public refreshValueSpecies(value: any): void {
         this.valueSpecies = value;
+    }
+    public removedSpecies(value: any): void {
+        
+    }
+    
+    
+    public selectedBleaching(value: SelectElement, index: any): void {
+        console.log('Selected value is: ' + value + ' from index: '+ index);
+    }
+    public refreshValueBleaching (value: any, index: any): void {
+        this.valueSpecies = value;
+    }
+    public removedBleaching(value: any, index: any): void {
+        
+    }
+    
+    
+    public selectedDisease(value: SelectElement, index: any): void {
+        console.log('Selected value is: ' + value.id + ' from index: '+ index);
+    }
+    public refreshValueDisease(value: any, index: any): void {
+        this.valueSpecies = value;
+    }
+    public removedDisease(value: any, index: any): void {
+        
     }
 }

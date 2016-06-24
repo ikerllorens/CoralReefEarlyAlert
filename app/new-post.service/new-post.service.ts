@@ -38,14 +38,12 @@ export class NewPostService {
     private bleachingObservable: Subject<BleachingResponse> = new Subject<BleachingResponse>()
     bleachingObservable$: Observable<BleachingResponse> = this.bleachingObservable.asObservable()
     private diseasesObservable: Subject<DiseasesResponse> = new Subject<DiseasesResponse>()
-    diseasesObservable$: Observable<DiseasesResponse> = this.bleachingObservable.asObservable()
+    diseasesObservable$: Observable<DiseasesResponse> = this.diseasesObservable.asObservable()
 
     constructor(private http: Http, mainScreenService: MainScreenService) {
 
     }
-
-
-
+    
     //TODO: hacer prototipo de funcion en MainScreenService
     private extractData(res: Response) {
         console.info('Response: ' + res.text())
@@ -91,7 +89,7 @@ export class NewPostService {
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
 
-        this.http.get(Main.serverUrl + 'getBlanqueamiento.php', options)
+        this.http.get(Main.serverUrl + 'getCatBlanq.php', options)
             .map(this.extractData)
             .subscribe(bleachings => {
 
@@ -109,12 +107,12 @@ export class NewPostService {
 
         this.http.get(Main.serverUrl + 'getEnfermedades.php', options)
             .map(this.extractData)
-            .subscribe(bleachings => {
+            .subscribe(diseases => {
 
-                if (bleachings.success) {
-                    this.bleachingObservable.next(bleachings)
+                if (diseases.success) {
+                    this.diseasesObservable.next(diseases)
                 } else {
-                    console.error("Could not fetch diseases because: " + bleachings.reason)
+                    console.error("Could not fetch diseases because: " + diseases.reason)
                 }
             })
     }
