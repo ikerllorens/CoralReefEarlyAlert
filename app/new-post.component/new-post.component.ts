@@ -18,7 +18,6 @@
 import {Component, OnInit} from '@angular/core'
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {NewPostService} from '../new-post.service/new-post.service'
-//import {SelectOptions} from '../select-options.component/select-options.component'
 
 import {SelectElement} from '../classes/PostObject.class/PostObject.class'
 
@@ -48,12 +47,14 @@ export class NewPostScreen implements OnInit {
     public diseases: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
     ]
-    private valuesDiseases: SelectElement[] = []
+    private valuesDiseases: SelectElement[] = new Array<SelectElement>(0)
+    private valuesDiseasesCount: number[] = new Array<number>(0)
 
     public bleaching: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
     ]
-    private valuesBleaching: SelectElement[] = []
+    private valuesBleaching: SelectElement[] = new Array<SelectElement>(0)
+    private valuesBleachingCount: number[] = new Array<number>(0)
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -67,16 +68,16 @@ export class NewPostScreen implements OnInit {
                 this.CoralSpecies = itemsSpecies.datos
                 this.disabledSpecies = false
             })
-            
+
         this.newPostService.bleachingObservable$.subscribe(
-        itemsBleaching => {
-            this.bleaching = itemsBleaching.datos
-        })
-        
+            itemsBleaching => {
+                this.bleaching = itemsBleaching.datos
+            })
+
         this.newPostService.diseasesObservable$.subscribe(
-        itemsDiseases => {
-            this.diseases = itemsDiseases.datos
-        })
+            itemsDiseases => {
+                this.diseases = itemsDiseases.datos
+            })
     }
 
     ngOnInit() {
@@ -100,42 +101,58 @@ export class NewPostScreen implements OnInit {
     }
 
     public addBleaching() {
-        this.valuesBleaching.push({ "id": -1, "text": "" })
+        this.valuesBleachingCount.push(this.valuesBleachingCount.length)
     }
 
     public addDisease() {
-        this.valuesDiseases.push({ "id": -1, "text": "" })
+        this.valuesDiseasesCount.push(this.valuesDiseasesCount.length)
     }
 
     public selectedSpecies(value: SelectElement): void {
         console.log('Selected value is: ', value);
+
     }
     public refreshValueSpecies(value: any): void {
         this.valueSpecies = value;
     }
     public removedSpecies(value: any): void {
-        
+
     }
-    
-    
+
+
     public selectedBleaching(value: SelectElement, index: any): void {
-        console.log('Selected value is: ' + value + ' from index: '+ index);
+        console.log('Selected value is: ' + value + ' from index: ' + index);
     }
-    public refreshValueBleaching (value: any, index: any): void {
-        this.valueSpecies = value;
+    public refreshValueBleaching(value: SelectElement, index: number): void {
+        if (value.id) {
+            console.info(value.text + "->> log from ->> " + index)
+            this.valuesBleaching[index] = value
+        } 
     }
-    public removedBleaching(value: any, index: any): void {
-        
+    public removedBleaching(index: any): void {
+        this.valuesBleaching.splice(index, 1)
+        this.valuesBleachingCount.splice(index, 1)
     }
-    
-    
+
+
     public selectedDisease(value: SelectElement, index: any): void {
-        console.log('Selected value is: ' + value.id + ' from index: '+ index);
+
     }
-    public refreshValueDisease(value: any, index: any): void {
-        this.valueSpecies = value;
+    public refreshValueDisease(value: SelectElement, index: number): void {
+        if (value.id) {
+            console.info(value.text + "->> log from ->> " + index)
+            this.valuesDiseases[index] = value
+        } 
     }
-    public removedDisease(value: any, index: any): void {
-        
+    public removedDisease(index: any): void { 
+       this.valuesDiseases.splice(index, 1)
+        this.valuesDiseasesCount.splice(index, 1)
+    }
+
+    public sendPost(event: any) {
+        console.warn("this data will be sent")
+        for (let diseaseItem of this.valuesDiseases) {
+            console.warn(diseaseItem.id + "--->" + diseaseItem.text)
+        }
     }
 }

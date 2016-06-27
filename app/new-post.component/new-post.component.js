@@ -63,11 +63,13 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.diseases = [
                         { "id": -1, "text": "cargando..." }
                     ];
-                    this.valuesDiseases = [];
+                    this.valuesDiseases = new Array(0);
+                    this.valuesDiseasesCount = new Array(0);
                     this.bleaching = [
                         { "id": -1, "text": "cargando..." }
                     ];
-                    this.valuesBleaching = [];
+                    this.valuesBleaching = new Array(0);
+                    this.valuesBleachingCount = new Array(0);
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
@@ -101,10 +103,10 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.valueType = value;
                 };
                 NewPostScreen.prototype.addBleaching = function () {
-                    this.valuesBleaching.push({ "id": -1, "text": "" });
+                    this.valuesBleachingCount.push(this.valuesBleachingCount.length);
                 };
                 NewPostScreen.prototype.addDisease = function () {
-                    this.valuesDiseases.push({ "id": -1, "text": "" });
+                    this.valuesDiseasesCount.push(this.valuesDiseasesCount.length);
                 };
                 NewPostScreen.prototype.selectedSpecies = function (value) {
                     console.log('Selected value is: ', value);
@@ -118,17 +120,33 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     console.log('Selected value is: ' + value + ' from index: ' + index);
                 };
                 NewPostScreen.prototype.refreshValueBleaching = function (value, index) {
-                    this.valueSpecies = value;
+                    if (value.id) {
+                        console.info(value.text + "->> log from ->> " + index);
+                        this.valuesBleaching[index] = value;
+                    }
                 };
-                NewPostScreen.prototype.removedBleaching = function (value, index) {
+                NewPostScreen.prototype.removedBleaching = function (index) {
+                    this.valuesBleaching.splice(index, 1);
+                    this.valuesBleachingCount.splice(index, 1);
                 };
                 NewPostScreen.prototype.selectedDisease = function (value, index) {
-                    console.log('Selected value is: ' + value.id + ' from index: ' + index);
                 };
                 NewPostScreen.prototype.refreshValueDisease = function (value, index) {
-                    this.valueSpecies = value;
+                    if (value.id) {
+                        console.info(value.text + "->> log from ->> " + index);
+                        this.valuesDiseases[index] = value;
+                    }
                 };
-                NewPostScreen.prototype.removedDisease = function (value, index) {
+                NewPostScreen.prototype.removedDisease = function (index) {
+                    this.valuesDiseases.splice(index, 1);
+                    this.valuesDiseasesCount.splice(index, 1);
+                };
+                NewPostScreen.prototype.sendPost = function (event) {
+                    console.warn("this data will be sent");
+                    for (var _i = 0, _a = this.valuesDiseases; _i < _a.length; _i++) {
+                        var diseaseItem = _a[_i];
+                        console.warn(diseaseItem.id + "--->" + diseaseItem.text);
+                    }
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({
