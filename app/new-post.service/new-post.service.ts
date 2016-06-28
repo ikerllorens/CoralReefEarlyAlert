@@ -20,7 +20,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http'
 
 import {Main} from '../main-app/main-app'
 import {MainScreenService} from '../main-app.service/main-app.service'
-import {CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse} from '../classes/PostObject.class/PostObject.class'
+import {CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse} from '../classes/PostObject.class/PostObject.class'
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable'
@@ -42,6 +42,8 @@ export class NewPostService {
 
     private sectorsObservable: Subject<SectorsResponse> = new Subject<SectorsResponse>()
     sectorsObservable$: Observable<SectorsResponse> = this.sectorsObservable.asObservable()
+    private subsectorObservable: Subject<SubsectorsResponse> = new Subject<SubsectorsResponse>()
+    subsectorObsevable$: Observable<SubsectorsResponse> = this.subsectorObservable.asObservable()
 
     constructor(private http: Http, mainScreenService: MainScreenService) {
 
@@ -133,5 +135,21 @@ export class NewPostService {
                     console.error("Could not fetch sectors because: " + sectors.reason)
                 }
             })
+    }
+    
+    getSubsectors(idSector: number) {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+        let sector = new SubsectorsRequest(idSector)
+        
+        this.http.post(Main.serverUrl + 'getSubSectores.php', JSON.stringify(sector), options)
+            .map(this.extractData)
+            .subscribe(subsectors => {
+                if(subsectors.success) {
+                    this.subsectorObservable.next(subsectors)
+                } else {
+                    console.error('Could not fetch subsectors because: ' + subsectors.reason)
+                }
+        })
     }
 } 

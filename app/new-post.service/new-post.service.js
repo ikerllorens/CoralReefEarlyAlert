@@ -63,6 +63,8 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     this.diseasesObservable$ = this.diseasesObservable.asObservable();
                     this.sectorsObservable = new Subject_1.Subject();
                     this.sectorsObservable$ = this.sectorsObservable.asObservable();
+                    this.subsectorObservable = new Subject_1.Subject();
+                    this.subsectorObsevable$ = this.subsectorObservable.asObservable();
                 }
                 //TODO: hacer prototipo de funcion en MainScreenService
                 NewPostService.prototype.extractData = function (res) {
@@ -142,6 +144,22 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                         }
                         else {
                             console.error("Could not fetch sectors because: " + sectors.reason);
+                        }
+                    });
+                };
+                NewPostService.prototype.getSubsectors = function (idSector) {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    var sector = new PostObject_class_1.SubsectorsRequest(idSector);
+                    this.http.post(main_app_1.Main.serverUrl + 'getSubSectores.php', JSON.stringify(sector), options)
+                        .map(this.extractData)
+                        .subscribe(function (subsectors) {
+                        if (subsectors.success) {
+                            _this.subsectorObservable.next(subsectors);
+                        }
+                        else {
+                            console.error('Could not fetch subsectors because: ' + subsectors.reason);
                         }
                     });
                 };

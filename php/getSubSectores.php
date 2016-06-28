@@ -14,7 +14,7 @@ if ($conn->connect_error) {
     ];
 } else {
 
-    $sql = "SELECT id, nombre FROM SubSector WHERE Sector_id = ". $info->id ."ORDER BY nombre";
+    $sql = "SELECT id, nombre FROM SubSector WHERE Sector_id = ". $info->id ." ORDER BY nombre";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $arreglodatos = array();

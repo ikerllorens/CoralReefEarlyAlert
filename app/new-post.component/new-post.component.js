@@ -94,12 +94,22 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.sectorsObservable$.subscribe(function (itemsSectors) {
                         _this.sectors = itemsSectors.datos;
                     });
+                    this.newPostService.subsectorObsevable$.subscribe(function (itemsSubsectors) {
+                        _this.subsectors = itemsSubsectors.datos;
+                        _this.disabledSubsector = false;
+                    });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
                     this.newPostService.getCoralTypes();
                     this.newPostService.getBleaching();
                     this.newPostService.getDiseases();
                     this.newPostService.getSectors();
+                };
+                NewPostScreen.prototype.addBleaching = function () {
+                    this.valuesBleachingCount.push(this.valuesBleachingCount.length);
+                };
+                NewPostScreen.prototype.addDisease = function () {
+                    this.valuesDiseasesCount.push(this.valuesDiseasesCount.length);
                 };
                 NewPostScreen.prototype.selectedType = function (value) {
                     console.log('Selected value is: ', value);
@@ -113,12 +123,6 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                 NewPostScreen.prototype.refreshValueType = function (value) {
                     this.valueType = value;
                 };
-                NewPostScreen.prototype.addBleaching = function () {
-                    this.valuesBleachingCount.push(this.valuesBleachingCount.length);
-                };
-                NewPostScreen.prototype.addDisease = function () {
-                    this.valuesDiseasesCount.push(this.valuesDiseasesCount.length);
-                };
                 NewPostScreen.prototype.selectedSpecies = function (value) {
                     console.log('Selected value is: ', value);
                 };
@@ -126,6 +130,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.valueSpecies = value;
                 };
                 NewPostScreen.prototype.removedSpecies = function (value) {
+                    this.valueSpecies = null;
                 };
                 NewPostScreen.prototype.selectedBleaching = function (value, index) {
                     console.log('Selected value is: ' + value + ' from index: ' + index);
@@ -152,18 +157,33 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.valuesDiseases.splice(index, 1);
                     this.valuesDiseasesCount.splice(index, 1);
                 };
-                NewPostScreen.prototype.sendPost = function (event) {
-                    console.warn("this data will be sent");
-                    for (var _i = 0, _a = this.valuesDiseases; _i < _a.length; _i++) {
-                        var diseaseItem = _a[_i];
-                        console.warn(diseaseItem.id + "--->" + diseaseItem.text);
-                    }
-                };
                 NewPostScreen.prototype.selectedSectors = function (value) {
                     console.log('Selected value is: ', value);
+                    this.subsectors = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.disabledSpecies = true;
+                    this.newPostService.getSubsectors(value.id);
                 };
                 NewPostScreen.prototype.refreshValueSectors = function (value) {
-                    this.valueType = value;
+                    this.valueSector = value;
+                };
+                NewPostScreen.prototype.selectedSubsector = function (value) {
+                    console.log('Selected value is: ', value);
+                };
+                NewPostScreen.prototype.refreshValueSubsector = function (value) {
+                    this.valueSubsector = value;
+                };
+                NewPostScreen.prototype.removedSubsector = function (value) {
+                    this.valueSubsector = null;
+                };
+                NewPostScreen.prototype.sendPost = function (event) {
+                    console.warn("this data will be sent");
+                    var keys = [];
+                    for (var _i = 0, _a = this.valuesDiseases; _i < _a.length; _i++) {
+                        var diseaseItem = _a[_i];
+                        keys.push(diseaseItem.id);
+                    }
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({

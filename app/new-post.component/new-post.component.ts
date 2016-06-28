@@ -95,6 +95,12 @@ export class NewPostScreen implements OnInit {
             itemsSectors => {
                 this.sectors = itemsSectors.datos
             })
+
+        this.newPostService.subsectorObsevable$.subscribe(
+            itemsSubsectors => {
+                this.subsectors = itemsSubsectors.datos
+                this.disabledSubsector = false
+            })
     }
 
     ngOnInit() {
@@ -102,6 +108,14 @@ export class NewPostScreen implements OnInit {
         this.newPostService.getBleaching()
         this.newPostService.getDiseases()
         this.newPostService.getSectors()
+    }
+
+    public addBleaching() {
+        this.valuesBleachingCount.push(this.valuesBleachingCount.length)
+    }
+
+    public addDisease() {
+        this.valuesDiseasesCount.push(this.valuesDiseasesCount.length)
     }
 
     public selectedType(value: SelectElement): void {
@@ -117,15 +131,6 @@ export class NewPostScreen implements OnInit {
         this.valueType = value;
     }
 
-
-    public addBleaching() {
-        this.valuesBleachingCount.push(this.valuesBleachingCount.length)
-    }
-
-    public addDisease() {
-        this.valuesDiseasesCount.push(this.valuesDiseasesCount.length)
-    }
-
     public selectedSpecies(value: SelectElement): void {
         console.log('Selected value is: ', value);
 
@@ -134,7 +139,7 @@ export class NewPostScreen implements OnInit {
         this.valueSpecies = value;
     }
     public removedSpecies(value: any): void {
-
+        this.valueSpecies = null
     }
 
 
@@ -167,19 +172,35 @@ export class NewPostScreen implements OnInit {
         this.valuesDiseasesCount.splice(index, 1)
     }
 
-    public sendPost(event: any) {
-        console.warn("this data will be sent")
-        for (let diseaseItem of this.valuesDiseases) {
-            console.warn(diseaseItem.id + "--->" + diseaseItem.text)
-        }
+    public selectedSectors(value: SelectElement): void {
+        console.log('Selected value is: ', value);
+        this.subsectors = [
+            { "id": -1, "text": "cargando..." }
+        ]
+        this.disabledSpecies = true
+        this.newPostService.getSubsectors(value.id)
+    }
+    public refreshValueSectors(value: any): void {
+        this.valueSector = value;
     }
 
-    public selectedSectors(value: SelectElement): void {
+    public selectedSubsector(value: SelectElement): void {
         console.log('Selected value is: ', value);
 
     }
-    public refreshValueSectors(value: any): void {
-        this.valueType = value;
+    public refreshValueSubsector(value: any): void {
+        this.valueSubsector = value;
+    }
+    public removedSubsector(value: any): void {
+        this.valueSubsector = null
     }
 
+
+    public sendPost(event: any) {
+        console.warn("this data will be sent")
+        let keys: number[] = []
+        for (let diseaseItem of this.valuesDiseases) {
+            keys.push(diseaseItem.id)
+        }     
+    }
 }

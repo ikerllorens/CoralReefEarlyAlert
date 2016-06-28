@@ -39,6 +39,10 @@ export class SectorsResponse {
     success: boolean
     datos: Array<SelectElement>
 }
+export class SubsectorsResponse {
+    success: boolean
+    datos: Array<SelectElement>
+}
 
 export class SelectElement {
     id: number
@@ -51,4 +55,19 @@ export class CoralSpeciesRequest {
     constructor(id: number) {
         this.id = id
     }
+}
+
+export class SubsectorsRequest {
+    id: number
+    
+    constructor(id: number) {
+        this.id= id
+    }
+}
+
+export class PostObject {
+    token: string
+    coralTypeId: number
+    coralSpeciesId: number
+    
 }
