@@ -9,5 +9,7 @@ import {Main} from '../main-app/main-app'
 import { ROUTER_PROVIDERS } from '@angular/router-deprecated';
 import {HTTP_BINDINGS} from '@angular/http';
 import {LoginScreenService} from '../login-screen.service/login-screen.service'
+import { enableProdMode } from '@angular/core';
+import {GOOGLE_MAPS_PROVIDERS} from 'angular2-google-maps/core';
 
-bootstrap(Main, [ROUTER_PROVIDERS, HTTP_BINDINGS]);
+bootstrap(Main, [ROUTER_PROVIDERS, HTTP_BINDINGS, GOOGLE_MAPS_PROVIDERS]);

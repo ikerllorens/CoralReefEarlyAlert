@@ -26,11 +26,13 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated'
 
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
 
+import { GOOGLE_MAPS_DIRECTIVES } from 'angular2-google-maps/core'
+
 @Component({
     selector: 'new-post',
     templateUrl: 'app/new-post.component/new-post.component.html',
     providers: [NewPostService],
-    directives: [ROUTER_DIRECTIVES, SELECT_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES, SELECT_DIRECTIVES, GOOGLE_MAPS_DIRECTIVES]
 })
 
 export class NewPostScreen implements OnInit {
@@ -67,16 +69,16 @@ export class NewPostScreen implements OnInit {
                 this.CoralSpecies = itemsSpecies.datos
                 this.disabledSpecies = false
             })
-            
+
         this.newPostService.bleachingObservable$.subscribe(
-        itemsBleaching => {
-            this.bleaching = itemsBleaching.datos
-        })
-        
+            itemsBleaching => {
+                this.bleaching = itemsBleaching.datos
+            })
+
         this.newPostService.diseasesObservable$.subscribe(
-        itemsDiseases => {
-            this.diseases = itemsDiseases.datos
-        })
+            itemsDiseases => {
+                this.diseases = itemsDiseases.datos
+            })
     }
 
     ngOnInit() {
@@ -114,28 +116,31 @@ export class NewPostScreen implements OnInit {
         this.valueSpecies = value;
     }
     public removedSpecies(value: any): void {
-        
+
     }
-    
-    
+
+
     public selectedBleaching(value: SelectElement, index: any): void {
-        console.log('Selected value is: ' + value + ' from index: '+ index);
+        console.log('Selected value is: ' + value + ' from index: ' + index);
     }
-    public refreshValueBleaching (value: any, index: any): void {
+    public refreshValueBleaching(value: any, index: any): void {
         this.valueSpecies = value;
     }
     public removedBleaching(value: any, index: any): void {
-        
+
     }
-    
-    
+
+
     public selectedDisease(value: SelectElement, index: any): void {
-        console.log('Selected value is: ' + value.id + ' from index: '+ index);
+        console.log('Selected value is: ' + value.id + ' from index: ' + index);
     }
     public refreshValueDisease(value: any, index: any): void {
         this.valueSpecies = value;
     }
     public removedDisease(value: any, index: any): void {
-        
+
     }
+    title: string = 'My first angular2-google-maps project';
+    lat: number = 51.678418;
+    lng: number = 7.809007;
 }

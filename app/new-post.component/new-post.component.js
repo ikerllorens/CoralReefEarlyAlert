@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '@angular/router-deprecated', 'ng2-select/ng2-select'], function(exports_1, context_1) {
+System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '@angular/router-deprecated', 'ng2-select/ng2-select', 'angular2-google-maps/core'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, main_app_service_1, new_post_service_1, router_deprecated_1, ng2_select_1;
+    var core_1, main_app_service_1, new_post_service_1, router_deprecated_1, ng2_select_1, core_2;
     var NewPostScreen;
     return {
         setters:[
@@ -44,6 +44,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
             },
             function (ng2_select_1_1) {
                 ng2_select_1 = ng2_select_1_1;
+            },
+            function (core_2_1) {
+                core_2 = core_2_1;
             }],
         execute: function() {
             NewPostScreen = (function () {
@@ -68,6 +71,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         { "id": -1, "text": "cargando..." }
                     ];
                     this.valuesBleaching = [];
+                    this.title = 'My first angular2-google-maps project';
+                    this.lat = 51.678418;
+                    this.lng = 7.809007;
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
@@ -135,7 +141,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         selector: 'new-post',
                         templateUrl: 'app/new-post.component/new-post.component.html',
                         providers: [new_post_service_1.NewPostService],
-                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES]
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES, core_2.GOOGLE_MAPS_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [main_app_service_1.MainScreenService, new_post_service_1.NewPostService, router_deprecated_1.Router])
                 ], NewPostScreen);

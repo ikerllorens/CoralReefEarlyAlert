@@ -1,0 +1,2 @@
+//Cuenta numero de posts por usuario
+SELECT nombre, apellido, COUNT(Reef.Post.id) AS sumPosts FROM Reef.Usuario LEFT JOIN Reef.Post ON Reef.Post.Usuario_id=Reef.Usuario.id GROUP BY Usuario.id ORDER BY Usuario.nombre;

@@ -33,15 +33,19 @@
                     'ng2-select': {
                         defaultExtension: 'js'
                     },
+                    'angular2-google-maps/core': {
+                        defaultExtension: 'js',
+                          main: 'core.umd.js' // you can also use core.umd.js here, if you want faster loads
+                    }
                 },
                 paths: {
                     "ng2-bootstrap": "node_modules/ng2-bootstrap/ng2-bootstrap"
                 },
                 map: {
                     'ng2-bootstrap': 'node_modules/ng2-bootstrap',
-             
                     moment: 'node_modules/moment/moment.js',
-                    'ng2-select': 'node_modules/ng2-select'
+                    'ng2-select': 'node_modules/ng2-select',
+                    'angular2-google-maps': 'vendor/angular2-google-maps'
                 }
             });
 
