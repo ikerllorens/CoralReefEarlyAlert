@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '@angular/router-deprecated', 'ng2-select/ng2-select'], function(exports_1, context_1) {
+System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '../classes/PostObject.class/PostObject.class', '@angular/router-deprecated', 'ng2-select/ng2-select'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, main_app_service_1, new_post_service_1, router_deprecated_1, ng2_select_1;
+    var core_1, main_app_service_1, new_post_service_1, PostObject_class_1, router_deprecated_1, ng2_select_1;
     var NewPostScreen;
     return {
         setters:[
@@ -38,6 +38,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
             },
             function (new_post_service_1_1) {
                 new_post_service_1 = new_post_service_1_1;
+            },
+            function (PostObject_class_1_1) {
+                PostObject_class_1 = PostObject_class_1_1;
             },
             function (router_deprecated_1_1) {
                 router_deprecated_1 = router_deprecated_1_1;
@@ -55,7 +58,6 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.CoralType = [
                         { "id": -1, "text": 'Cargando...' }
                     ];
-                    this.valueType = {};
                     this.CoralSpecies = [
                         { "id": -1, "text": "cargando..." }
                     ];
@@ -65,11 +67,13 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     ];
                     this.valuesDiseases = new Array(0);
                     this.valuesDiseasesCount = new Array(0);
+                    this.valuesDiseasesPercentage = [];
                     this.bleaching = [
                         { "id": -1, "text": "cargando..." }
                     ];
                     this.valuesBleaching = new Array(0);
                     this.valuesBleachingCount = new Array(0);
+                    this.valuesBleachingPercentage = [];
                     this.sectors = [
                         { "id": -1, "text": "cargando..." }
                     ];
@@ -106,10 +110,10 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.getSectors();
                 };
                 NewPostScreen.prototype.addBleaching = function () {
-                    this.valuesBleachingCount.push(this.valuesBleachingCount.length);
+                    this.valuesBleachingCount.push(0);
                 };
                 NewPostScreen.prototype.addDisease = function () {
-                    this.valuesDiseasesCount.push(this.valuesDiseasesCount.length);
+                    this.valuesDiseasesCount.push(0);
                 };
                 NewPostScreen.prototype.selectedType = function (value) {
                     console.log('Selected value is: ', value);
@@ -144,6 +148,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                 NewPostScreen.prototype.removedBleaching = function (index) {
                     this.valuesBleaching.splice(index, 1);
                     this.valuesBleachingCount.splice(index, 1);
+                    this.valuesBleachingPercentage.splice(index, 1);
                 };
                 NewPostScreen.prototype.selectedDisease = function (value, index) {
                 };
@@ -156,6 +161,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                 NewPostScreen.prototype.removedDisease = function (index) {
                     this.valuesDiseases.splice(index, 1);
                     this.valuesDiseasesCount.splice(index, 1);
+                    this.valuesDiseasesPercentage.splice(index, 1);
                 };
                 NewPostScreen.prototype.selectedSectors = function (value) {
                     console.log('Selected value is: ', value);
@@ -178,12 +184,27 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.valueSubsector = null;
                 };
                 NewPostScreen.prototype.sendPost = function (event) {
-                    console.warn("this data will be sent");
-                    var keys = [];
-                    for (var _i = 0, _a = this.valuesDiseases; _i < _a.length; _i++) {
-                        var diseaseItem = _a[_i];
-                        keys.push(diseaseItem.id);
+                    var diseasesPack = [];
+                    var bleachingPack = [];
+                    var token = this.mainScreenService.getLoginInfo().token;
+                    for (var i = 0; i < this.valuesDiseasesCount.length; ++i) {
+                        diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i] });
                     }
+                    for (var i = 0; i < this.valuesBleachingCount.length; ++i) {
+                        bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i] });
+                    }
+                    if (!this.valueType.id) {
+                        event.preventDefault();
+                        alert('Por favor ingresa un tipo de coral');
+                        return;
+                    }
+                    if (!this.valueSector.id) {
+                        event.preventDefault();
+                        alert('Por favor ingresa un sector');
+                        return;
+                    }
+                    var postPackage = new PostObject_class_1.PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack);
+                    console.info('JSON final: ' + JSON.stringify(postPackage));
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({

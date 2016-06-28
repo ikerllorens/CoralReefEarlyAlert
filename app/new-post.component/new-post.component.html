@@ -88,7 +88,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
                                 <ng-select [allowClear]="false" [items]="bleaching" (data)="refreshValueBleaching($event, i)" (selected)="selectedBleaching($event, i)"  placeholder="Blanqueamiento"></ng-select>
                             </div>
                             <div class="col-xs-3 ">                      
-                                <input placeholder="%" type="number" min="0" max="100" step="1" class="form-control ">
+                                <input [(ngModel)]="valuesBleachingPercentage[i]" placeholder="%" type="number" min="0" max="100" step="1" class="form-control ">
                             </div>
                             <div class="col-xs-2">
                                 <button (click)="removedBleaching( i)" class="btn btn-danger "><span class="glyphicon glyphicon-remove-sign"></span></button>
@@ -118,7 +118,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.-->
                                 <ng-select [allowClear]="false" [items]="diseases" (data)="refreshValueDisease($event, i)" (selected)="selectedDisease($event, i)"  (removed)="removedDisease($event, i)" placeholder="Enfermedad"> </ng-select>
                             </div>
                             <div class="col-xs-3 ">                      
-                                <input placeholder="%" type="number" min="0" max="100" step="1" class="form-control ">
+                                <input [(ngModel)]="valuesDiseasesPercentage[i]" placeholder="%" type="number" min="0" max="100" step="1" class="form-control ">
                             </div>
                             <div class="col-xs-2">
                                 <button (click)="removedDisease(i)" class="btn btn-danger "><span class="glyphicon glyphicon-remove-sign"></span></button>

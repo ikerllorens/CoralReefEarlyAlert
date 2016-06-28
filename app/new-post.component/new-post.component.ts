@@ -20,6 +20,8 @@ import {MainScreenService} from '../main-app.service/main-app.service'
 import {NewPostService} from '../new-post.service/new-post.service'
 
 import {SelectElement} from '../classes/PostObject.class/PostObject.class'
+import {PostObject} from '../classes/PostObject.class/PostObject.class'
+
 
 import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated'
 
@@ -36,7 +38,7 @@ export class NewPostScreen implements OnInit {
     public CoralType: Array<SelectElement> = [
         { "id": -1, "text": 'Cargando...' }
     ]
-    private valueType: any = {};
+    private valueType: SelectElement ;
 
     public CoralSpecies: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
@@ -49,12 +51,14 @@ export class NewPostScreen implements OnInit {
     ]
     private valuesDiseases: SelectElement[] = new Array<SelectElement>(0)
     private valuesDiseasesCount: number[] = new Array<number>(0)
+    public valuesDiseasesPercentage: number[] = []
 
     public bleaching: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
     ]
     private valuesBleaching: SelectElement[] = new Array<SelectElement>(0)
     private valuesBleachingCount: number[] = new Array<number>(0)
+    public valuesBleachingPercentage: number[] = []
 
     public sectors: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
@@ -111,11 +115,11 @@ export class NewPostScreen implements OnInit {
     }
 
     public addBleaching() {
-        this.valuesBleachingCount.push(this.valuesBleachingCount.length)
+        this.valuesBleachingCount.push(0)
     }
 
     public addDisease() {
-        this.valuesDiseasesCount.push(this.valuesDiseasesCount.length)
+        this.valuesDiseasesCount.push(0)
     }
 
     public selectedType(value: SelectElement): void {
@@ -133,7 +137,6 @@ export class NewPostScreen implements OnInit {
 
     public selectedSpecies(value: SelectElement): void {
         console.log('Selected value is: ', value);
-
     }
     public refreshValueSpecies(value: any): void {
         this.valueSpecies = value;
@@ -155,6 +158,7 @@ export class NewPostScreen implements OnInit {
     public removedBleaching(index: any): void {
         this.valuesBleaching.splice(index, 1)
         this.valuesBleachingCount.splice(index, 1)
+        this.valuesBleachingPercentage.splice(index, 1)
     }
 
 
@@ -170,6 +174,7 @@ export class NewPostScreen implements OnInit {
     public removedDisease(index: any): void {
         this.valuesDiseases.splice(index, 1)
         this.valuesDiseasesCount.splice(index, 1)
+        this.valuesDiseasesPercentage.splice(index, 1)
     }
 
     public selectedSectors(value: SelectElement): void {
@@ -197,10 +202,30 @@ export class NewPostScreen implements OnInit {
 
 
     public sendPost(event: any) {
-        console.warn("this data will be sent")
-        let keys: number[] = []
-        for (let diseaseItem of this.valuesDiseases) {
-            keys.push(diseaseItem.id)
-        }     
+        let diseasesPack = []
+        let bleachingPack = []
+        let token = this.mainScreenService.getLoginInfo().token 
+         
+        for (var i = 0; i < this.valuesDiseasesCount.length; ++i) {
+            diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i]})
+        }
+        for (var i = 0; i < this.valuesBleachingCount.length; ++i) {
+            bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i]})
+        }
+        
+    
+        if (!this.valueType.id) {
+            event.preventDefault()
+            alert('Por favor ingresa un tipo de coral')
+            return
+        }   
+        if (!this.valueSector.id) {
+            event.preventDefault()
+            alert('Por favor ingresa un sector')
+            return
+        }
+        
+        let postPackage = new PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack)          
+        console.info('JSON final: ' + JSON.stringify(postPackage))
     }
 }

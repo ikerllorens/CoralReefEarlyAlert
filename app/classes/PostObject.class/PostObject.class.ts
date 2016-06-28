@@ -69,5 +69,19 @@ export class PostObject {
     token: string
     coralTypeId: number
     coralSpeciesId: number
+    sectorId: number
+    subsectorId:number
+    bleaching: any
+    diseases: any
+    observations: string
     
+    constructor(token: string, coralTypeID: number, coralSpeciesId: number, sectorId: number, subsectorId: number, bleaching: any, diseases:any) {
+        this.token = token
+        this.coralTypeId = coralTypeID
+        this.coralSpeciesId = coralSpeciesId
+        this.sectorId = sectorId
+        this.subsectorId = subsectorId
+        this.bleaching = bleaching
+        this.diseases = diseases
+    }
 }
