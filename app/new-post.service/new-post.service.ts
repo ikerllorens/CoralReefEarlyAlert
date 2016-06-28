@@ -20,7 +20,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http'
 
 import {Main} from '../main-app/main-app'
 import {MainScreenService} from '../main-app.service/main-app.service'
-import {CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse} from '../classes/PostObject.class/PostObject.class'
+import {CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse} from '../classes/PostObject.class/PostObject.class'
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable'
@@ -39,6 +39,9 @@ export class NewPostService {
     bleachingObservable$: Observable<BleachingResponse> = this.bleachingObservable.asObservable()
     private diseasesObservable: Subject<DiseasesResponse> = new Subject<DiseasesResponse>()
     diseasesObservable$: Observable<DiseasesResponse> = this.diseasesObservable.asObservable()
+
+    private sectorsObservable: Subject<SectorsResponse> = new Subject<SectorsResponse>()
+    sectorsObservable$: Observable<SectorsResponse> = this.sectorsObservable.asObservable()
 
     constructor(private http: Http, mainScreenService: MainScreenService) {
 
@@ -113,6 +116,21 @@ export class NewPostService {
                     this.diseasesObservable.next(diseases)
                 } else {
                     console.error("Could not fetch diseases because: " + diseases.reason)
+                }
+            })
+    }
+    
+    getSectors() {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+        
+        this.http.get(Main.serverUrl + 'getSectores.php', options)
+            .map(this.extractData)
+            .subscribe(sectors => {
+                if (sectors.success) {
+                    this.sectorsObservable.next(sectors)
+                } else {
+                    console.error("Could not fetch sectors because: " + sectors.reason)
                 }
             })
     }

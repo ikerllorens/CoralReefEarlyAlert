@@ -56,6 +56,18 @@ export class NewPostScreen implements OnInit {
     private valuesBleaching: SelectElement[] = new Array<SelectElement>(0)
     private valuesBleachingCount: number[] = new Array<number>(0)
 
+    public sectors: Array<SelectElement> = [
+        { "id": -1, "text": "cargando..." }
+    ]
+    private valueSector: SelectElement
+
+    public subsectors: Array<SelectElement> = [
+        { "id": -1, "text": "cargando..." }
+    ]
+    private valueSubsector: SelectElement
+    public disabledSubsector: boolean = true
+
+
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
         this.newPostService.coralTypesObservable$.subscribe(
@@ -78,12 +90,18 @@ export class NewPostScreen implements OnInit {
             itemsDiseases => {
                 this.diseases = itemsDiseases.datos
             })
+
+        this.newPostService.sectorsObservable$.subscribe(
+            itemsSectors => {
+                this.sectors = itemsSectors.datos
+            })
     }
 
     ngOnInit() {
         this.newPostService.getCoralTypes()
         this.newPostService.getBleaching()
         this.newPostService.getDiseases()
+        this.newPostService.getSectors()
     }
 
     public selectedType(value: SelectElement): void {
@@ -95,10 +113,10 @@ export class NewPostScreen implements OnInit {
         this.newPostService.getCoralSpecies(value.id)
         this.refreshValueSpecies({})
     }
-
     public refreshValueType(value: any): void {
         this.valueType = value;
     }
+
 
     public addBleaching() {
         this.valuesBleachingCount.push(this.valuesBleachingCount.length)
@@ -127,7 +145,7 @@ export class NewPostScreen implements OnInit {
         if (value.id) {
             console.info(value.text + "->> log from ->> " + index)
             this.valuesBleaching[index] = value
-        } 
+        }
     }
     public removedBleaching(index: any): void {
         this.valuesBleaching.splice(index, 1)
@@ -142,10 +160,10 @@ export class NewPostScreen implements OnInit {
         if (value.id) {
             console.info(value.text + "->> log from ->> " + index)
             this.valuesDiseases[index] = value
-        } 
+        }
     }
-    public removedDisease(index: any): void { 
-       this.valuesDiseases.splice(index, 1)
+    public removedDisease(index: any): void {
+        this.valuesDiseases.splice(index, 1)
         this.valuesDiseasesCount.splice(index, 1)
     }
 
@@ -155,4 +173,13 @@ export class NewPostScreen implements OnInit {
             console.warn(diseaseItem.id + "--->" + diseaseItem.text)
         }
     }
+
+    public selectedSectors(value: SelectElement): void {
+        console.log('Selected value is: ', value);
+
+    }
+    public refreshValueSectors(value: any): void {
+        this.valueType = value;
+    }
+
 }

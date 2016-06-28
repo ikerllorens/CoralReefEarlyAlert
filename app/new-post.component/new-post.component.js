@@ -70,6 +70,13 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     ];
                     this.valuesBleaching = new Array(0);
                     this.valuesBleachingCount = new Array(0);
+                    this.sectors = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.subsectors = [
+                        { "id": -1, "text": "cargando..." }
+                    ];
+                    this.disabledSubsector = true;
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
@@ -84,11 +91,15 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.diseasesObservable$.subscribe(function (itemsDiseases) {
                         _this.diseases = itemsDiseases.datos;
                     });
+                    this.newPostService.sectorsObservable$.subscribe(function (itemsSectors) {
+                        _this.sectors = itemsSectors.datos;
+                    });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
                     this.newPostService.getCoralTypes();
                     this.newPostService.getBleaching();
                     this.newPostService.getDiseases();
+                    this.newPostService.getSectors();
                 };
                 NewPostScreen.prototype.selectedType = function (value) {
                     console.log('Selected value is: ', value);
@@ -147,6 +158,12 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         var diseaseItem = _a[_i];
                         console.warn(diseaseItem.id + "--->" + diseaseItem.text);
                     }
+                };
+                NewPostScreen.prototype.selectedSectors = function (value) {
+                    console.log('Selected value is: ', value);
+                };
+                NewPostScreen.prototype.refreshValueSectors = function (value) {
+                    this.valueType = value;
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({

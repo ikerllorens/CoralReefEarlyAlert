@@ -35,6 +35,11 @@ export class DiseasesResponse {
     datos: Array<SelectElement>
 }
 
+export class SectorsResponse {
+    success: boolean
+    datos: Array<SelectElement>
+}
+
 export class SelectElement {
     id: number
     text: string
