@@ -78,7 +78,7 @@ System.register([], function(exports_1, context_1) {
             }());
             exports_1("SubsectorsRequest", SubsectorsRequest);
             PostObject = (function () {
-                function PostObject(token, coralTypeID, coralSpeciesId, sectorId, subsectorId, bleaching, diseases) {
+                function PostObject(token, coralTypeID, coralSpeciesId, sectorId, subsectorId, bleaching, diseases, observations) {
                     this.token = token;
                     this.coralTypeId = coralTypeID;
                     this.coralSpeciesId = coralSpeciesId;
@@ -86,6 +86,7 @@ System.register([], function(exports_1, context_1) {
                     this.subsectorId = subsectorId;
                     this.bleaching = bleaching;
                     this.diseases = diseases;
+                    this.observations = observations;
                 }
                 return PostObject;
             }());

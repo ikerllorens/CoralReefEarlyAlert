@@ -75,7 +75,7 @@ export class PostObject {
     diseases: any
     observations: string
     
-    constructor(token: string, coralTypeID: number, coralSpeciesId: number, sectorId: number, subsectorId: number, bleaching: any, diseases:any) {
+    constructor(token: string, coralTypeID: number, coralSpeciesId: number, sectorId: number, subsectorId: number, bleaching: any, diseases:any, observations:string) {
         this.token = token
         this.coralTypeId = coralTypeID
         this.coralSpeciesId = coralSpeciesId
@@ -83,5 +83,6 @@ export class PostObject {
         this.subsectorId = subsectorId
         this.bleaching = bleaching
         this.diseases = diseases
+        this.observations = observations
     }
 }

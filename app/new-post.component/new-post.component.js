@@ -81,6 +81,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         { "id": -1, "text": "cargando..." }
                     ];
                     this.disabledSubsector = true;
+                    this.comments = "";
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
@@ -203,7 +204,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         alert('Por favor ingresa un sector');
                         return;
                     }
-                    var postPackage = new PostObject_class_1.PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack);
+                    var postPackage = new PostObject_class_1.PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments);
                     console.info('JSON final: ' + JSON.stringify(postPackage));
                 };
                 NewPostScreen = __decorate([

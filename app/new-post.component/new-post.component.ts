@@ -70,7 +70,8 @@ export class NewPostScreen implements OnInit {
     ]
     private valueSubsector: SelectElement
     public disabledSubsector: boolean = true
-
+    
+    public comments: string = ""
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -225,7 +226,7 @@ export class NewPostScreen implements OnInit {
             return
         }
         
-        let postPackage = new PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack)          
+        let postPackage = new PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments)          
         console.info('JSON final: ' + JSON.stringify(postPackage))
     }
 }
