@@ -20,7 +20,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http'
 
 import {Main} from '../main-app/main-app'
 import {MainScreenService} from '../main-app.service/main-app.service'
-import {CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse} from '../classes/PostObject.class/PostObject.class'
+import {PostObject, CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse} from '../classes/PostObject.class/PostObject.class'
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable'
@@ -149,6 +149,21 @@ export class NewPostService {
                     this.subsectorObservable.next(subsectors)
                 } else {
                     console.error('Could not fetch subsectors because: ' + subsectors.reason)
+                }
+        })
+    }
+    
+    public sendPost(info:  PostObject) {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+       
+        this.http.post(Main.serverUrl + 'insertPost.php', JSON.stringify(info), options)
+            .map(this.extractData)
+            .subscribe(successPost => {
+                if (successPost.success) {
+                    
+                } else {
+                    console.error('Could not insert post because: ' + successPost.reason)
                 }
         })
     }

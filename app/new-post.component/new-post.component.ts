@@ -18,6 +18,7 @@
 import {Component, OnInit} from '@angular/core'
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {NewPostService} from '../new-post.service/new-post.service'
+import {Main} from '../main-app/main-app'
 
 import {SelectElement} from '../classes/PostObject.class/PostObject.class'
 import {PostObject} from '../classes/PostObject.class/PostObject.class'
@@ -26,19 +27,21 @@ import {PostObject} from '../classes/PostObject.class/PostObject.class'
 import {Router, ROUTER_DIRECTIVES} from '@angular/router-deprecated'
 
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
+import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload/ng2-file-upload';
+
 
 @Component({
     selector: 'new-post',
     templateUrl: 'app/new-post.component/new-post.component.html',
     providers: [NewPostService],
-    directives: [ROUTER_DIRECTIVES, SELECT_DIRECTIVES]
+    directives: [ROUTER_DIRECTIVES, SELECT_DIRECTIVES, FILE_UPLOAD_DIRECTIVES]
 })
 
 export class NewPostScreen implements OnInit {
     public CoralType: Array<SelectElement> = [
         { "id": -1, "text": 'Cargando...' }
     ]
-    private valueType: SelectElement ;
+    private valueType: SelectElement;
 
     public CoralSpecies: Array<SelectElement> = [
         { "id": -1, "text": "cargando..." }
@@ -70,8 +73,11 @@ export class NewPostScreen implements OnInit {
     ]
     private valueSubsector: SelectElement
     public disabledSubsector: boolean = true
-    
+
     public comments: string = ""
+
+
+    public uploader: FileUploader = new FileUploader({ url: Main.serverUrl + 'test.php'});
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -79,6 +85,7 @@ export class NewPostScreen implements OnInit {
             items => {
                 this.CoralType = items.datos
             })
+        
 
         this.newPostService.coralSpeciesObservable$.subscribe(
             itemsSpecies => {
@@ -113,6 +120,10 @@ export class NewPostScreen implements OnInit {
         this.newPostService.getBleaching()
         this.newPostService.getDiseases()
         this.newPostService.getSectors()
+        
+        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+            console.log("item uploaded" + response);
+        };
     }
 
     public addBleaching() {
@@ -205,28 +216,30 @@ export class NewPostScreen implements OnInit {
     public sendPost(event: any) {
         let diseasesPack = []
         let bleachingPack = []
-        let token = this.mainScreenService.getLoginInfo().token 
-         
+        let token = this.mainScreenService.getLoginInfo().token
+
         for (var i = 0; i < this.valuesDiseasesCount.length; ++i) {
-            diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i]})
+            diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i] })
         }
         for (var i = 0; i < this.valuesBleachingCount.length; ++i) {
-            bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i]})
+            bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i] })
         }
-        
-    
+
+
         if (!this.valueType.id) {
             event.preventDefault()
             alert('Por favor ingresa un tipo de coral')
             return
-        }   
+        }
         if (!this.valueSector.id) {
             event.preventDefault()
             alert('Por favor ingresa un sector')
             return
         }
-        
-        let postPackage = new PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments)          
+
+        let postPackage = new PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments)
         console.info('JSON final: ' + JSON.stringify(postPackage))
+        this.newPostService.sendPost(postPackage)
+        
     }
 }

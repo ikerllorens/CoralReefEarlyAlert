@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '../classes/PostObject.class/PostObject.class', '@angular/router-deprecated', 'ng2-select/ng2-select'], function(exports_1, context_1) {
+System.register(['@angular/core', '../main-app.service/main-app.service', '../new-post.service/new-post.service', '../main-app/main-app', '../classes/PostObject.class/PostObject.class', '@angular/router-deprecated', 'ng2-select/ng2-select', 'ng2-file-upload/ng2-file-upload'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, main_app_service_1, new_post_service_1, PostObject_class_1, router_deprecated_1, ng2_select_1;
+    var core_1, main_app_service_1, new_post_service_1, main_app_1, PostObject_class_1, router_deprecated_1, ng2_select_1, ng2_file_upload_1;
     var NewPostScreen;
     return {
         setters:[
@@ -39,6 +39,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
             function (new_post_service_1_1) {
                 new_post_service_1 = new_post_service_1_1;
             },
+            function (main_app_1_1) {
+                main_app_1 = main_app_1_1;
+            },
             function (PostObject_class_1_1) {
                 PostObject_class_1 = PostObject_class_1_1;
             },
@@ -47,6 +50,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
             },
             function (ng2_select_1_1) {
                 ng2_select_1 = ng2_select_1_1;
+            },
+            function (ng2_file_upload_1_1) {
+                ng2_file_upload_1 = ng2_file_upload_1_1;
             }],
         execute: function() {
             NewPostScreen = (function () {
@@ -82,6 +88,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     ];
                     this.disabledSubsector = true;
                     this.comments = "";
+                    this.uploader = new ng2_file_upload_1.FileUploader({ url: main_app_1.Main.serverUrl + 'test.php' });
                     console.info('new-post module loaded');
                     this.newPostService.coralTypesObservable$.subscribe(function (items) {
                         _this.CoralType = items.datos;
@@ -109,6 +116,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.getBleaching();
                     this.newPostService.getDiseases();
                     this.newPostService.getSectors();
+                    this.uploader.onCompleteItem = function (item, response, status, headers) {
+                        console.log("item uploaded" + response);
+                    };
                 };
                 NewPostScreen.prototype.addBleaching = function () {
                     this.valuesBleachingCount.push(0);
@@ -206,13 +216,14 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     }
                     var postPackage = new PostObject_class_1.PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments);
                     console.info('JSON final: ' + JSON.stringify(postPackage));
+                    this.newPostService.sendPost(postPackage);
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({
                         selector: 'new-post',
                         templateUrl: 'app/new-post.component/new-post.component.html',
                         providers: [new_post_service_1.NewPostService],
-                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES]
+                        directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES, ng2_file_upload_1.FILE_UPLOAD_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [main_app_service_1.MainScreenService, new_post_service_1.NewPostService, router_deprecated_1.Router])
                 ], NewPostScreen);

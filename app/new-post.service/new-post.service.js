@@ -163,6 +163,19 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                         }
                     });
                 };
+                NewPostService.prototype.sendPost = function (info) {
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.post(main_app_1.Main.serverUrl + 'insertPost.php', JSON.stringify(info), options)
+                        .map(this.extractData)
+                        .subscribe(function (successPost) {
+                        if (successPost.success) {
+                        }
+                        else {
+                            console.error('Could not insert post because: ' + successPost.reason);
+                        }
+                    });
+                };
                 NewPostService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [http_1.Http, main_app_service_1.MainScreenService])
