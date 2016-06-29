@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+Copyright (C) 2016 ikerllorens
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <div class="row">
     <div class="col-xs-0 col-sm-4"></div>
     <div class="col-xs-12 col-sm-4 container-fluid">
@@ -17,7 +26,7 @@ and open the template in the editor.
             <div class="form-group col-xs-8 col-sm-12  ">  
                 <div class="input-group" [class.has-success]="!emptyUsername" [class.has-warning]="emptyUsername">
                     <span class="input-group-addon">Usuario</span>
-                    <input (keyup)="onFieldUpdate($event)" (keydown)="preventCharacters($event)" [(ngModel)]="username" placeholder="Nombre de Usuario" type="text" class="form-control center-block">
+                    <input (keyup)="onFieldUpdate()" (keydown)="preventCharacters($event)" [(ngModel)]="username" autofocus="true" autocomplete="off" placeholder="Nombre de Usuario" type="email" class="form-control center-block">
                 </div>
             </div>
         </div>
@@ -30,7 +39,7 @@ and open the template in the editor.
                 <a href="#">Olvidaste tu contraseña?</a>
                 <div class="input-group" [class.has-warning]="emptyPassword" [class.has-success]="!emptyPassword" >
                     <span class="input-group-addon">Contraseña</span>
-                    <input (keyup)="onFieldUpdate($event)" (keydown)="preventCharacters($event)" [(ngModel)]="password" placeholder="Contraseña" type="password" class="form-control center-block">
+                    <input (keyup)="onFieldUpdate()" (keydown)="preventCharacters($event)" [(ngModel)]="password" autocomplete="off" placeholder="Contraseña" type="password" class="form-control center-block">
                 </div>
             </div>
         </div>

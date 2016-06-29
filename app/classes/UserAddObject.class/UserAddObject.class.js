@@ -17,32 +17,35 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var LoginObject, LoginResponse;
+    var UserAddObject, UserAddResponse;
     return {
         setters:[],
         execute: function() {
-            LoginObject = (function () {
-                function LoginObject(username, password) {
+            UserAddObject = (function () {
+                function UserAddObject(username, password, name, surname, userType) {
+                    this.name = "";
+                    this.surname = "";
                     this.username = "";
                     this.password = "";
+                    this.userType = 1;
                     this.username = username;
                     this.password = password;
+                    this.name = name;
+                    this.surname = surname;
+                    this.userType = userType;
                 }
-                return LoginObject;
+                return UserAddObject;
             }());
-            exports_1("LoginObject", LoginObject);
-            LoginResponse = (function () {
-                function LoginResponse() {
+            exports_1("UserAddObject", UserAddObject);
+            UserAddResponse = (function () {
+                function UserAddResponse() {
                     this.success = false;
-                    this.userType = 0;
-                    this.name = "";
                     this.reason = "";
-                    this.token = "";
                 }
-                return LoginResponse;
+                return UserAddResponse;
             }());
-            exports_1("LoginResponse", LoginResponse);
+            exports_1("UserAddResponse", UserAddResponse);
         }
     }
 });
-//# sourceMappingURL=LoginObject.class.js.map
+//# sourceMappingURL=UserAddObject.class.js.map

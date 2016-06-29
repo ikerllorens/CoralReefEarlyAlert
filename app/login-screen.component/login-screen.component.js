@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 ikerllorens
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.class', '../login-screen.service/login-screen.service', '@angular/router-deprecated', '../main-app.service/main-app.service'], function(exports_1, context_1) {
     "use strict";
@@ -53,6 +64,14 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     this.validLoginFields = false;
                     console.info("login-screen module loaded");
                 }
+                LoginScreen.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.onFieldUpdate();
+                    setTimeout(function () {
+                        console.info("Entrando...");
+                        _this.onFieldUpdate();
+                    }, 50);
+                };
                 LoginScreen.prototype.preventCharacters = function (event) {
                     if (event.key == "<" || event.key == ">" || event.key == '"' ||
                         event.key == " " || event.key == "&" || event.key == "|" ||
@@ -62,7 +81,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                         console.info("Prohibited character: " + event.key);
                     }
                 };
-                LoginScreen.prototype.onFieldUpdate = function (event) {
+                LoginScreen.prototype.onFieldUpdate = function () {
                     if (this.username.length < this.minimumLenUsername) {
                         this.emptyUsername = true;
                     }
@@ -108,7 +127,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                 LoginScreen = __decorate([
                     core_1.Component({
                         selector: 'login-screen',
-                        providers: [],
+                        providers: [login_screen_service_1.LoginScreenService],
                         directives: [router_deprecated_1.ROUTER_DIRECTIVES],
                         templateUrl: 'app/login-screen.component/login-screen.component.html'
                     }), 
