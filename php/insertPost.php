@@ -23,17 +23,38 @@ if ($conn->connect_error) {
             ];
         }
 
-        $sql = "INSERT INTO Post (Usuario_id, TipCoral_id, Especie_id, Sector_id, SubSector_id, fecha_tiempo) VALUES (" . $usuarioID . "," . $info->coralTypeId . ", " . $info->coralSpeciesId . " , " . $info->sectorId . "," . $info->subsectorId . ",NOW())";
-        if ($conn->query($sql) === TRUE) {
+        $sql1 = "INSERT INTO Post (Usuario_id, TipCoral_id, Especie_id, Sector_id, SubSector_id, fecha_tiempo) VALUES (" . $usuarioID . "," . $info->coralTypeId . ", " . $info->coralSpeciesId . " , " . $info->sectorId . "," . $info->subsectorId . ",NOW())";
+        if ($conn->query($sql1) === TRUE) {
             $postid = $conn->insert_id; //Post id   
             $longB = count($info->bleaching);
 
             for ($i = 0; $i < $longB; $i++) {
                 $sql2 = "INSERT INTO Post_has_CatBlanq (Post_id, CatBlanq_id, por) VALUES(" . $postid . "," . $info->bleaching[$i]->id . "," . $info->bleaching[$i]->percentage . ")";
+                if ($conn->query($sql2) === TRUE) {
+                    $response = [
+                        "success" => true,
+                    ];
+                } else {
+                    $response = [
+                        "success" => false,
+                        "reason" => "Connection failed: " . $conn->error . " SQL: " . $sql . " info: " . $data
+                    ];
+                }
             }
             $longD = count($info->diseases);
             for ($i = 0; $i < $longD; $i++) {
                 $sql3 = "INSERT INTO Post_has_Enfermedad (Post_id, Enfermedad_id, por) VALUES(" . $postid . "," . $info->diseases[$i]->id . "," . $info->diseases[$i]->percentage . ")";
+
+                if ($conn->query($sql3) === TRUE) {
+                    $response = [
+                        "success" => true,
+                    ];
+                } else {
+                    $response = [
+                        "success" => false,
+                        "reason" => "Connection failed: " . $conn->error . " SQL: " . $sql . " info: " . $data
+                    ];
+                }
             }
 
             $response = [
