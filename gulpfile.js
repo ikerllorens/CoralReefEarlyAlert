@@ -20,7 +20,3 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('build/app'));
 });
 
-gulp.task('maps', function () {
-    return gulp.src('app/**/*.js.map')
-            .pipe(gulp.dest('build/app'));
-})
