@@ -77,7 +77,7 @@ export class NewPostScreen implements OnInit {
     public comments: string = ""
 
 
-    public uploader: FileUploader = new FileUploader({ url: Main.serverUrl + 'test.php'});
+    public uploader: FileUploader = new FileUploader({ url: Main.serverUrl + 'test.php' });
 
     constructor(private mainScreenService: MainScreenService, private newPostService: NewPostService, private router: Router) {
         console.info('new-post module loaded')
@@ -85,7 +85,7 @@ export class NewPostScreen implements OnInit {
             items => {
                 this.CoralType = items.datos
             })
-        
+
 
         this.newPostService.coralSpeciesObservable$.subscribe(
             itemsSpecies => {
@@ -120,8 +120,8 @@ export class NewPostScreen implements OnInit {
         this.newPostService.getBleaching()
         this.newPostService.getDiseases()
         this.newPostService.getSectors()
-        
-        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+
+        this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
             console.log("item uploaded" + response);
         };
     }
@@ -219,12 +219,21 @@ export class NewPostScreen implements OnInit {
         let token = this.mainScreenService.getLoginInfo().token
 
         for (var i = 0; i < this.valuesDiseasesCount.length; ++i) {
-            diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i] })
+            if (this.valuesDiseases[i])  {
+                if (!this.valuesDiseasesPercentage[i]) {
+                    this.valuesDiseasesPercentage[i] = -1
+                }
+                diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i] })
+            }
         }
         for (var i = 0; i < this.valuesBleachingCount.length; ++i) {
-            bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i] })
+            if (this.valuesBleaching[i]) {
+                if (!this.valuesBleachingPercentage[i]) {
+                    this.valuesBleachingPercentage[i] = -1
+                }
+                bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i] })
+            }
         }
-
 
         if (!this.valueType.id) {
             event.preventDefault()
@@ -240,6 +249,6 @@ export class NewPostScreen implements OnInit {
         let postPackage = new PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments)
         console.info('JSON final: ' + JSON.stringify(postPackage))
         this.newPostService.sendPost(postPackage)
-        
+
     }
 }

@@ -199,10 +199,20 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     var bleachingPack = [];
                     var token = this.mainScreenService.getLoginInfo().token;
                     for (var i = 0; i < this.valuesDiseasesCount.length; ++i) {
-                        diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i] });
+                        if (this.valuesDiseases[i]) {
+                            if (!this.valuesDiseasesPercentage[i]) {
+                                this.valuesDiseasesPercentage[i] = -1;
+                            }
+                            diseasesPack.push({ "id": this.valuesDiseases[i].id, "percentage": this.valuesDiseasesPercentage[i] });
+                        }
                     }
                     for (var i = 0; i < this.valuesBleachingCount.length; ++i) {
-                        bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i] });
+                        if (this.valuesBleaching[i]) {
+                            if (!this.valuesBleachingPercentage[i]) {
+                                this.valuesBleachingPercentage[i] = -1;
+                            }
+                            bleachingPack.push({ "id": this.valuesBleaching[i].id, "percentage": this.valuesBleachingPercentage[i] });
+                        }
                     }
                     if (!this.valueType.id) {
                         event.preventDefault();

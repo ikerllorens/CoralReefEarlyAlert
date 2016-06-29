@@ -23,7 +23,7 @@ if ($conn->connect_error) {
             ];
         }
 
-        $sql1 = "INSERT INTO Post (Usuario_id, TipCoral_id, Especie_id, Sector_id, SubSector_id, fecha_tiempo) VALUES (" . $usuarioID . "," . $info->coralTypeId . ", " . $info->coralSpeciesId . " , " . $info->sectorId . "," . $info->subsectorId . ",NOW())";
+        $sql1 = "INSERT INTO Post (Usuario_id, TipCoral_id, Especie_id, Sector_id, SubSector_id, fecha_tiempo, comentarios) VALUES (" . $usuarioID . "," . $info->coralTypeId . ", " . $info->coralSpeciesId . " , " . $info->sectorId . "," . $info->subsectorId . ",NOW(),'".$info->observations."')";
         if ($conn->query($sql1) === TRUE) {
             $postid = $conn->insert_id; //Post id   
             $longB = count($info->bleaching);
@@ -69,11 +69,9 @@ if ($conn->connect_error) {
     } else {
         $response = [
             "success" => false,
-            "reason" => "sesionExp"
+            "reason" => "sesionExp". $sql
         ];
     }
 }
 echo json_encode($response);
 ?>
-
-}
