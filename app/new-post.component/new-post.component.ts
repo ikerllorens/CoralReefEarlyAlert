@@ -123,7 +123,12 @@ export class NewPostScreen implements OnInit {
 
         this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
             console.log("item uploaded" + response);
+            console.log(item.file.name)
         };
+        
+        this.uploader.onBeforeUploadItem = (item: any) => {
+            item.file.name = "1_postID_" + item.file.name
+        }      
     }
 
     public addBleaching() {

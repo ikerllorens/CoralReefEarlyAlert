@@ -118,6 +118,10 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.getSectors();
                     this.uploader.onCompleteItem = function (item, response, status, headers) {
                         console.log("item uploaded" + response);
+                        console.log(item.file.name);
+                    };
+                    this.uploader.onBeforeUploadItem = function (item) {
+                        item.file.name = "1_postID_" + item.file.name;
                     };
                 };
                 NewPostScreen.prototype.addBleaching = function () {
