@@ -39,7 +39,7 @@ export class UserAddService {
         let newUser = new UserAddObject(username, password, name, surname, userType)
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        let url = Main.serverUrl + ''
+        let url = Main.serverUrl + 'insertUsuario.php'
         
         this.http.post(url, JSON.stringify(newUser), options)
             .map(this.extractData)

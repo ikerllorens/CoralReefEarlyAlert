@@ -36,7 +36,9 @@
     "bootstrap": "^3.3.6",
     "es6-shim": "^0.33.3",
     
-    "ng2-bootstrap":"^1.0"
+    "ng2-bootstrap":"^1.0", 
+    "ng2-select":"",
+    "ng2-file-upload":""
   },
   "devDependencies": {
     "concurrently": "^1.0.0",

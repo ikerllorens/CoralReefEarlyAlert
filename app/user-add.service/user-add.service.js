@@ -58,7 +58,7 @@ System.register(['@angular/core', '@angular/http', '../classes/UserAddObject.cla
                     var newUser = new UserAddObject_class_1.UserAddObject(username, password, name, surname, userType);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    var url = main_app_1.Main.serverUrl + '';
+                    var url = main_app_1.Main.serverUrl + 'insertUsuario.php';
                     this.http.post(url, JSON.stringify(newUser), options)
                         .map(this.extractData)
                         .subscribe(function (userAddResponse) {

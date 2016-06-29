@@ -88,7 +88,10 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                         //console.log('Request: ' + JSON.stringify(body))
                         this.http.post(main_app_1.Main.serverUrl + 'checklog.php', JSON.stringify(body), options)
                             .map(this.extractData)
-                            .subscribe(function (loginInfo) { return _this.fetchUserInfo(loginInfo.success); });
+                            .subscribe(function (loginInfo) {
+                            _this.fetchUserInfo(loginInfo.success);
+                            console.info(loginInfo.token);
+                        });
                     }
                 };
                 MainScreenService.prototype.fetchUserInfo = function (valid_token) {

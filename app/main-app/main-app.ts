@@ -17,7 +17,7 @@ import {DataCard} from '../data-card.component/data-card.component';
 import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
 import {UserAddScreen} from '../user-add.component/user-add.component';
-import {SearchPostsScreen} from '../search-posts.component/search-posts.component';
+import {NewPostScreen} from '../new-post.component/new-post.component'
 
 import {MenuElements} from '../classes/MenuElements.class/MenuElements.class';
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
@@ -41,11 +41,10 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 })
 
 @RouteConfig([
-    { path: '/home', name: 'Home', component: HomeScreen, useAsDefault: false },
-    { path: '/', name: 'UserAdd', component: UserAddScreen, useAsDefault: true },
+    { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
     { path: '/login', name: 'Login', component: LoginScreen },
-    { path: '/user-add', name: 'UserAdd', component: UserAddScreen },
-    { path: '/posts', name: 'Posts', component: SearchPostsScreen}
+    { path: '/userAdd', name: 'UserAdd', component: UserAddScreen },
+    { path: '/newPost', name: 'NewPost', component: NewPostScreen}
 ])
 
 export class Main implements OnInit {
@@ -60,9 +59,9 @@ export class Main implements OnInit {
 
     private menuElements: MenuElements[] = [
         { "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Búsqueda", "menuRef": "Posts" },
-        { "menuName": "Away", "menuRef": "Home" },
-        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" }
+        { "menuName": "Búsqueda", "menuRef": "Home" },
+        { "menuName": "Registrar Observación", "menuRef": "NewPost" },
+        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" },
     ];
 
     //Variables Dropdown

@@ -69,9 +69,11 @@ export class UserAddScreen implements OnInit {
     
     addUserButtonClicked (event) {
         if (this.mainScreenService.getLoginInfo().userType == 2) {
-            this.router.navigate(['Home'])
+            //this.router.navigate(['Home'])
+            this.userAddService.addUser(this.username, this.password, this.name, this.surname, this.userType)
         } else {
             console.info("Not Logged in as Admin")
+            event.preventDefault()
         }
     }
     

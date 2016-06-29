@@ -36,14 +36,14 @@ export class MainScreenService {
 
     private loggedIn: boolean = false
     private loginInfo: LoginResponse = new LoginResponse()
-    private token: string 
+    private token: string
 
     constructor(private http: Http) {
         this.loggedInObservable$.subscribe(
             loggedIn => this.loggedIn = loggedIn
         )
         this.loginInfoObservable$.subscribe(
-            loginInfo => { this.loginInfo = loginInfo; this.loginInfo.token = this.token}
+            loginInfo => { this.loginInfo = loginInfo; this.loginInfo.token = this.token }
         )
         //        this.checkLoginObservable$.sub        scribe(
         //            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
@@ -74,8 +74,11 @@ export class MainScreenService {
             this.http.post(Main.serverUrl + 'checklog.php', JSON.stringify(body), options)
                 .map(this.extractData)
                 .subscribe(
-                loginInfo => this.fetchUserInfo(loginInfo.success)
-                )
+
+                loginInfo => {
+                    this.fetchUserInfo(loginInfo.success)
+                    console.info(loginInfo.token)
+                })
         }
     }
 
@@ -88,7 +91,7 @@ export class MainScreenService {
             this.http.post(Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
                 .map(this.extractData)
                 .subscribe(
-                    loginInfo => this.loginInfoObservable.next(loginInfo)
+                loginInfo => this.loginInfoObservable.next(loginInfo)
                 )
             this.loggedInObservable.next(true)
         } else {
@@ -97,10 +100,10 @@ export class MainScreenService {
     }
 
     private extractData(res: Response) {
-        let responseJSON = res.json();    
+        let responseJSON = res.json();
         return responseJSON;
     }
-    
+
     public getLoginInfo(): LoginResponse {
         return this.loginInfo
     }

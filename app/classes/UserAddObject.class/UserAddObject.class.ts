@@ -24,7 +24,11 @@ export class UserAddObject {
     userType: number = 1
     
     constructor(username: string, password: string, name: string, surname: string, userType: number) {
-        
+        this.username = username
+        this.password = password
+        this.name = name
+        this.surname = surname
+        this.userType = userType
     }
 }
 

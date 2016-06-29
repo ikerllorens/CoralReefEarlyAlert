@@ -1,11 +1,21 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2016 ikerllorens
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-import {Component, Output, EventEmitter } from '@angular/core'
+import {Component, OnInit } from '@angular/core'
 import {LoginObject, LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 import { LoginScreenService } from '../login-screen.service/login-screen.service';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
@@ -21,13 +31,13 @@ import {MainScreenService} from '../main-app.service/main-app.service'
     templateUrl: 'app/login-screen.component/login-screen.component.html'
 })
 
-export class LoginScreen {
-//    
-//    @Output() onLogin = new EventEmitter<LoginResponse>();
+export class LoginScreen implements OnInit {
+    //    
+    //    @Output() onLogin = new EventEmitter<LoginResponse>();
 
     minimumLenUsername: number = 8;
     minimumLenPassword: number = 8;
-    
+
     password: String = "";
     username: String = "";
 
@@ -42,6 +52,16 @@ export class LoginScreen {
         console.info("login-screen module loaded");
     }
 
+    ngOnInit() {
+        this.onFieldUpdate()
+
+        setTimeout(() => {
+            console.info("Entrando...")
+            this.onFieldUpdate()
+        }, 50);
+
+    }
+
     preventCharacters(event): void {
         if (event.key == "<" || event.key == ">" || event.key == '"' ||
             event.key == " " || event.key == "&" || event.key == "|" ||
@@ -52,7 +72,7 @@ export class LoginScreen {
         }
     }
 
-    onFieldUpdate(event): void {
+    onFieldUpdate(): void {
         if (this.username.length < this.minimumLenUsername) {
             this.emptyUsername = true
         } else {
@@ -74,7 +94,7 @@ export class LoginScreen {
 
     login(event): void {
         console.info("Trying to login...")
-        
+
         if (this.username.length < this.minimumLenUsername) {
             event.preventDefault();
         } else if (this.password.length < this.minimumLenPassword) {
@@ -87,9 +107,9 @@ export class LoginScreen {
 
     successfulLoginRequest(login_response: LoginResponse): void {
         if (login_response.success == true) {
-            this.mainScreenService.setLoginInfo(login_response)           
-            this.router.navigate(['Home']) 
-       } else {
+            this.mainScreenService.setLoginInfo(login_response)
+            this.router.navigate(['Home'])
+        } else {
             console.info("Failed login because: " + login_response.reason)
         }
     }
