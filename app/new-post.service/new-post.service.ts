@@ -20,7 +20,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http'
 
 import {Main} from '../main-app/main-app'
 import {MainScreenService} from '../main-app.service/main-app.service'
-import {PostObject, CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse} from '../classes/PostObject.class/PostObject.class'
+import {PostObject, CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse, PostResponse} from '../classes/PostObject.class/PostObject.class'
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable'
@@ -34,7 +34,7 @@ export class NewPostService {
     coralTypesObservable$: Observable<CoralTypeResponse> = this.coralTypesObservable.asObservable()
     private coralSpeciesObservable: Subject<CoralSpeciesResponse> = new Subject<CoralSpeciesResponse>()
     coralSpeciesObservable$: Observable<CoralSpeciesResponse> = this.coralSpeciesObservable.asObservable()
-    
+
     private bleachingObservable: Subject<BleachingResponse> = new Subject<BleachingResponse>()
     bleachingObservable$: Observable<BleachingResponse> = this.bleachingObservable.asObservable()
     private diseasesObservable: Subject<DiseasesResponse> = new Subject<DiseasesResponse>()
@@ -45,10 +45,13 @@ export class NewPostService {
     private subsectorObservable: Subject<SubsectorsResponse> = new Subject<SubsectorsResponse>()
     subsectorObsevable$: Observable<SubsectorsResponse> = this.subsectorObservable.asObservable()
 
+    private postObservable: Subject<PostResponse> = new Subject<PostResponse>()
+    postObservable$: Observable<PostResponse> = this.postObservable.asObservable()
+
     constructor(private http: Http, mainScreenService: MainScreenService) {
 
     }
-    
+
     //TODO: hacer prototipo de funcion en MainScreenService
     private extractData(res: Response) {
         console.info('Response: ' + res.text())
@@ -105,7 +108,7 @@ export class NewPostService {
                 }
             })
     }
-    
+
     getDiseases() {
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
@@ -121,11 +124,11 @@ export class NewPostService {
                 }
             })
     }
-    
+
     getSectors() {
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
-        
+
         this.http.get(Main.serverUrl + 'getSectores.php', options)
             .map(this.extractData)
             .subscribe(sectors => {
@@ -136,35 +139,35 @@ export class NewPostService {
                 }
             })
     }
-    
+
     getSubsectors(idSector: number) {
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
         let sector = new SubsectorsRequest(idSector)
-        
+
         this.http.post(Main.serverUrl + 'getSubSectores.php', JSON.stringify(sector), options)
             .map(this.extractData)
             .subscribe(subsectors => {
-                if(subsectors.success) {
+                if (subsectors.success) {
                     this.subsectorObservable.next(subsectors)
                 } else {
                     console.error('Could not fetch subsectors because: ' + subsectors.reason)
                 }
-        })
+            })
     }
-    
-    public sendPost(info:  PostObject) {
+
+    public sendPost(info: PostObject) {
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
-       
+
         this.http.post(Main.serverUrl + 'insertPost.php', JSON.stringify(info), options)
             .map(this.extractData)
             .subscribe(successPost => {
                 if (successPost.success) {
-                    
+                    this.postObservable.next(successPost)
                 } else {
                     console.error('Could not insert post because: ' + successPost.reason)
                 }
-        })
+            })
     }
 } 

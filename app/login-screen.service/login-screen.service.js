@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs/Observable', '../rxjs-operators'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs/Observable', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, main_app_1, Observable_1;
+    var core_1, http_1, main_app_1, Observable_1, Subject_1;
     var LoginScreenService;
     return {
         setters:[
@@ -42,22 +42,33 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
             function (Observable_1_1) {
                 Observable_1 = Observable_1_1;
             },
+            function (Subject_1_1) {
+                Subject_1 = Subject_1_1;
+            },
             function (_1) {}],
         execute: function() {
             LoginScreenService = (function () {
                 function LoginScreenService(http) {
                     this.http = http;
-                    this.url = main_app_1.Main.serverUrl + 'login.php';
+                    this.loginSuccessObservable = new Subject_1.Subject();
+                    this.loginSuccessObservable$ = this.loginSuccessObservable.asObservable();
                 }
                 LoginScreenService.prototype.tryLogin = function (loginData) {
+                    var _this = this;
                     var body = JSON.stringify(loginData);
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    return this.http.post(this.url, body, options)
+                    var url = main_app_1.Main.serverUrl + 'login.php';
+                    return this.http.post(url, body, options)
                         .map(this.extractData)
-                        .catch(this.handleError);
+                        .subscribe(function (loginInfo) {
+                        if (loginInfo.success) {
+                            _this.loginSuccessObservable.next(loginInfo);
+                        }
+                    });
                 };
                 LoginScreenService.prototype.extractData = function (res) {
+                    console.warn(res.text());
                     var responseJSON = res.json();
                     return responseJSON;
                 };
