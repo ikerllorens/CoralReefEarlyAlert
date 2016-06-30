@@ -49,6 +49,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
             //TODO: Añadir funciónalidad al estar logeado 
             LoginScreen = (function () {
                 function LoginScreen(loginScreenService, router, mainScreenService) {
+                    var _this = this;
                     this.loginScreenService = loginScreenService;
                     this.router = router;
                     this.mainScreenService = mainScreenService;
@@ -63,6 +64,11 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     this.emptyPassword = true;
                     this.validLoginFields = false;
                     console.info("login-screen module loaded");
+                    this.loginScreenService.loginSuccessObservable$.subscribe(function (loginInfo) {
+                        console.info("token recieved from login: " + loginInfo.token + " with name: " + loginInfo.name);
+                        _this.mainScreenService.setLoginInfo(loginInfo);
+                        _this.router.navigate(['Home']);
+                    });
                 }
                 LoginScreen.prototype.ngOnInit = function () {
                     var _this = this;
@@ -102,7 +108,6 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     }
                 };
                 LoginScreen.prototype.login = function (event) {
-                    var _this = this;
                     console.info("Trying to login...");
                     if (this.username.length < this.minimumLenUsername) {
                         event.preventDefault();
@@ -112,16 +117,7 @@ System.register(['@angular/core', '../classes/LoginObject.class/LoginObject.clas
                     }
                     else {
                         var login_object = new LoginObject_class_1.LoginObject(this.username, this.password);
-                        this.loginScreenService.tryLogin(login_object).subscribe(function (login_success) { return _this.successfulLoginRequest(login_success); }, function (error) { return console.info(error); });
-                    }
-                };
-                LoginScreen.prototype.successfulLoginRequest = function (login_response) {
-                    if (login_response.success == true) {
-                        this.mainScreenService.setLoginInfo(login_response);
-                        this.router.navigate(['Home']);
-                    }
-                    else {
-                        console.info("Failed login because: " + login_response.reason);
+                        this.loginScreenService.tryLogin(login_object);
                     }
                 };
                 LoginScreen = __decorate([

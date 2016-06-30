@@ -73,7 +73,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     console.info('main-app module loaded');
                     //        mainScreenService.loginInfo.subscribe()
                     this.mainScreenService.loginInfoObservable$.subscribe(function (loginInfo) {
-                        _this.logInMode(loginInfo);
+                        _this.name = loginInfo.name;
                     });
                     this.mainScreenService.loggedInObservable$.subscribe(function (loggedIn) {
                         _this.loggedIn = loggedIn;
@@ -82,17 +82,8 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 Main.prototype.ngOnInit = function () {
                     this.mainScreenService.checkLogin();
                 };
-                //    ngOnInit(    ) {
-                //        let id = this.routeParams.get('userType    ');
-                //        console.info(    id)
-                //        //this.service.getHero(id).then(hero => this.hero = her    o);
-                //    }
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
-                };
-                Main.prototype.logInMode = function (loginInfo) {
-                    console.info('Name: ' + loginInfo.name + " with token: " + this.mainScreenService.getLoginInfo().token);
-                    this.name = loginInfo.name;
                 };
                 Main.prototype.logOut = function () {
                     this.loggedIn = false;

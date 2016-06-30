@@ -77,7 +77,7 @@ export class Main implements OnInit {
         //        mainScreenService.loginInfo.subscribe()
         this.mainScreenService.loginInfoObservable$.subscribe(
             loginInfo => {
-                this.logInMode(loginInfo)
+                 this.name = loginInfo.name
             }
         )
 
@@ -93,19 +93,8 @@ export class Main implements OnInit {
         this.mainScreenService.checkLogin()
     }
 
-    //    ngOnInit(    ) {
-    //        let id = this.routeParams.get('userType    ');
-    //        console.info(    id)
-    //        //this.service.getHero(id).then(hero => this.hero = her    o);
-    //    }
-
     toggleNavbarClick(): void {
         this.navBarToggle = !this.navBarToggle;
-    }
-
-    logInMode(loginInfo: LoginResponse) {
-        console.info('Name: ' + loginInfo.name + " with token: " + this.mainScreenService.getLoginInfo().token)
-        this.name = loginInfo.name
     }
 
     logOut() {

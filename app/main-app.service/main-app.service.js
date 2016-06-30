@@ -63,16 +63,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                     this.loggedIn = false;
                     this.loginInfo = new LoginObject_class_1.LoginResponse();
                     this.loggedInObservable$.subscribe(function (loggedIn) { return _this.loggedIn = loggedIn; });
-                    this.loginInfoObservable$.subscribe(function (loginInfo) { _this.loginInfo = loginInfo; _this.loginInfo.token = _this.token; });
-                    //        this.checkLoginObservable$.sub        scribe(
-                    //            loginInfo => this.fetchUserInfo(loginInfo.s        uccess)
-                    //                )
-                    //        this.valid_tokenObservable$.sub        scribe(
-                    //            loginInfo => this.loginInfoObservable.next(log        inInfo)
-                    //        )
+                    this.loginInfoObservable$.subscribe(function (loginInfo) {
+                        _this.loginInfo = loginInfo;
+                        localStorage.setItem("token_CEA", loginInfo.token);
+                    });
                 }
                 MainScreenService.prototype.setLoginInfo = function (loginInfo) {
-                    localStorage.setItem("token_CEA", loginInfo.token);
+                    console.info("on main-app: " + loginInfo.token);
                     this.loginInfoObservable.next(loginInfo);
                     this.loggedInObservable.next(true);
                 };
@@ -83,14 +80,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                     if (token != null) {
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                         var options = new http_1.RequestOptions({ headers: headers });
-                        this.token = token;
-                        var body = { "token": this.token };
+                        var body = { "token": token };
                         //console.log('Request: ' + JSON.stringify(body))
                         this.http.post(main_app_1.Main.serverUrl + 'checklog.php', JSON.stringify(body), options)
                             .map(this.extractData)
                             .subscribe(function (loginInfo) {
+                            _this.loginInfo.token = token;
                             _this.fetchUserInfo(loginInfo.success);
-                            console.info(loginInfo.token);
                         });
                     }
                 };
@@ -99,10 +95,13 @@ System.register(['@angular/core', '@angular/http', 'rxjs/Subject', 'rxjs/Observa
                     if (valid_token) {
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
                         var options = new http_1.RequestOptions({ headers: headers });
-                        var body = { "token": this.token };
+                        var body = { "token": this.loginInfo.token };
                         this.http.post(main_app_1.Main.serverUrl + 'tokenInfo.php', JSON.stringify(body), options)
                             .map(this.extractData)
-                            .subscribe(function (loginInfo) { return _this.loginInfoObservable.next(loginInfo); });
+                            .subscribe(function (loginInfo) {
+                            loginInfo.token = _this.loginInfo.token;
+                            _this.loginInfoObservable.next(loginInfo);
+                        });
                         this.loggedInObservable.next(true);
                     }
                     else {

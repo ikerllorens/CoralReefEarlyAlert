@@ -65,7 +65,7 @@ if ($conn->connect_error) {
         } else {
             $response = [
                 "success" => false,
-                "reason" => "Insert" . $sql
+                "reason" => "Insert: " . $sql1
             ];
         }
     } else {
