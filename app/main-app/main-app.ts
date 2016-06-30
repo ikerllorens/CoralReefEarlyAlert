@@ -58,11 +58,11 @@ export class Main implements OnInit {
 
 
     private menuElements: MenuElements[] = [
-        { "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Búsqueda", "menuRef": "Home" },
-        { "menuName": "Registrar Observación", "menuRef": "NewPost" },
-        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" },
-    ];
+        { "menuName": "Home", "menuRef": "Home", "permissions":0},
+        { "menuName": "Búsqueda", "menuRef": "Home", "permissions":0},
+        { "menuName": "Registrar Observación", "menuRef": "NewPost", "permissions":1 },
+        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" , "permissions": 2},
+    ]; 
 
     //Variables Dropdown
     private disabled: boolean = false;
@@ -87,6 +87,7 @@ export class Main implements OnInit {
                 this.loggedIn = loggedIn
             }
         )
+        
     }
 
     ngOnInit() {
@@ -98,6 +99,7 @@ export class Main implements OnInit {
     }
 
     logOut() {
+        this.mainScreenService.setLoginInfo(new LoginResponse())
         this.loggedIn = false
         localStorage.removeItem("token_CEA")
     }
