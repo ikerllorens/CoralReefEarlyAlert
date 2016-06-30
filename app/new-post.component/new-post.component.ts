@@ -127,7 +127,7 @@ export class NewPostScreen implements OnInit {
         };
         
         this.uploader.onBeforeUploadItem = (item: any) => {
-            item.file.name = "1_postID_" + item.file.name
+            item.file.name = "2_postID_" + item.file.name
         }      
     }
 

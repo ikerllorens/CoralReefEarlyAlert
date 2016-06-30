@@ -121,7 +121,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         console.log(item.file.name);
                     };
                     this.uploader.onBeforeUploadItem = function (item) {
-                        item.file.name = "1_postID_" + item.file.name;
+                        item.file.name = "2_postID_" + item.file.name;
                     };
                 };
                 NewPostScreen.prototype.addBleaching = function () {
