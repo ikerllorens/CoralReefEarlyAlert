@@ -44,6 +44,11 @@ export class SubsectorsResponse {
     datos: Array<SelectElement>
 }
 
+export class PostResponse {
+    idPost: number
+    success: boolean
+}
+
 export class SelectElement {
     id: number
     text: string

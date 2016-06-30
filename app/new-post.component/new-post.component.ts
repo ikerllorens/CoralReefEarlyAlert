@@ -113,6 +113,11 @@ export class NewPostScreen implements OnInit {
                 this.subsectors = itemsSubsectors.datos
                 this.disabledSubsector = false
             })
+
+        this.newPostService.postObservable$.subscribe(
+            postID => {
+                this.uploadPhotos(postID.idPost)
+            })
     }
 
     ngOnInit() {
@@ -125,10 +130,8 @@ export class NewPostScreen implements OnInit {
             console.log("item uploaded" + response);
             console.log(item.file.name)
         };
+
         
-        this.uploader.onBeforeUploadItem = (item: any) => {
-            item.file.name = "2_postID_" + item.file.name
-        }      
     }
 
     public addBleaching() {
@@ -224,7 +227,7 @@ export class NewPostScreen implements OnInit {
         let token = this.mainScreenService.getLoginInfo().token
 
         for (var i = 0; i < this.valuesDiseasesCount.length; ++i) {
-            if (this.valuesDiseases[i])  {
+            if (this.valuesDiseases[i]) {
                 if (!this.valuesDiseasesPercentage[i]) {
                     this.valuesDiseasesPercentage[i] = -1
                 }
@@ -255,5 +258,12 @@ export class NewPostScreen implements OnInit {
         console.info('JSON final: ' + JSON.stringify(postPackage))
         this.newPostService.sendPost(postPackage)
 
+    }
+
+    private uploadPhotos(idPost: number) {
+        this.uploader.onBeforeUploadItem = (item: any) => {
+            item.file.name = idPost +"_postID_" + item.file.name
+        }
+        this.uploader.uploadAll()
     }
 }
