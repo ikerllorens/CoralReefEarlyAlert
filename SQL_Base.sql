@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 30-06-2016 a las 22:25:26
+-- Tiempo de generación: 30-06-2016 a las 22:29:11
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
@@ -13,6 +13,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `Reef`
 --
+CREATE DATABASE IF NOT EXISTS `Reef` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `Reef`;
 
 -- --------------------------------------------------------
 
@@ -20,6 +22,7 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `CatBlanq`
 --
 
+DROP TABLE IF EXISTS `CatBlanq`;
 CREATE TABLE `CatBlanq` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -40,6 +43,7 @@ INSERT INTO `CatBlanq` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `Enfermedad`
 --
 
+DROP TABLE IF EXISTS `Enfermedad`;
 CREATE TABLE `Enfermedad` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -72,6 +76,7 @@ INSERT INTO `Enfermedad` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `Especie`
 --
 
+DROP TABLE IF EXISTS `Especie`;
 CREATE TABLE `Especie` (
   `id` int(10) NOT NULL,
   `nombre` varchar(45) NOT NULL,
@@ -149,6 +154,7 @@ INSERT INTO `Especie` (`id`, `nombre`, `TipCoral_id`) VALUES
 -- Estructura de tabla para la tabla `Foto`
 --
 
+DROP TABLE IF EXISTS `Foto`;
 CREATE TABLE `Foto` (
   `id` bigint(8) unsigned NOT NULL,
   `Post_id` bigint(8) unsigned NOT NULL,
@@ -170,6 +176,7 @@ INSERT INTO `Foto` (`id`, `Post_id`, `ruta`) VALUES
 -- Estructura de tabla para la tabla `Observador`
 --
 
+DROP TABLE IF EXISTS `Observador`;
 CREATE TABLE `Observador` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -190,6 +197,7 @@ INSERT INTO `Observador` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `Perfil`
 --
 
+DROP TABLE IF EXISTS `Perfil`;
 CREATE TABLE `Perfil` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -209,6 +217,7 @@ INSERT INTO `Perfil` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `Post`
 --
 
+DROP TABLE IF EXISTS `Post`;
 CREATE TABLE `Post` (
   `id` bigint(8) unsigned NOT NULL,
   `Usuario_id` int(10) NOT NULL,
@@ -245,6 +254,7 @@ INSERT INTO `Post` (`id`, `Usuario_id`, `Observador_id`, `TipCoral_id`, `Especie
 -- Estructura de tabla para la tabla `Post_has_CatBlanq`
 --
 
+DROP TABLE IF EXISTS `Post_has_CatBlanq`;
 CREATE TABLE `Post_has_CatBlanq` (
   `Post_id` bigint(8) unsigned NOT NULL,
   `CatBlanq_id` int(10) unsigned NOT NULL,
@@ -277,6 +287,7 @@ INSERT INTO `Post_has_CatBlanq` (`Post_id`, `CatBlanq_id`, `por`) VALUES
 -- Estructura de tabla para la tabla `Post_has_Enfermedad`
 --
 
+DROP TABLE IF EXISTS `Post_has_Enfermedad`;
 CREATE TABLE `Post_has_Enfermedad` (
   `Post_id` bigint(8) unsigned NOT NULL,
   `Enfermedad_id` int(10) unsigned NOT NULL,
@@ -303,6 +314,7 @@ INSERT INTO `Post_has_Enfermedad` (`Post_id`, `Enfermedad_id`, `por`) VALUES
 -- Estructura de tabla para la tabla `Sector`
 --
 
+DROP TABLE IF EXISTS `Sector`;
 CREATE TABLE `Sector` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -332,6 +344,7 @@ INSERT INTO `Sector` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `SubSector`
 --
 
+DROP TABLE IF EXISTS `SubSector`;
 CREATE TABLE `SubSector` (
   `id` int(10) unsigned NOT NULL,
   `Sector_id` int(10) unsigned NOT NULL,
@@ -358,6 +371,7 @@ INSERT INTO `SubSector` (`id`, `Sector_id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `TipCoral`
 --
 
+DROP TABLE IF EXISTS `TipCoral`;
 CREATE TABLE `TipCoral` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -387,6 +401,7 @@ INSERT INTO `TipCoral` (`id`, `nombre`) VALUES
 -- Estructura de tabla para la tabla `Usuario`
 --
 
+DROP TABLE IF EXISTS `Usuario`;
 CREATE TABLE `Usuario` (
   `id` int(10) NOT NULL COMMENT 'Para Perfil_id :   1 = Administrador, 2 = Usuario ',
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
