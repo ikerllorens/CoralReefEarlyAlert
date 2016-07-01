@@ -16,11 +16,48 @@
  */
 
 import {Injectable} from '@angular/core'
-import {Http} from '@angular/http'
+import {Http, Response, Headers, RequestOptions} from '@angular/http'
+
+import {Main} from '../main-app/main-app'
+import {MainScreenService} from '../main-app.service/main-app.service'
+import {PostObject, CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse, PostResponse} from '../classes/PostObject.class/PostObject.class'
+
+import { Subject }    from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable'
+import '../rxjs-operators'
 
 @Injectable()
 export class SearchPostsService {
+    
+    private coralTypesObservable: Subject<CoralTypeResponse> = new Subject<CoralTypeResponse>()
+    coralTypesObservable$: Observable<CoralTypeResponse> = this.coralTypesObservable.asObservable()
+    private coralSpeciesObservable: Subject<CoralSpeciesResponse> = new Subject<CoralSpeciesResponse>()
+    coralSpeciesObservable$: Observable<CoralSpeciesResponse> = this.coralSpeciesObservable.asObservable()
+
+    
     constructor(private http: Http) {
         console.info('search-posts module loaded')
+    }
+    
+     public getCoralTypes() {
+
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+
+        this.http.get(Main.serverUrl + 'getTipCorales.php', options).map(this.extractData).subscribe(
+            CoralTypes => {
+
+                if (CoralTypes.success) {
+                    this.coralTypesObservable.next(CoralTypes)
+                } else {
+                    console.error("Could not fetch CoralTypes because: " + CoralTypes.reason)
+                }
+            });
+    }  
+   
+     private extractData(res: Response) {
+        console.info('Response: ' + res.text())
+        let responseJSON = res.json();
+        return responseJSON;
     }
 }

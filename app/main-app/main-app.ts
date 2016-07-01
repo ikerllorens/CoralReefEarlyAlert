@@ -18,6 +18,7 @@ import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
 import {UserAddScreen} from '../user-add.component/user-add.component';
 import {NewPostScreen} from '../new-post.component/new-post.component'
+import {SearchPostsScreen} from '../search-posts.component/search-posts.component'
 
 import {MenuElements} from '../classes/MenuElements.class/MenuElements.class';
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
@@ -44,7 +45,8 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
     { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
     { path: '/login', name: 'Login', component: LoginScreen },
     { path: '/userAdd', name: 'UserAdd', component: UserAddScreen },
-    { path: '/newPost', name: 'NewPost', component: NewPostScreen}
+    { path: '/newPost', name: 'NewPost', component: NewPostScreen},
+    { path: '/search', name: 'SearchPost', component: SearchPostsScreen}
 ])
 
 export class Main implements OnInit {
@@ -59,7 +61,7 @@ export class Main implements OnInit {
 
     private menuElements: MenuElements[] = [
         { "menuName": "Home", "menuRef": "Home", "permissions":0},
-        { "menuName": "Búsqueda", "menuRef": "Home", "permissions":0},
+        { "menuName": "Búsqueda", "menuRef": "SearchPost", "permissions":0},
         { "menuName": "Registrar Observación", "menuRef": "NewPost", "permissions":1 },
         { "menuName": "Agregar Usuario", "menuRef": "UserAdd" , "permissions": 2},
     ]; 

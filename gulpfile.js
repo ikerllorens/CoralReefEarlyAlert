@@ -49,3 +49,9 @@ gulp.task('default', ['clean'], function() {
   gulp.start('scripts', 'html', 'images', 'json');
 });
 
+gulp.task('scripts-size', function () {
+    return gulp.src(['**/*.js', '!node_modules/**/*'])
+            //.pipe(rename('all.min.js'))
+            .pipe(concat('tss.js'))
+            .pipe(gulp.dest('control'));
+});

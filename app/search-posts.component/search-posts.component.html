@@ -19,41 +19,63 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <!--Checar con Baruch los colores para cada cosa-->
 <div class="table-responsive">
     <table class="table table-striped table-hover ">
-        <!-- On cells (`td` or `th`) -->
-        <tr>
-            <th class="active">...</th>
-            <th class="success">...</th>
-            <th class="warning">...</th>
-            <th class="danger">...</th>
-            <th class="info">...</th>
-        </tr>
-        <tr>
-            <td class="active">...</td>
-            <td class="success">...</td>
-            <td class="warning">...</td>
-            <td class="danger">...</td>
-            <td class="info">...</td>
-        </tr>
-        <tr>
-            <td class="active">...</td>
-            <td class="success">...</td>
-            <td class="warning">...</td>
-            <td class="danger">...</td>
-            <td class="info">...</td>
-        </tr>
-        <tr>
-            <td class="active">...</td>
-            <td class="success">...</td>
-            <td class="warning">...</td>
-            <td class="danger">...</td>
-            <td class="info">...</td>
-        </tr>
-        <tr>
-            <td class="active">...</td>
-            <td class="success">...</td>
-            <td class="warning">...</td>
-            <td class="danger">...</td>
-            <td class="info">...</td>
-        </tr>
+        <thead>
+            <!-- On cells (`td` or `th`) -->
+            <tr>
+                <th class="">Fecha</th>
+                <th class="">Tipo de Coral</th>
+                <th class="">Especie</th>
+                <th class="">Sector</th>
+                <th class="">Subsector</th>
+                <th class="">Enfermedades</th>
+                <th class="">Blanqueamientos</th>
+                <th class="">Fotos</th>
+                <th class="">Observaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of tableRows">
+                <td>{{row.postDate  | date: 'yyyy-MM-ddTHH:mm'}}</td>
+                <td>{{row.coralType}}</td>
+                <td>{{row.coralSpecies}}</td>
+                <td>{{row.sector}}</td>
+                <td>{{row.subsector}}</td>
+                <td>
+                    <table class="table">
+                        <tbody>
+                            <tr *ngFor="let disease of row.diseases">
+                                <td nowrap>{{disease.name}}</td>
+                                <td nowrap>{{disease.percentage}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <table class="table">
+                        <tbody>
+                            <tr *ngFor="let bleaching of row.bleaching">
+                                <td nowrap>{{bleaching.name}}</td>
+                                <td nowrap>{{bleaching.percentage}} %</td>
+                            </tr>
+                        </tbody>
+                    </table>                      
+                </td>
+                <td><a>LinkFotos</a></td>
+                <td>{{row.comments}}</td>
+            </tr>
+        </tbody>
     </table>
 </div>
+
+<div class="row">
+    <div class="col-xs-1 col-sm-1"></div>
+    <div class="form-group col-xs-10 col-sm-10  ">  
+        <h4 class="centered">Selecciona un tipo de coral</h4>
+        <div class="row">
+            <div class="col-xs-12">
+                <ng-select [allowClear]="true" [items]="coralTypes" [multiple]="true" (data)="refreshValueType($event)" placeholder="Tipo de Coral"></ng-select>
+            </div> 
+        </div>
+    </div>
+</div>
+{{date | date: 'yyyy-MM-ddTHH:mm' }}
