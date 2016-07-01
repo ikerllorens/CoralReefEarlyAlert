@@ -3,73 +3,49 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var gulp = require('gulp')
-    rename = require('gulp-rename'),
-    traceur = require('gulp-traceur'),
-    webserver = require('gulp-webserver');
-    watch = require('gulp-watch');
 
-// run init tasks
-gulp.task('default', ['dependencies', 'js', 'html', 'css']);
+var gulp = require('gulp');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
+var htmlmin = require('gulp-htmlmin');
+var imagemin = require('gulp-imagemin');
+var del = require('del');
 
-// run development task
-gulp.task('dev', ['watch', 'serve']);
 
-// serve the build dir
-gulp.task('serve', function () {
-  gulp.src('build')
-    .pipe(webserver({
-      open: true
-    }));
+gulp.task('lint', function () {
+    return gulp.src('**/*.js');
 });
 
-// watch for changes and run the relevant task
-gulp.task('watch', function () {
-  gulp.watch('src/**/*.js', ['js']);
-  gulp.watch('src/**/*.html', ['html']);
-  gulp.watch('src/**/*.css', ['css']);
-});
-
-// move dependencies into build dir
-gulp.task('dependencies', function () {
-  return gulp.src([
-    'node_modules/angular2/**'
-  ])
-    .pipe(gulp.dest('build/node_modules'));
-});
-
-// transpile & move js
-gulp.task('js', function () {
-  return gulp.src('app/**/*.js')
-    .pipe(rename({
-      extname: ''
-    }))
-    .pipe(traceur({
-      modules: 'instantiate',
-      moduleName: true,
-      annotations: true,
-      types: true,
-      memberVariables: true
-    }))
-    .pipe(rename({
-      extname: '.js'
-    }))
-    .pipe(gulp.dest('build'));
-});
-
-// move html
-gulp.task('html', function () {
-  return gulp.src('app/**/*.html')
-    .pipe(gulp.dest('build'))
-});
-
-// move css
-gulp.task('css', function () {
-  return gulp.src('app/**/*.css')
-    .pipe(gulp.dest('build'))
+gulp.task('scripts', function () {
+    return gulp.src(['**/*.js', '!node_modules/**/*'])
+            //.pipe(rename('all.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('build'));
 });
 
 gulp.task('html', function () {
-   return gulp.src('index.html')
-           .pipe(gulp.dest('build')) 
+    return gulp.src(['**/*.html', '!node_modules/**/*'])
+           // .pipe(htmlmin({collapseWhitespace: true}))
+            .pipe(gulp.dest('build'));
 });
+
+gulp.task('images', function() {
+  return gulp.src('img/**/*')
+    .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
+    .pipe(gulp.dest('build/img'));
+});
+
+gulp.task('json', function() {
+    return gulp.src('package.json')
+            .pipe(gulp.dest('build'));
+});
+
+gulp.task('clean', function() {
+  return del(['build']);
+});
+
+gulp.task('default', ['clean'], function() {
+  gulp.start('scripts', 'html', 'images', 'json');
+});
+
