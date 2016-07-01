@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 22-06-2016 a las 18:32:49
+-- Tiempo de generación: 30-06-2016 a las 22:29:11
 -- Versión del servidor: 5.5.42
 -- Versión de PHP: 7.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `Reef`
@@ -25,20 +19,20 @@ USE `Reef`;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `CatBalq`
+-- Estructura de tabla para la tabla `CatBlanq`
 --
 
-DROP TABLE IF EXISTS `CatBalq`;
-CREATE TABLE IF NOT EXISTS `CatBalq` (
+DROP TABLE IF EXISTS `CatBlanq`;
+CREATE TABLE `CatBlanq` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `CatBalq`
+-- Volcado de datos para la tabla `CatBlanq`
 --
 
-INSERT INTO `CatBalq` (`id`, `nombre`) VALUES
+INSERT INTO `CatBlanq` (`id`, `nombre`) VALUES
 (1, 'Pálido'),
 (2, 'Parcialmente blanqueado'),
 (3, 'Blanqueado');
@@ -50,7 +44,7 @@ INSERT INTO `CatBalq` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `Enfermedad`;
-CREATE TABLE IF NOT EXISTS `Enfermedad` (
+CREATE TABLE `Enfermedad` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
@@ -83,7 +77,7 @@ INSERT INTO `Enfermedad` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `Especie`;
-CREATE TABLE IF NOT EXISTS `Especie` (
+CREATE TABLE `Especie` (
   `id` int(10) NOT NULL,
   `nombre` varchar(45) NOT NULL,
   `TipCoral_id` int(10) unsigned DEFAULT NULL
@@ -161,11 +155,20 @@ INSERT INTO `Especie` (`id`, `nombre`, `TipCoral_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `Foto`;
-CREATE TABLE IF NOT EXISTS `Foto` (
+CREATE TABLE `Foto` (
   `id` bigint(8) unsigned NOT NULL,
   `Post_id` bigint(8) unsigned NOT NULL,
-  `ruta` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `ruta` varchar(100) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Foto`
+--
+
+INSERT INTO `Foto` (`id`, `Post_id`, `ruta`) VALUES
+(6, 2, '../uploads/2/2b3b9fdaece9c9f971d1f8a400b46f6e.jpeg'),
+(7, 2, '../uploads/2/b5c1de65ccd586a892de399fdc36e83d.jpg'),
+(8, 2, '../uploads/2/f2d3bb08ddd7cd32bc2628e34c85d1f6.jpeg');
 
 -- --------------------------------------------------------
 
@@ -174,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `Foto` (
 --
 
 DROP TABLE IF EXISTS `Observador`;
-CREATE TABLE IF NOT EXISTS `Observador` (
+CREATE TABLE `Observador` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -195,7 +198,7 @@ INSERT INTO `Observador` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `Perfil`;
-CREATE TABLE IF NOT EXISTS `Perfil` (
+CREATE TABLE `Perfil` (
   `id` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -215,17 +218,17 @@ INSERT INTO `Perfil` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `Post`;
-CREATE TABLE IF NOT EXISTS `Post` (
+CREATE TABLE `Post` (
   `id` bigint(8) unsigned NOT NULL,
   `Usuario_id` int(10) NOT NULL,
-  `Observador_id` int(10) unsigned NOT NULL,
+  `Observador_id` int(10) unsigned DEFAULT NULL,
   `TipCoral_id` int(10) unsigned NOT NULL,
   `Especie_id` int(10) NOT NULL,
   `Sector_id` int(10) unsigned NOT NULL,
   `SubSector_id` int(10) unsigned NOT NULL,
   `fecha_tiempo` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `comentarios` varchar(1000) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `Post`
@@ -233,28 +236,50 @@ CREATE TABLE IF NOT EXISTS `Post` (
 
 INSERT INTO `Post` (`id`, `Usuario_id`, `Observador_id`, `TipCoral_id`, `Especie_id`, `Sector_id`, `SubSector_id`, `fecha_tiempo`, `comentarios`) VALUES
 (1, 1, 2, 7, 8, 1, 2, '2016-06-14 05:00:00', 'esta baliendo berga la bida'),
-(2, 2, 1, 7, 9, 2, 5, '2016-06-15 21:07:44', 'que mal pedo');
+(2, 2, 1, 7, 9, 2, 5, '2016-06-15 21:07:44', 'que mal pedo'),
+(3, 2, NULL, 7, 9, 2, 5, '2016-06-28 22:14:15', 'HOLIIII'),
+(4, 1, NULL, 10, 33, 3, 7, '2016-06-29 02:44:47', NULL),
+(5, 1, NULL, 6, 48, 3, 7, '2016-06-29 02:49:52', NULL),
+(6, 1, NULL, 6, 48, 3, 7, '2016-06-29 02:51:06', NULL),
+(7, 1, NULL, 8, 11, 4, 8, '2016-06-29 03:01:09', 'esta dos dos'),
+(8, 1, NULL, 8, 11, 4, 8, '2016-06-29 03:01:40', 'esta dos dos'),
+(9, 1, NULL, 12, 58, 2, 4, '2016-06-29 03:15:16', 'yaya'),
+(10, 1, NULL, 1, 2, 3, 7, '2016-06-29 03:19:38', ''),
+(11, 1, NULL, 1, 2, 3, 7, '2016-06-29 03:19:56', ''),
+(12, 2, NULL, 10, 35, 3, 7, '2016-06-30 20:23:04', 'gg');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Post_has_CatBalq`
+-- Estructura de tabla para la tabla `Post_has_CatBlanq`
 --
 
-DROP TABLE IF EXISTS `Post_has_CatBalq`;
-CREATE TABLE IF NOT EXISTS `Post_has_CatBalq` (
+DROP TABLE IF EXISTS `Post_has_CatBlanq`;
+CREATE TABLE `Post_has_CatBlanq` (
   `Post_id` bigint(8) unsigned NOT NULL,
-  `CatBalq_id` int(10) unsigned NOT NULL,
+  `CatBlanq_id` int(10) unsigned NOT NULL,
   `por` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `Post_has_CatBalq`
+-- Volcado de datos para la tabla `Post_has_CatBlanq`
 --
 
-INSERT INTO `Post_has_CatBalq` (`Post_id`, `CatBalq_id`, `por`) VALUES
+INSERT INTO `Post_has_CatBlanq` (`Post_id`, `CatBlanq_id`, `por`) VALUES
 (1, 1, 5),
-(1, 2, 4);
+(1, 2, 4),
+(2, 3, 5),
+(5, 1, 2),
+(5, 2, 10),
+(5, 3, 20),
+(6, 1, 2),
+(6, 2, 10),
+(6, 3, 20),
+(7, 2, 4),
+(8, 2, 4),
+(9, 2, -1),
+(10, 2, 12),
+(11, 2, 12);
 
 -- --------------------------------------------------------
 
@@ -263,7 +288,7 @@ INSERT INTO `Post_has_CatBalq` (`Post_id`, `CatBalq_id`, `por`) VALUES
 --
 
 DROP TABLE IF EXISTS `Post_has_Enfermedad`;
-CREATE TABLE IF NOT EXISTS `Post_has_Enfermedad` (
+CREATE TABLE `Post_has_Enfermedad` (
   `Post_id` bigint(8) unsigned NOT NULL,
   `Enfermedad_id` int(10) unsigned NOT NULL,
   `por` int(10) DEFAULT NULL
@@ -274,7 +299,14 @@ CREATE TABLE IF NOT EXISTS `Post_has_Enfermedad` (
 --
 
 INSERT INTO `Post_has_Enfermedad` (`Post_id`, `Enfermedad_id`, `por`) VALUES
-(1, 3, 2);
+(1, 3, 2),
+(6, 3, 2),
+(7, 6, 4),
+(8, 6, 4),
+(9, 3, -1),
+(9, 4, 2),
+(10, 4, 12),
+(11, 4, 12);
 
 -- --------------------------------------------------------
 
@@ -283,7 +315,7 @@ INSERT INTO `Post_has_Enfermedad` (`Post_id`, `Enfermedad_id`, `por`) VALUES
 --
 
 DROP TABLE IF EXISTS `Sector`;
-CREATE TABLE IF NOT EXISTS `Sector` (
+CREATE TABLE `Sector` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
@@ -313,7 +345,7 @@ INSERT INTO `Sector` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `SubSector`;
-CREATE TABLE IF NOT EXISTS `SubSector` (
+CREATE TABLE `SubSector` (
   `id` int(10) unsigned NOT NULL,
   `Sector_id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
@@ -340,7 +372,7 @@ INSERT INTO `SubSector` (`id`, `Sector_id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `TipCoral`;
-CREATE TABLE IF NOT EXISTS `TipCoral` (
+CREATE TABLE `TipCoral` (
   `id` int(10) unsigned NOT NULL,
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
@@ -370,7 +402,7 @@ INSERT INTO `TipCoral` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `Usuario`;
-CREATE TABLE IF NOT EXISTS `Usuario` (
+CREATE TABLE `Usuario` (
   `id` int(10) NOT NULL COMMENT 'Para Perfil_id :   1 = Administrador, 2 = Usuario ',
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `nombre` varchar(45) NOT NULL,
@@ -380,25 +412,29 @@ CREATE TABLE IF NOT EXISTS `Usuario` (
   `Perfil_id` int(11) NOT NULL DEFAULT '1',
   `token` varchar(100) DEFAULT NULL,
   `tiempo_token` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `Usuario`
 --
 
 INSERT INTO `Usuario` (`id`, `fecha`, `nombre`, `apellido`, `mail`, `pass`, `Perfil_id`, `token`, `tiempo_token`) VALUES
-(1, '2016-06-22 16:03:24', 'Alan', 'Espinosa de los Monteros Cuevas', 'alanesp92@hotmail.com', 'centroakumal', 2, '4pZjLrwHSHiGdYFE4eP8Ss5OWO8PdP1wJujIH6Yj9ss5um4VEWIZYXEYXfegQprBNrJc1iZOo9XvIHYDZT8WAnZ7sGdpJgNSdCf', '2016-06-22 16:03:24'),
+(1, '2016-06-30 18:05:16', 'Alan', 'Espinosa de los Monteros Cuevas', 'alanesp92@hotmail.com', 'centroakumal', 2, 'hBKBYYZFsbA0gcEMXh1G3eNJNbJvxPcpkeaAd4O1IUVsnGxu8lDiyanTicDmAV0by0HD39ouLWSAXS6rZnCaUw5aLULBzdT8VlB', '2016-06-30 18:05:16'),
 (2, '2016-06-13 05:00:00', 'Iker', 'Llorens', 'iker.llorens.13@gmail.com', '12345678', 2, '2qvGj8ODHGQkFTXZ8NxPWwHZabSDHpXUnKVBVaz4qZEd89kc490IsVovVqD01ChlFVV3xHOq44cC6lGBR6NwnuB6RMIT31gTRRy', '2016-06-15 18:53:17'),
-(3, '2016-06-17 20:47:56', 'Baruch', 'Figueroa', 'baruch.figzav@gmail.com', 'yosoybaruch', 1, NULL, NULL);
+(3, '2016-06-17 20:47:56', 'Baruch', 'Figueroa', 'baruch.figzav@gmail.com', 'yosoybaruch', 1, NULL, NULL),
+(4, '2016-06-23 02:43:53', 'CÃ¡ndido', 'MuÃ±oz', 'slowmo2@msn.com', 'chamaco', 1, NULL, NULL),
+(5, '2016-06-23 02:49:31', 'CÃ¡ndido', 'MuÃ±oz', 'slowmo2@msn.com', 'puto', 1, NULL, NULL),
+(6, '2016-06-23 02:54:03', 'moÃƒÂ±oÃƒÂ±onga', 'marcelÃƒÂ­ÃƒÂ­ÃƒÂ­ÃƒÂ­no', 'slowmo2@msn.com', 'putitototte', 1, NULL, NULL),
+(7, '2016-06-23 03:07:46', 'ÃƒÂ±ÃƒÂ±ÃƒÂ±', 'ÃƒÂ±ÃƒÂ±ÃƒÂ±', 'ÃƒÂ±ÃƒÂ±ÃƒÂ±ÃƒÂ±', 'ÃƒÂ±ÃƒÂ±ÃƒÂ±', 1, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
 --
 
 --
--- Indices de la tabla `CatBalq`
+-- Indices de la tabla `CatBlanq`
 --
-ALTER TABLE `CatBalq`
+ALTER TABLE `CatBlanq`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id_UNIQUE` (`id`);
 
@@ -451,11 +487,11 @@ ALTER TABLE `Post`
   ADD KEY `fk_Post_SubSector1_idx` (`SubSector_id`);
 
 --
--- Indices de la tabla `Post_has_CatBalq`
+-- Indices de la tabla `Post_has_CatBlanq`
 --
-ALTER TABLE `Post_has_CatBalq`
-  ADD PRIMARY KEY (`Post_id`,`CatBalq_id`),
-  ADD KEY `fk_Post_has_CatBalq_CatBalq1_idx` (`CatBalq_id`),
+ALTER TABLE `Post_has_CatBlanq`
+  ADD PRIMARY KEY (`Post_id`,`CatBlanq_id`),
+  ADD KEY `fk_Post_has_CatBalq_CatBalq1_idx` (`CatBlanq_id`),
   ADD KEY `fk_Post_has_CatBalq_Post1_idx` (`Post_id`);
 
 --
@@ -501,9 +537,9 @@ ALTER TABLE `Usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `CatBalq`
+-- AUTO_INCREMENT de la tabla `CatBlanq`
 --
-ALTER TABLE `CatBalq`
+ALTER TABLE `CatBlanq`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Enfermedad`
@@ -519,7 +555,7 @@ ALTER TABLE `Especie`
 -- AUTO_INCREMENT de la tabla `Foto`
 --
 ALTER TABLE `Foto`
-  MODIFY `id` bigint(8) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `Observador`
 --
@@ -534,7 +570,7 @@ ALTER TABLE `Perfil`
 -- AUTO_INCREMENT de la tabla `Post`
 --
 ALTER TABLE `Post`
-  MODIFY `id` bigint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` bigint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `Sector`
 --
@@ -554,7 +590,7 @@ ALTER TABLE `TipCoral`
 -- AUTO_INCREMENT de la tabla `Usuario`
 --
 ALTER TABLE `Usuario`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Para Perfil_id :   1 = Administrador, 2 = Usuario ',AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Para Perfil_id :   1 = Administrador, 2 = Usuario ',AUTO_INCREMENT=8;
 --
 -- Restricciones para tablas volcadas
 --
@@ -575,26 +611,26 @@ ALTER TABLE `Foto`
 -- Filtros para la tabla `Post`
 --
 ALTER TABLE `Post`
-  ADD CONSTRAINT `fk_Post_Especie1` FOREIGN KEY (`Especie_id`) REFERENCES `Especie` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Post_Observador1` FOREIGN KEY (`Observador_id`) REFERENCES `Observador` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Post_Especie1` FOREIGN KEY (`Especie_id`) REFERENCES `Especie` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Post_Sector1` FOREIGN KEY (`Sector_id`) REFERENCES `Sector` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Post_SubSector1` FOREIGN KEY (`SubSector_id`) REFERENCES `SubSector` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Post_TipCoral1` FOREIGN KEY (`TipCoral_id`) REFERENCES `TipCoral` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Post_Usuario` FOREIGN KEY (`Usuario_id`) REFERENCES `Usuario` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `Post_has_CatBalq`
+-- Filtros para la tabla `Post_has_CatBlanq`
 --
-ALTER TABLE `Post_has_CatBalq`
-  ADD CONSTRAINT `fk_Post_has_CatBalq_Post1` FOREIGN KEY (`Post_id`) REFERENCES `Post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Post_has_CatBalq_CatBalq1` FOREIGN KEY (`CatBalq_id`) REFERENCES `CatBalq` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `Post_has_CatBlanq`
+  ADD CONSTRAINT `fk_Post_has_CatBlanq_CatBlanq1` FOREIGN KEY (`CatBlanq_id`) REFERENCES `CatBlanq` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Post_has_CatBlanq_Enfermedad` FOREIGN KEY (`Post_id`) REFERENCES `Post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `Post_has_Enfermedad`
 --
 ALTER TABLE `Post_has_Enfermedad`
-  ADD CONSTRAINT `fk_Post_has_Enfermedad_Post1` FOREIGN KEY (`Post_id`) REFERENCES `Post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Post_has_Enfermedad_Enfermedad1` FOREIGN KEY (`Enfermedad_id`) REFERENCES `Enfermedad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Post_has_Enfermedad_Enfermedad1` FOREIGN KEY (`Enfermedad_id`) REFERENCES `Enfermedad` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Post_has_Enfermedad_Post1` FOREIGN KEY (`Post_id`) REFERENCES `Post` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `SubSector`
@@ -607,7 +643,3 @@ ALTER TABLE `SubSector`
 --
 ALTER TABLE `Usuario`
   ADD CONSTRAINT `fk_Usuario_Perfil1` FOREIGN KEY (`Perfil_id`) REFERENCES `Perfil` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

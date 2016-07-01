@@ -19,4 +19,5 @@
 export class MenuElements {
     menuName: String;
     menuRef: String
+    permissions: number
 }

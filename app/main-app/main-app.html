@@ -25,7 +25,8 @@ and open the template in the editor.
 
             <ul class="nav navbar-nav">
                 <li *ngFor="let item of menuElements">
-                    <a role="button" style="color: whitesmoke" [routerLink]="[ item.menuRef ]"> {{ item.menuName }} <span class="sr-only"></span></a>
+                    <a *ngIf="item.permissions<=mainScreenService.getLoginInfo().userType" role="button" style="color: whitesmoke" [routerLink]="[ item.menuRef ]"> {{ item.menuName }}<span class="sr-only"></span></a>
+               
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">

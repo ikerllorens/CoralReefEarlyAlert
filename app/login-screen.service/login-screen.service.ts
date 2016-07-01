@@ -20,34 +20,42 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http'
 
 import { LoginObject, LoginResponse } from '../classes/LoginObject.class/LoginObject.class'
 import { Main } from '../main-app/main-app'
+import {MainScreenService} from '../main-app.service/main-app.service'
 import { Observable } from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject'
 import '../rxjs-operators'
 
 @Injectable()
 export class LoginScreenService {
-
-    private url = Main.serverUrl + 'login.php'
+    private loginSuccessObservable: Subject<LoginResponse> = new Subject<LoginResponse>()
+    loginSuccessObservable$: Observable<LoginResponse> = this.loginSuccessObservable.asObservable()
 
     constructor(private http: Http) {
 
     }
 
-    tryLogin(loginData: LoginObject): Observable<LoginResponse> {
+    tryLogin(loginData: LoginObject) {
         let body = JSON.stringify(loginData);
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        
-        return this.http.post(this.url, body, options)
+        let url = Main.serverUrl + 'login.php'
+
+        return this.http.post(url, body, options)
             .map(this.extractData)
-            .catch(this.handleError);
+            .subscribe(loginInfo => {
+                if (loginInfo.success) {
+                    this.loginSuccessObservable.next(loginInfo)
+                }
+            })
     }
 
 
     private extractData(res: Response) {
+        console.warn(res.text())
         let responseJSON = res.json();
         return responseJSON;
     }
-    
+
     private handleError(error: any) {
         // In a real world app, we might use a remote logging infrastructure
         // We'd also dig deeper into the error to get a better message

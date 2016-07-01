@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', '../user-add.component/user-add.component', '../new-post.component/new-post.component', 'ng2-bootstrap/ng2-bootstrap', '../main-app.service/main-app.service'], function(exports_1, context_1) {
+System.register(["@angular/core", '@angular/router-deprecated', '../data-card.component/data-card.component', '../login-screen.component/login-screen.component', '../home-screen.component/home-screen.component', '../user-add.component/user-add.component', '../new-post.component/new-post.component', 'ng2-bootstrap/ng2-bootstrap', '../main-app.service/main-app.service', '../classes/LoginObject.class/LoginObject.class'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -15,7 +15,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, user_add_component_1, new_post_component_1, ng2_bootstrap_1, main_app_service_1;
+    var core_1, router_deprecated_1, data_card_component_1, login_screen_component_1, home_screen_component_1, user_add_component_1, new_post_component_1, ng2_bootstrap_1, main_app_service_1, LoginObject_class_1;
     var Main;
     return {
         setters:[
@@ -45,6 +45,9 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
             },
             function (main_app_service_1_1) {
                 main_app_service_1 = main_app_service_1_1;
+            },
+            function (LoginObject_class_1_1) {
+                LoginObject_class_1 = LoginObject_class_1_1;
             }],
         execute: function() {
             //import { Progressbar } from "ng2-bootstrap/ng2-bootstrap";
@@ -62,10 +65,10 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.loggedIn = false;
                     this.name = "Identifícate";
                     this.menuElements = [
-                        { "menuName": "Home", "menuRef": "Home" },
-                        { "menuName": "Búsqueda", "menuRef": "Home" },
-                        { "menuName": "Registrar Observación", "menuRef": "NewPost" },
-                        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" },
+                        { "menuName": "Home", "menuRef": "Home", "permissions": 0 },
+                        { "menuName": "Búsqueda", "menuRef": "Home", "permissions": 0 },
+                        { "menuName": "Registrar Observación", "menuRef": "NewPost", "permissions": 1 },
+                        { "menuName": "Agregar Usuario", "menuRef": "UserAdd", "permissions": 2 },
                     ];
                     //Variables Dropdown
                     this.disabled = false;
@@ -73,7 +76,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     console.info('main-app module loaded');
                     //        mainScreenService.loginInfo.subscribe()
                     this.mainScreenService.loginInfoObservable$.subscribe(function (loginInfo) {
-                        _this.logInMode(loginInfo);
+                        _this.name = loginInfo.name;
                     });
                     this.mainScreenService.loggedInObservable$.subscribe(function (loggedIn) {
                         _this.loggedIn = loggedIn;
@@ -82,19 +85,11 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                 Main.prototype.ngOnInit = function () {
                     this.mainScreenService.checkLogin();
                 };
-                //    ngOnInit(    ) {
-                //        let id = this.routeParams.get('userType    ');
-                //        console.info(    id)
-                //        //this.service.getHero(id).then(hero => this.hero = her    o);
-                //    }
                 Main.prototype.toggleNavbarClick = function () {
                     this.navBarToggle = !this.navBarToggle;
                 };
-                Main.prototype.logInMode = function (loginInfo) {
-                    console.info('Name: ' + loginInfo.name + " with token: " + this.mainScreenService.getLoginInfo().token);
-                    this.name = loginInfo.name;
-                };
                 Main.prototype.logOut = function () {
+                    this.mainScreenService.setLoginInfo(new LoginObject_class_1.LoginResponse());
                     this.loggedIn = false;
                     localStorage.removeItem("token_CEA");
                 };

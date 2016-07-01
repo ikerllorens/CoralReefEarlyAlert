@@ -58,11 +58,11 @@ export class Main implements OnInit {
 
 
     private menuElements: MenuElements[] = [
-        { "menuName": "Home", "menuRef": "Home" },
-        { "menuName": "Búsqueda", "menuRef": "Home" },
-        { "menuName": "Registrar Observación", "menuRef": "NewPost" },
-        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" },
-    ];
+        { "menuName": "Home", "menuRef": "Home", "permissions":0},
+        { "menuName": "Búsqueda", "menuRef": "Home", "permissions":0},
+        { "menuName": "Registrar Observación", "menuRef": "NewPost", "permissions":1 },
+        { "menuName": "Agregar Usuario", "menuRef": "UserAdd" , "permissions": 2},
+    ]; 
 
     //Variables Dropdown
     private disabled: boolean = false;
@@ -77,7 +77,7 @@ export class Main implements OnInit {
         //        mainScreenService.loginInfo.subscribe()
         this.mainScreenService.loginInfoObservable$.subscribe(
             loginInfo => {
-                this.logInMode(loginInfo)
+                 this.name = loginInfo.name
             }
         )
 
@@ -87,28 +87,19 @@ export class Main implements OnInit {
                 this.loggedIn = loggedIn
             }
         )
+        
     }
 
     ngOnInit() {
         this.mainScreenService.checkLogin()
     }
 
-    //    ngOnInit(    ) {
-    //        let id = this.routeParams.get('userType    ');
-    //        console.info(    id)
-    //        //this.service.getHero(id).then(hero => this.hero = her    o);
-    //    }
-
     toggleNavbarClick(): void {
         this.navBarToggle = !this.navBarToggle;
     }
 
-    logInMode(loginInfo: LoginResponse) {
-        console.info('Name: ' + loginInfo.name + " with token: " + this.mainScreenService.getLoginInfo().token)
-        this.name = loginInfo.name
-    }
-
     logOut() {
+        this.mainScreenService.setLoginInfo(new LoginResponse())
         this.loggedIn = false
         localStorage.removeItem("token_CEA")
     }

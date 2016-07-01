@@ -65,6 +65,8 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     this.sectorsObservable$ = this.sectorsObservable.asObservable();
                     this.subsectorObservable = new Subject_1.Subject();
                     this.subsectorObsevable$ = this.subsectorObservable.asObservable();
+                    this.postObservable = new Subject_1.Subject();
+                    this.postObservable$ = this.postObservable.asObservable();
                 }
                 //TODO: hacer prototipo de funcion en MainScreenService
                 NewPostService.prototype.extractData = function (res) {
@@ -164,12 +166,14 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../m
                     });
                 };
                 NewPostService.prototype.sendPost = function (info) {
+                    var _this = this;
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
                     var options = new http_1.RequestOptions({ headers: headers });
                     this.http.post(main_app_1.Main.serverUrl + 'insertPost.php', JSON.stringify(info), options)
                         .map(this.extractData)
                         .subscribe(function (successPost) {
                         if (successPost.success) {
+                            _this.postObservable.next(successPost);
                         }
                         else {
                             console.error('Could not insert post because: ' + successPost.reason);

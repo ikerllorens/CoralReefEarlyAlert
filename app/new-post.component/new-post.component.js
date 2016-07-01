@@ -110,6 +110,9 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                         _this.subsectors = itemsSubsectors.datos;
                         _this.disabledSubsector = false;
                     });
+                    this.newPostService.postObservable$.subscribe(function (postID) {
+                        _this.uploadPhotos(postID.idPost);
+                    });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
                     this.newPostService.getCoralTypes();
@@ -118,6 +121,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.newPostService.getSectors();
                     this.uploader.onCompleteItem = function (item, response, status, headers) {
                         console.log("item uploaded" + response);
+                        console.log(item.file.name);
                     };
                 };
                 NewPostScreen.prototype.addBleaching = function () {
@@ -227,6 +231,12 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     var postPackage = new PostObject_class_1.PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments);
                     console.info('JSON final: ' + JSON.stringify(postPackage));
                     this.newPostService.sendPost(postPackage);
+                };
+                NewPostScreen.prototype.uploadPhotos = function (idPost) {
+                    this.uploader.onBeforeUploadItem = function (item) {
+                        item.file.name = idPost + "_postID_" + item.file.name;
+                    };
+                    this.uploader.uploadAll();
                 };
                 NewPostScreen = __decorate([
                     core_1.Component({

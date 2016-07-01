@@ -50,6 +50,12 @@ export class LoginScreen implements OnInit {
 
     constructor(private loginScreenService: LoginScreenService, private router: Router, private mainScreenService: MainScreenService) {
         console.info("login-screen module loaded");
+        this.loginScreenService.loginSuccessObservable$.subscribe(
+        loginInfo => {
+            console.info("token recieved from login: " + loginInfo.token + " with name: " + loginInfo.name)
+            this.mainScreenService.setLoginInfo(loginInfo)
+            this.router.navigate(['Home'])        
+        })
     }
 
     ngOnInit() {
@@ -101,16 +107,7 @@ export class LoginScreen implements OnInit {
             event.preventDefault();
         } else {
             var login_object = new LoginObject(this.username, this.password)
-            this.loginScreenService.tryLogin(login_object).subscribe(login_success => this.successfulLoginRequest(login_success), error => console.info(<any>error));
-        }
-    }
-
-    successfulLoginRequest(login_response: LoginResponse): void {
-        if (login_response.success == true) {
-            this.mainScreenService.setLoginInfo(login_response)
-            this.router.navigate(['Home'])
-        } else {
-            console.info("Failed login because: " + login_response.reason)
+            this.loginScreenService.tryLogin(login_object);
         }
     }
 }

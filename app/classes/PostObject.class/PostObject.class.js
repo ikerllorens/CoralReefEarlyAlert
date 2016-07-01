@@ -17,7 +17,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var CoralTypeResponse, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsResponse, SelectElement, CoralSpeciesRequest, SubsectorsRequest, PostObject;
+    var CoralTypeResponse, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsResponse, PostResponse, SelectElement, CoralSpeciesRequest, SubsectorsRequest, PostObject;
     return {
         setters:[],
         execute: function() {
@@ -57,6 +57,12 @@ System.register([], function(exports_1, context_1) {
                 return SubsectorsResponse;
             }());
             exports_1("SubsectorsResponse", SubsectorsResponse);
+            PostResponse = (function () {
+                function PostResponse() {
+                }
+                return PostResponse;
+            }());
+            exports_1("PostResponse", PostResponse);
             SelectElement = (function () {
                 function SelectElement() {
                 }
