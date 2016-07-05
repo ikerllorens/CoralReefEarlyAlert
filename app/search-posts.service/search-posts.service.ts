@@ -28,18 +28,25 @@ import '../rxjs-operators'
 
 @Injectable()
 export class SearchPostsService {
-    
+
     private coralTypesObservable: Subject<CoralTypeResponse> = new Subject<CoralTypeResponse>()
     coralTypesObservable$: Observable<CoralTypeResponse> = this.coralTypesObservable.asObservable()
     private coralSpeciesObservable: Subject<CoralSpeciesResponse> = new Subject<CoralSpeciesResponse>()
     coralSpeciesObservable$: Observable<CoralSpeciesResponse> = this.coralSpeciesObservable.asObservable()
 
-    
+    private sectorsObservable: Subject<SectorsResponse> = new Subject<SectorsResponse>()
+    sectorsObservable$: Observable<SectorsResponse> = this.sectorsObservable.asObservable()
+    private subsectorObservable: Subject<SubsectorsResponse> = new Subject<SubsectorsResponse>()
+    subsectorObsevable$: Observable<SubsectorsResponse> = this.subsectorObservable.asObservable()
+
+    private numberOfPagesObservable: Subject<number> = new Subject<number>()
+    numberOfPagesObservable$: Observable<number> = this.numberOfPagesObservable.asObservable()
+
     constructor(private http: Http) {
         console.info('search-posts module loaded')
     }
-    
-     public getCoralTypes() {
+
+    public getCoralTypes() {
 
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
@@ -53,11 +60,76 @@ export class SearchPostsService {
                     console.error("Could not fetch CoralTypes because: " + CoralTypes.reason)
                 }
             });
-    }  
-   
-     private extractData(res: Response) {
+    }
+
+    public getCoralSpecies() {
+        let typeID = -1
+        let coralType = new CoralSpeciesRequest(typeID)
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+
+        console.warn(JSON.stringify(coralType))
+        this.http.post(Main.serverUrl + 'getEspecies.php', JSON.stringify(coralType), options)
+            .map(this.extractData)
+            .subscribe(
+            coralSpecies => {
+                if (coralSpecies.success) {
+                    this.coralSpeciesObservable.next(coralSpecies)
+                } else {
+                    console.error("Could not fetch CoralSpecies because: " + coralSpecies.reason)
+                }
+            })
+    }
+
+    getSectors() {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+
+        this.http.get(Main.serverUrl + 'getSectores.php', options)
+            .map(this.extractData)
+            .subscribe(sectors => {
+                if (sectors.success) {
+                    this.sectorsObservable.next(sectors)
+                } else {
+                    console.error("Could not fetch sectors because: " + sectors.reason)
+                }
+            })
+    }
+
+    getSubsectors() {
+        let idSector = -1
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+        let sector = new SubsectorsRequest(idSector)
+
+        this.http.post(Main.serverUrl + 'getSubSectores.php', JSON.stringify(sector), options)
+            .map(this.extractData)
+            .subscribe(subsectors => {
+                if (subsectors.success) {
+                    this.subsectorObservable.next(subsectors)
+                } else {
+                    console.error('Could not fetch subsectors because: ' + subsectors.reason)
+                }
+            })
+    }
+
+    private extractData(res: Response) {
         console.info('Response: ' + res.text())
         let responseJSON = res.json();
         return responseJSON;
+    }
+
+    getTableData() {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+        this.http.get(Main.serverUrl + 'pagination.php', options)
+            .map(this.extractData)
+            .subscribe(tableResponse => {
+                if (tableResponse.success) {
+                    this.numberOfPagesObservable.next(tableResponse.paginas)
+                } else {
+                    console.error('Could not fetch Posts because: ' + tableResponse.reason)
+                }         
+        })
     }
 }

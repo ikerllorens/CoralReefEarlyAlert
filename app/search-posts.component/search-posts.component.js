@@ -26,7 +26,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, ng2_bootstrap_1, main_app_service_1, search_posts_service_1, ng2_select_1;
+    var core_1, ng2_bootstrap_1, ng2_bootstrap_2, main_app_service_1, search_posts_service_1, ng2_select_1;
     var SearchPostsScreen;
     return {
         setters:[
@@ -35,6 +35,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
             },
             function (ng2_bootstrap_1_1) {
                 ng2_bootstrap_1 = ng2_bootstrap_1_1;
+                ng2_bootstrap_2 = ng2_bootstrap_1_1;
             },
             function (main_app_service_1_1) {
                 main_app_service_1 = main_app_service_1_1;
@@ -54,16 +55,44 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                     this.date = new Date('2016-06-30 15:56:14');
                     this.tableRows = [];
                     this.coralTypes = [];
+                    this.coralSpecies = [];
+                    this.sectors = [];
+                    this.subSectors = [];
+                    this.selectedPhotos = [];
+                    this.maxSize = 6;
+                    this.bigCurrentPage = 1;
+                    this.bigTotalItems = 1;
                     console.info('search-posts module loaded');
                     this.searchPostsService.coralTypesObservable$.subscribe(function (items) {
                         _this.coralTypes = items.datos;
                     });
+                    this.searchPostsService.coralSpeciesObservable$.subscribe(function (items) {
+                        _this.coralSpecies = items.datos;
+                    });
+                    this.searchPostsService.sectorsObservable$.subscribe(function (items) {
+                        _this.sectors = items.datos;
+                    });
+                    this.searchPostsService.subsectorObsevable$.subscribe(function (items) {
+                        _this.subSectors = items.datos;
+                    });
                 }
                 SearchPostsScreen.prototype.ngOnInit = function () {
                     this.searchPostsService.getCoralTypes();
+                    this.searchPostsService.getCoralSpecies();
+                    this.searchPostsService.getSectors();
+                    this.searchPostsService.getSubsectors();
                     this.populateTable();
                 };
                 SearchPostsScreen.prototype.refreshValueType = function (event) {
+                };
+                SearchPostsScreen.prototype.refreshValueSpecies = function (event) {
+                };
+                SearchPostsScreen.prototype.refreshValueSector = function (event) {
+                };
+                SearchPostsScreen.prototype.refreshValueSubsector = function (event) {
+                };
+                SearchPostsScreen.prototype.showPhotos = function (index) {
+                    this.selectedPhotos = this.tableRows[index].photos;
                 };
                 SearchPostsScreen.prototype.populateTable = function () {
                     this.tableRows.push({
@@ -107,7 +136,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                         "subsector": "Sector1",
                         "diseases": [],
                         "bleaching": [],
-                        "photos": ["hello", "nunca"],
+                        "photos": ["uploads/15/235b32801f9346071cbb3a3af0eee34b.jpg", "uploads/15/a88810c40bf6df34c915831eb75db771.jpeg"],
                         "comments": "hasta crees"
                     });
                     this.tableRows.push({
@@ -132,12 +161,14 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                         "photos": ["hello", "nunca"],
                         "comments": "hasta crees"
                     });
+                    this.bigTotalItems = this.tableRows.length;
                 };
                 SearchPostsScreen = __decorate([
                     core_1.Component({
                         selector: "search-posts",
                         providers: [search_posts_service_1.SearchPostsService],
-                        directives: [ng2_bootstrap_1.PAGINATION_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES],
+                        directives: [ng2_bootstrap_1.PAGINATION_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES, ng2_bootstrap_2.MODAL_DIRECTVES, ng2_bootstrap_2.CAROUSEL_DIRECTIVES],
+                        viewProviders: [ng2_bootstrap_2.BS_VIEW_PROVIDERS],
                         templateUrl: 'app/search-posts.component/search-posts.component.html'
                     }), 
                     __metadata('design:paramtypes', [search_posts_service_1.SearchPostsService, main_app_service_1.MainScreenService])

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
 
 //import {ROUTER_DIRECTIVES, Router} from '@angular/router';
 /*
@@ -72,9 +72,9 @@ export class Main implements OnInit {
 
 
 
-    constructor(private mainScreenService: MainScreenService) {
+    constructor(private mainScreenService: MainScreenService, viewContainerRef:ViewContainerRef) {
         console.info('main-app module loaded');
-
+        this.viewContainerRef = viewContainerRef;
         
         //        mainScreenService.loginInfo.subscribe()
         this.mainScreenService.loginInfoObservable$.subscribe(

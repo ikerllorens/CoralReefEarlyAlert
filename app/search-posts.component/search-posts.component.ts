@@ -17,6 +17,7 @@
 
 import {Component, OnInit} from '@angular/core'
 import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS, CAROUSEL_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {SearchPostsService} from '../search-posts.service/search-posts.service'
@@ -29,7 +30,8 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
 @Component({
     selector: "search-posts",
     providers: [SearchPostsService],
-    directives: [PAGINATION_DIRECTIVES, SELECT_DIRECTIVES],
+    directives: [PAGINATION_DIRECTIVES, SELECT_DIRECTIVES, MODAL_DIRECTVES, CAROUSEL_DIRECTIVES],
+    viewProviders: [BS_VIEW_PROVIDERS],
     templateUrl: 'app/search-posts.component/search-posts.component.html'
 })
 
@@ -37,6 +39,16 @@ export class SearchPostsScreen implements OnInit {
     public date: Date = new Date('2016-06-30 15:56:14')
     public tableRows: SearchPostResponse[] = []
     public coralTypes: SelectElement[] = []
+    public coralSpecies: SelectElement[] = []
+    public sectors: SelectElement[] = []
+    public subSectors: SelectElement[] = []
+
+    public selectedPhotos = []
+
+
+    public maxSize: number = 6;
+    public bigCurrentPage: number = 1;
+    public bigTotalItems: number = 1
 
     constructor(private searchPostsService: SearchPostsService, private mainScreenService: MainScreenService) {
         console.info('search-posts module loaded')
@@ -44,15 +56,49 @@ export class SearchPostsScreen implements OnInit {
             items => {
                 this.coralTypes = items.datos
             })
+
+        this.searchPostsService.coralSpeciesObservable$.subscribe(
+            items => {
+                this.coralSpecies = items.datos
+            })
+
+        this.searchPostsService.sectorsObservable$.subscribe(
+            items => {
+                this.sectors = items.datos
+            })
+
+        this.searchPostsService.subsectorObsevable$.subscribe(
+            items => {
+                this.subSectors = items.datos
+            })
     }
 
     ngOnInit() {
         this.searchPostsService.getCoralTypes()
+        this.searchPostsService.getCoralSpecies()
+        this.searchPostsService.getSectors()
+        this.searchPostsService.getSubsectors()
         this.populateTable()
     }
 
     refreshValueType(event: any) {
-        
+
+    }
+
+    refreshValueSpecies(event: any) {
+
+    }
+
+    refreshValueSector(event: any) {
+
+    }
+
+    refreshValueSubsector(event: any) {
+
+    }
+
+    showPhotos(index: number)  {
+        this.selectedPhotos = this.tableRows[index].photos
     }
 
     public populateTable() {
@@ -97,7 +143,7 @@ export class SearchPostsScreen implements OnInit {
             "subsector": "Sector1",
             "diseases": [],
             "bleaching": [],
-            "photos": ["hello", "nunca"],
+            "photos": ["uploads/15/235b32801f9346071cbb3a3af0eee34b.jpg", "uploads/15/a88810c40bf6df34c915831eb75db771.jpeg"],
             "comments": "hasta crees"
         })
         this.tableRows.push({
@@ -122,7 +168,6 @@ export class SearchPostsScreen implements OnInit {
             "photos": ["hello", "nunca"],
             "comments": "hasta crees"
         })
+        this.bigTotalItems = this.tableRows.length
     }
-
-
 }

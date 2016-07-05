@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../classes/PostObject.class/PostObject.class', 'rxjs/Subject', '../rxjs-operators'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, main_app_1, Subject_1;
+    var core_1, http_1, main_app_1, PostObject_class_1, Subject_1;
     var SearchPostsService;
     return {
         setters:[
@@ -38,6 +38,9 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
             },
             function (main_app_1_1) {
                 main_app_1 = main_app_1_1;
+            },
+            function (PostObject_class_1_1) {
+                PostObject_class_1 = PostObject_class_1_1;
             },
             function (Subject_1_1) {
                 Subject_1 = Subject_1_1;
@@ -51,6 +54,12 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
                     this.coralTypesObservable$ = this.coralTypesObservable.asObservable();
                     this.coralSpeciesObservable = new Subject_1.Subject();
                     this.coralSpeciesObservable$ = this.coralSpeciesObservable.asObservable();
+                    this.sectorsObservable = new Subject_1.Subject();
+                    this.sectorsObservable$ = this.sectorsObservable.asObservable();
+                    this.subsectorObservable = new Subject_1.Subject();
+                    this.subsectorObsevable$ = this.subsectorObservable.asObservable();
+                    this.numberOfPagesObservable = new Subject_1.Subject();
+                    this.numberOfPagesObservable$ = this.numberOfPagesObservable.asObservable();
                     console.info('search-posts module loaded');
                 }
                 SearchPostsService.prototype.getCoralTypes = function () {
@@ -66,10 +75,75 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
                         }
                     });
                 };
+                SearchPostsService.prototype.getCoralSpecies = function () {
+                    var _this = this;
+                    var typeID = -1;
+                    var coralType = new PostObject_class_1.CoralSpeciesRequest(typeID);
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    console.warn(JSON.stringify(coralType));
+                    this.http.post(main_app_1.Main.serverUrl + 'getEspecies.php', JSON.stringify(coralType), options)
+                        .map(this.extractData)
+                        .subscribe(function (coralSpecies) {
+                        if (coralSpecies.success) {
+                            _this.coralSpeciesObservable.next(coralSpecies);
+                        }
+                        else {
+                            console.error("Could not fetch CoralSpecies because: " + coralSpecies.reason);
+                        }
+                    });
+                };
+                SearchPostsService.prototype.getSectors = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'getSectores.php', options)
+                        .map(this.extractData)
+                        .subscribe(function (sectors) {
+                        if (sectors.success) {
+                            _this.sectorsObservable.next(sectors);
+                        }
+                        else {
+                            console.error("Could not fetch sectors because: " + sectors.reason);
+                        }
+                    });
+                };
+                SearchPostsService.prototype.getSubsectors = function () {
+                    var _this = this;
+                    var idSector = -1;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    var sector = new PostObject_class_1.SubsectorsRequest(idSector);
+                    this.http.post(main_app_1.Main.serverUrl + 'getSubSectores.php', JSON.stringify(sector), options)
+                        .map(this.extractData)
+                        .subscribe(function (subsectors) {
+                        if (subsectors.success) {
+                            _this.subsectorObservable.next(subsectors);
+                        }
+                        else {
+                            console.error('Could not fetch subsectors because: ' + subsectors.reason);
+                        }
+                    });
+                };
                 SearchPostsService.prototype.extractData = function (res) {
                     console.info('Response: ' + res.text());
                     var responseJSON = res.json();
                     return responseJSON;
+                };
+                SearchPostsService.prototype.getTableData = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'pagination.php', options)
+                        .map(this.extractData)
+                        .subscribe(function (tableResponse) {
+                        if (tableResponse.success) {
+                            _this.numberOfPagesObservable.next(tableResponse.paginas);
+                        }
+                        else {
+                            console.error('Could not fetch Posts because: ' + tableResponse.reason);
+                        }
+                    });
                 };
                 SearchPostsService = __decorate([
                     core_1.Injectable(), 

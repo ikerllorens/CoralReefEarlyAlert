@@ -60,7 +60,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
              * son utilizadas, al igual que se importan los tags HTML de dichos componentes.
              */
             Main = (function () {
-                function Main(mainScreenService) {
+                function Main(mainScreenService, viewContainerRef) {
                     var _this = this;
                     this.mainScreenService = mainScreenService;
                     this.title = "Alerta Temprana de Arrecifes de Coral";
@@ -77,6 +77,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.disabled = false;
                     this.status = { isopen: false };
                     console.info('main-app module loaded');
+                    this.viewContainerRef = viewContainerRef;
                     //        mainScreenService.loginInfo.subscribe()
                     this.mainScreenService.loginInfoObservable$.subscribe(function (loginInfo) {
                         _this.name = loginInfo.name;
@@ -121,7 +122,7 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                         { path: '/newPost', name: 'NewPost', component: new_post_component_1.NewPostScreen },
                         { path: '/search', name: 'SearchPost', component: search_posts_component_1.SearchPostsScreen }
                     ]), 
-                    __metadata('design:paramtypes', [main_app_service_1.MainScreenService])
+                    __metadata('design:paramtypes', [main_app_service_1.MainScreenService, core_1.ViewContainerRef])
                 ], Main);
                 return Main;
             }());
