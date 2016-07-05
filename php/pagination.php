@@ -75,6 +75,7 @@ if ($conn->connect_error) {
         }
         
         $response[] = array(
+            "paginas" => $totalpages,
             "postDate" => $row['fecha_tiempo'],
             "coralType" => $row['TipCoral_id'],
             "coralSpecies" => $row['Especie_id'],
