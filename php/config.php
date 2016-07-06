@@ -1,10 +1,10 @@
 <?php
 ini_set("auto_detect_line_endings", true);
 
-$dbname = "Reef";
+$dbname = "triumpha_Reef";
 $servername = "localhost";
-$username = "root";
-$password = "root";
+$username = "triumpha_cea";
+$password = "CentroAkumal041";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

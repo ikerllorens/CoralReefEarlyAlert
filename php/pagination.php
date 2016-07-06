@@ -75,7 +75,6 @@ if ($conn->connect_error) {
         }
         
         $response[] = array(
-            "paginas" => $totalpages,
             "postDate" => $row['fecha_tiempo'],
             "coralType" => $row['TipCoral_id'],
             "coralSpecies" => $row['Especie_id'],
@@ -85,9 +84,13 @@ if ($conn->connect_error) {
             "bleaching" => $catblanq,
             "fotos" => $foto
         );
-
-        //$output[] = $post;
     }
-    echo json_encode($response);
+    $output= array(
+        "paginas" => $totalpages,
+        "datos"=>$response,
+        "success"=> true       
+    );
+    
+    echo json_encode($output);
 }
 ?>
