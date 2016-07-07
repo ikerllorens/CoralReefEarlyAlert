@@ -19,6 +19,7 @@ import {Component, OnInit} from '@angular/core'
 import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 import {MODAL_DIRECTVES, BS_VIEW_PROVIDERS, CAROUSEL_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
+import {Main} from '../main-app/main-app'
 import {MainScreenService} from '../main-app.service/main-app.service'
 import {SearchPostsService} from '../search-posts.service/search-posts.service'
 
@@ -135,7 +136,8 @@ export class SearchPostsScreen implements OnInit {
 
     showPhotos(index: number) {
         //{ruta: "../.."/xx.jpg}
-        this.selectedPhotos = this.tableRows[index].fotos.map(routes => {return routes.ruta})
+
+        this.selectedPhotos = this.tableRows[index].fotos.map(routes => { return (Main.serverUrl + routes.ruta)})
         console.info(this.selectedPhotos)
     }
     
@@ -150,8 +152,6 @@ export class SearchPostsScreen implements OnInit {
     
     clearFilter() {
         //Limpiar selección
-       
-        this.activeFilters = false
         this.coralTypeFilters = []
         this.coralSpeciesFilters = []
         this.sectorsFilters = []

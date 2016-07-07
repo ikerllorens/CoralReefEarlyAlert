@@ -3,14 +3,17 @@
 * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-System.register(['@angular/platform-browser-dynamic', '../main-app/main-app', '@angular/router-deprecated', '@angular/http'], function(exports_1, context_1) {
+System.register(['@angular/platform-browser-dynamic', '@angular/core', '../main-app/main-app', '@angular/router-deprecated', '@angular/http'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var platform_browser_dynamic_1, main_app_1, router_deprecated_1, http_1;
+    var platform_browser_dynamic_1, core_1, main_app_1, router_deprecated_1, http_1;
     return {
         setters:[
             function (platform_browser_dynamic_1_1) {
                 platform_browser_dynamic_1 = platform_browser_dynamic_1_1;
+            },
+            function (core_1_1) {
+                core_1 = core_1_1;
             },
             function (main_app_1_1) {
                 main_app_1 = main_app_1_1;
@@ -22,7 +25,7 @@ System.register(['@angular/platform-browser-dynamic', '../main-app/main-app', '@
                 http_1 = http_1_1;
             }],
         execute: function() {
-            //enableProdMode()
+            core_1.enableProdMode();
             platform_browser_dynamic_1.bootstrap(main_app_1.Main, [router_deprecated_1.ROUTER_PROVIDERS, http_1.HTTP_BINDINGS]);
         }
     }

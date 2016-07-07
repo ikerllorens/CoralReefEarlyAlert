@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.service/main-app.service', '../search-posts.service/search-posts.service', 'ng2-select/ng2-select'], function(exports_1, context_1) {
+System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app/main-app', '../main-app.service/main-app.service', '../search-posts.service/search-posts.service', 'ng2-select/ng2-select'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, ng2_bootstrap_1, ng2_bootstrap_2, main_app_service_1, search_posts_service_1, ng2_select_1;
+    var core_1, ng2_bootstrap_1, ng2_bootstrap_2, main_app_1, main_app_service_1, search_posts_service_1, ng2_select_1;
     var SearchPostsScreen;
     return {
         setters:[
@@ -36,6 +36,9 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
             function (ng2_bootstrap_1_1) {
                 ng2_bootstrap_1 = ng2_bootstrap_1_1;
                 ng2_bootstrap_2 = ng2_bootstrap_1_1;
+            },
+            function (main_app_1_1) {
+                main_app_1 = main_app_1_1;
             },
             function (main_app_service_1_1) {
                 main_app_service_1 = main_app_service_1_1;
@@ -133,7 +136,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                 };
                 SearchPostsScreen.prototype.showPhotos = function (index) {
                     //{ruta: "../.."/xx.jpg}
-                    this.selectedPhotos = this.tableRows[index].fotos.map(function (routes) { return routes.ruta; });
+                    this.selectedPhotos = this.tableRows[index].fotos.map(function (routes) { return (main_app_1.Main.serverUrl + routes.ruta); });
                     console.info(this.selectedPhotos);
                 };
                 SearchPostsScreen.prototype.changePage = function (pagenumber) {
@@ -145,7 +148,6 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                 };
                 SearchPostsScreen.prototype.clearFilter = function () {
                     //Limpiar selección
-                    this.activeFilters = false;
                     this.coralTypeFilters = [];
                     this.coralSpeciesFilters = [];
                     this.sectorsFilters = [];

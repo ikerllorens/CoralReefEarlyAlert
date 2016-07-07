@@ -51,7 +51,8 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
 
 export class Main implements OnInit {
     //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
-    public static serverUrl: String = "http://localhost/php/"
+    //public static serverUrl: String = "http://localhost/php/"
+    public static serverUrl: String = "http://triumphare.com/php/"
     private title: String = "Alerta Temprana de Arrecifes de Coral";
     private navBarToggle: Boolean = false;
 

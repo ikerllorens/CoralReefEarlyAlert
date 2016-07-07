@@ -107,7 +107,8 @@ System.register(["@angular/core", '@angular/router-deprecated', '../data-card.co
                     this.status.isopen = !this.status.isopen;
                 };
                 //    public static serverUrl: String = "http://localhost:8383/CoralReefEarlyAlert/php/"
-                Main.serverUrl = "http://localhost/php/";
+                //public static serverUrl: String = "http://localhost/php/"
+                Main.serverUrl = "http://triumphare.com/php/";
                 Main = __decorate([
                     core_1.Component({
                         selector: 'main-app',
