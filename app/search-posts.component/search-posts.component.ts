@@ -23,7 +23,7 @@ import {MainScreenService} from '../main-app.service/main-app.service'
 import {SearchPostsService} from '../search-posts.service/search-posts.service'
 
 import {SelectElement} from '../classes/PostObject.class/PostObject.class'
-import {SearchPostResponse} from '../classes/InfoObject/InfoObject'
+import {SearchPostResponse, SearchPostTable} from '../classes/InfoObject.class/InfoObject.class'
 
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
 
@@ -37,18 +37,25 @@ import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select'
 
 export class SearchPostsScreen implements OnInit {
     public date: Date = new Date('2016-06-30 15:56:14')
-    public tableRows: SearchPostResponse[] = []
+    public tableRows: SearchPostTable[] = []
     public coralTypes: SelectElement[] = []
+    private coralTypeFilters: number[] = []
     public coralSpecies: SelectElement[] = []
+    private coralSpeciesFilters: number[] = []
     public sectors: SelectElement[] = []
+    private sectorsFilters: number[] = []
     public subSectors: SelectElement[] = []
+    private subSectorsFilters: number[] = []
 
     public selectedPhotos = []
 
-
-    public maxSize: number = 6;
+    public itemsPerPage: number = 10
+    public maxSize: number = 7;
     public bigCurrentPage: number = 1;
-    public bigTotalItems: number = 1
+    public bigTotalItems: number = 0
+    
+    startDate: string = ""
+    endDate: string = ""
 
     constructor(private searchPostsService: SearchPostsService, private mainScreenService: MainScreenService) {
         console.info('search-posts module loaded')
@@ -71,6 +78,12 @@ export class SearchPostsScreen implements OnInit {
             items => {
                 this.subSectors = items.datos
             })
+
+        this.searchPostsService.postsTableObservable$.subscribe(
+            postsData => {
+                this.bigTotalItems = (postsData.paginas * this.itemsPerPage)
+                this.tableRows = postsData.datos
+            })
     }
 
     ngOnInit() {
@@ -78,27 +91,59 @@ export class SearchPostsScreen implements OnInit {
         this.searchPostsService.getCoralSpecies()
         this.searchPostsService.getSectors()
         this.searchPostsService.getSubsectors()
-        this.populateTable()
+        this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters)
+    
     }
 
-    refreshValueType(event: any) {
-
+    refreshValueType(event: SelectElement[]) {        
+        if(event) {
+            this.coralTypeFilters = event.map(IDs => { return IDs.id})
+            console.info(this.coralTypeFilters)
+        } else {
+            this.coralTypeFilters = []
+        }
     }
 
-    refreshValueSpecies(event: any) {
-
+    refreshValueSpecies(event: SelectElement[]) {
+        if(event) {
+            this.coralSpeciesFilters = event.map(IDs => { return IDs.id})
+            console.info(this.coralSpeciesFilters)
+        } else {
+            this.coralSpeciesFilters = []
+        }
     }
 
-    refreshValueSector(event: any) {
-
+    refreshValueSector(event: SelectElement[]) {
+        if(event) {
+            this.sectorsFilters = event.map(IDs => { return IDs.id})
+            console.info(this.sectorsFilters)
+        } else {
+            this.sectorsFilters = []
+        }
     }
 
-    refreshValueSubsector(event: any) {
-
+    refreshValueSubsector(event: SelectElement[]) {
+        if(event) {
+            this.subSectorsFilters = event.map(IDs => { return IDs.id})
+            console.info(this.subSectorsFilters)
+        } else {
+            this.subSectorsFilters = []
+        }
     }
 
-    showPhotos(index: number)  {
-        this.selectedPhotos = this.tableRows[index].photos
+    showPhotos(index: number) {
+        //{ruta: "../.."/xx.jpg}
+        this.selectedPhotos = this.tableRows[index].fotos.map(routes => {return routes.ruta})
+        console.info(this.selectedPhotos)
+    }
+    
+    changePage(pagenumber: any) {
+        console.warn(pagenumber.page)
+        this.searchPostsService.getTableData(pagenumber.page, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters)
+    }
+    
+    applyFilters() {
+            this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters)
     }
 
     public populateTable() {
@@ -110,29 +155,29 @@ export class SearchPostsScreen implements OnInit {
             "subsector": "Sector1",
             "diseases": [
                 {
-                    "name": "gripe corálica",
-                    "percentage": 23
+                    "nombre": "gripe corálica",
+                    "percentage": "23"
                 },
                 {
-                    "name": "viruela corálica",
-                    "percentage": 43
+                    "nombre": "viruela corálica",
+                    "percentage": "43"
                 },
                 {
-                    "name": "posesión diabólica corálica",
-                    "percentage": 23
+                    "nombre": "posesión diabólica corálica",
+                    "percentage": "23"
                 },
                 {
-                    "name": "banda roja",
-                    "percentage": 23
+                    "nombre": "banda roja",
+                    "percentage": "23"
                 }
             ],
             "bleaching": [
                 {
-                    "name": "parcial",
-                    "percentage": 21
+                    "nombre": "parcial",
+                    "percentage": "21"
                 }
             ],
-            "photos": ["hello", "nunca"],
+            "fotos": ["hello", "nunca"],
             "comments": "hasta crees"
         })
         this.tableRows.push({
@@ -143,7 +188,7 @@ export class SearchPostsScreen implements OnInit {
             "subsector": "Sector1",
             "diseases": [],
             "bleaching": [],
-            "photos": ["uploads/15/235b32801f9346071cbb3a3af0eee34b.jpg", "uploads/15/a88810c40bf6df34c915831eb75db771.jpeg"],
+            "fotos": ["uploads/15/235b32801f9346071cbb3a3af0eee34b.jpg", "uploads/15/a88810c40bf6df34c915831eb75db771.jpeg"],
             "comments": "hasta crees"
         })
         this.tableRows.push({
@@ -154,7 +199,7 @@ export class SearchPostsScreen implements OnInit {
             "subsector": "Sector1",
             "diseases": [],
             "bleaching": [],
-            "photos": ["hello", "nunca"],
+            "fotos": ["hello", "nunca"],
             "comments": "hasta crees"
         })
         this.tableRows.push({
@@ -165,9 +210,21 @@ export class SearchPostsScreen implements OnInit {
             "subsector": "Sector1",
             "diseases": [],
             "bleaching": [],
-            "photos": ["hello", "nunca"],
+            "fotos": ["hello", "nunca"],
             "comments": "hasta crees"
         })
-        this.bigTotalItems = this.tableRows.length
+        this.tableRows.push({
+            "postDate": new Date('2016-06-20 15:56:14'),
+            "coralType": "Coral de Fuego",
+            "coralSpecies": "Coralis Fueguis",
+            "sector": "Akumal Norte",
+            "subsector": "Sector1",
+            "diseases": [],
+            "bleaching": [],
+            "fotos": ["hello", "nunca"],
+            "comments": "hasta crees"
+        })
+       
+        //this.bigTotalItems = this.tableRows.length
     }
 }

@@ -11,12 +11,15 @@ if ($conn->connect_error) {
         "reason" => "Connection failed: " . $conn->connect_error            
     ];
 } else {
-    $info = array ('curpage' => 1, 'inicio' => "2016-06-15 11:07:44", 'final' => "2016-06-28 22:07:40", 'TipCoral' => array(6,7,8), 'Especie' => array(11,33,48),'Sector' => NULL);
+    //$info = array ('curpage' => 1, 'inicio' => "2016-06-15 11:07:44", 'final' => "2016-06-28 22:07:40", 'TipCoral' => array(6,7,8), 'Especie' => array(11,33,48),'Sector' => NULL);
     //echo json_encode($info);
+    $info['inicio'] = "2016-06-15 11:07:44";
+    $info['final'] = "2017-06-15 11:07:44";
+            
     $query = "SELECT COUNT(id) FROM Post";
     $flag = 0;
  
-    if (isset($info['TipCoral']) == true) {
+    if (isset($info['TipCoral']) == true && count($info['TipCoral'])!=0) {
         for ($i = 0; $i < count($info['TipCoral']); ++$i) {
             if ($i == 0) {
 
@@ -29,7 +32,7 @@ if ($conn->connect_error) {
         $flag = 1;
     }
     
-    if (isset($info['Especie']) == true) {
+    if (isset($info['Especie']) == true && count($info['Especie'])!=0) {
         if ($flag == 0) {
             $query = $query . " WHERE";
         } else {
@@ -46,7 +49,7 @@ if ($conn->connect_error) {
         $flag = 1;
     }
 
-    if (isset($info['Sector']) == true) {
+    if (isset($info['Sector']) == true && count($info['Sector'])!=0) {
         if ($flag == 0) {
             $query = $query . " WHERE";
         } else {
@@ -63,7 +66,7 @@ if ($conn->connect_error) {
         $flag = 1;
     }
 
-    if (isset($info['SubSector']) == true) {
+    if (isset($info['SubSector']) == true && count($info['SubSector'])!=0) {
         if ($flag == 0) {
             $query = $query . " WHERE";
         } else {
@@ -103,7 +106,7 @@ if ($conn->connect_error) {
 
     // echo json_encode($catblanq);
     // echo json_encode("\n");
-    // echo json_encode($query);
+//    echo json_encode(array('success'=> false, "reason"=> $query));
 // ********* INICIA Proceso de Paginación ************   
 // lets find out how many rows are in the MySQL table
     $sql = $query;
@@ -118,14 +121,14 @@ if ($conn->connect_error) {
     $totalpages = ceil($numrows / $rowsperpage);
 // get the current page or set a default
     
-    echo json_encode($info['curpage']);
+
     if (isset($info['curpage']) && is_numeric($info['curpage'])) {
         $currentpage = (int) $info['curpage'];
     } else {
         $currentpage = 1;  // default page number
     }
     
-    echo json_encode($currentpage);
+    
 // if current page is greater than total pages
     if ($currentpage > $totalpages) {
 // set current page to last page

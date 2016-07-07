@@ -55,13 +55,20 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                     this.date = new Date('2016-06-30 15:56:14');
                     this.tableRows = [];
                     this.coralTypes = [];
+                    this.coralTypeFilters = [];
                     this.coralSpecies = [];
+                    this.coralSpeciesFilters = [];
                     this.sectors = [];
+                    this.sectorsFilters = [];
                     this.subSectors = [];
+                    this.subSectorsFilters = [];
                     this.selectedPhotos = [];
-                    this.maxSize = 6;
+                    this.itemsPerPage = 10;
+                    this.maxSize = 7;
                     this.bigCurrentPage = 1;
-                    this.bigTotalItems = 1;
+                    this.bigTotalItems = 0;
+                    this.startDate = "";
+                    this.endDate = "";
                     console.info('search-posts module loaded');
                     this.searchPostsService.coralTypesObservable$.subscribe(function (items) {
                         _this.coralTypes = items.datos;
@@ -75,24 +82,65 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                     this.searchPostsService.subsectorObsevable$.subscribe(function (items) {
                         _this.subSectors = items.datos;
                     });
+                    this.searchPostsService.postsTableObservable$.subscribe(function (postsData) {
+                        _this.bigTotalItems = (postsData.paginas * _this.itemsPerPage);
+                        _this.tableRows = postsData.datos;
+                    });
                 }
                 SearchPostsScreen.prototype.ngOnInit = function () {
                     this.searchPostsService.getCoralTypes();
                     this.searchPostsService.getCoralSpecies();
                     this.searchPostsService.getSectors();
                     this.searchPostsService.getSubsectors();
-                    this.populateTable();
+                    this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters);
                 };
                 SearchPostsScreen.prototype.refreshValueType = function (event) {
+                    if (event) {
+                        this.coralTypeFilters = event.map(function (IDs) { return IDs.id; });
+                        console.info(this.coralTypeFilters);
+                    }
+                    else {
+                        this.coralTypeFilters = [];
+                    }
                 };
                 SearchPostsScreen.prototype.refreshValueSpecies = function (event) {
+                    if (event) {
+                        this.coralSpeciesFilters = event.map(function (IDs) { return IDs.id; });
+                        console.info(this.coralSpeciesFilters);
+                    }
+                    else {
+                        this.coralSpeciesFilters = [];
+                    }
                 };
                 SearchPostsScreen.prototype.refreshValueSector = function (event) {
+                    if (event) {
+                        this.sectorsFilters = event.map(function (IDs) { return IDs.id; });
+                        console.info(this.sectorsFilters);
+                    }
+                    else {
+                        this.sectorsFilters = [];
+                    }
                 };
                 SearchPostsScreen.prototype.refreshValueSubsector = function (event) {
+                    if (event) {
+                        this.subSectorsFilters = event.map(function (IDs) { return IDs.id; });
+                        console.info(this.subSectorsFilters);
+                    }
+                    else {
+                        this.subSectorsFilters = [];
+                    }
                 };
                 SearchPostsScreen.prototype.showPhotos = function (index) {
-                    this.selectedPhotos = this.tableRows[index].photos;
+                    //{ruta: "../.."/xx.jpg}
+                    this.selectedPhotos = this.tableRows[index].fotos.map(function (routes) { return routes.ruta; });
+                    console.info(this.selectedPhotos);
+                };
+                SearchPostsScreen.prototype.changePage = function (pagenumber) {
+                    console.warn(pagenumber.page);
+                    this.searchPostsService.getTableData(pagenumber.page, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters);
+                };
+                SearchPostsScreen.prototype.applyFilters = function () {
+                    this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters);
                 };
                 SearchPostsScreen.prototype.populateTable = function () {
                     this.tableRows.push({
@@ -103,29 +151,29 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                         "subsector": "Sector1",
                         "diseases": [
                             {
-                                "name": "gripe corálica",
-                                "percentage": 23
+                                "nombre": "gripe corálica",
+                                "percentage": "23"
                             },
                             {
-                                "name": "viruela corálica",
-                                "percentage": 43
+                                "nombre": "viruela corálica",
+                                "percentage": "43"
                             },
                             {
-                                "name": "posesión diabólica corálica",
-                                "percentage": 23
+                                "nombre": "posesión diabólica corálica",
+                                "percentage": "23"
                             },
                             {
-                                "name": "banda roja",
-                                "percentage": 23
+                                "nombre": "banda roja",
+                                "percentage": "23"
                             }
                         ],
                         "bleaching": [
                             {
-                                "name": "parcial",
-                                "percentage": 21
+                                "nombre": "parcial",
+                                "percentage": "21"
                             }
                         ],
-                        "photos": ["hello", "nunca"],
+                        "fotos": ["hello", "nunca"],
                         "comments": "hasta crees"
                     });
                     this.tableRows.push({
@@ -136,7 +184,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                         "subsector": "Sector1",
                         "diseases": [],
                         "bleaching": [],
-                        "photos": ["uploads/15/235b32801f9346071cbb3a3af0eee34b.jpg", "uploads/15/a88810c40bf6df34c915831eb75db771.jpeg"],
+                        "fotos": ["uploads/15/235b32801f9346071cbb3a3af0eee34b.jpg", "uploads/15/a88810c40bf6df34c915831eb75db771.jpeg"],
                         "comments": "hasta crees"
                     });
                     this.tableRows.push({
@@ -147,7 +195,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                         "subsector": "Sector1",
                         "diseases": [],
                         "bleaching": [],
-                        "photos": ["hello", "nunca"],
+                        "fotos": ["hello", "nunca"],
                         "comments": "hasta crees"
                     });
                     this.tableRows.push({
@@ -158,10 +206,21 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                         "subsector": "Sector1",
                         "diseases": [],
                         "bleaching": [],
-                        "photos": ["hello", "nunca"],
+                        "fotos": ["hello", "nunca"],
                         "comments": "hasta crees"
                     });
-                    this.bigTotalItems = this.tableRows.length;
+                    this.tableRows.push({
+                        "postDate": new Date('2016-06-20 15:56:14'),
+                        "coralType": "Coral de Fuego",
+                        "coralSpecies": "Coralis Fueguis",
+                        "sector": "Akumal Norte",
+                        "subsector": "Sector1",
+                        "diseases": [],
+                        "bleaching": [],
+                        "fotos": ["hello", "nunca"],
+                        "comments": "hasta crees"
+                    });
+                    //this.bigTotalItems = this.tableRows.length
                 };
                 SearchPostsScreen = __decorate([
                     core_1.Component({

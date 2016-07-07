@@ -40,19 +40,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <br>
         <div class="row">
             <div class="col-xs-6">
-                <ng-select [allowClear]="true" [items]="sectors" [multiple]="true" (data)="refreshValueSector($event)" placeholder="Sector"></ng-select>
-            </div>
-            <div class="col-xs-6">
-                <ng-select [allowClear]="true" [items]="subSectors" [multiple]="true" (data)="refreshValueSubsector($event)" placeholder="Subsector"></ng-select>
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-xs-6">
                 <button class="btn btn-block btn-warning">Borrar Filtros</button>
             </div>
             <div class="col-xs-6">
-                <button class="btn btn-block btn-info">Filtrar</button>
+                <button (click)="applyFilters()" class="btn btn-block btn-info">Filtrar</button>
             </div>
         </div>
     </div>
@@ -79,7 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </thead>
         <tbody>
             <tr *ngFor="let row of tableRows; let i = index">
-                <td>{{row.postDate  | date: 'yyyy-MM-ddTHH:mm'}}</td>
+                <td>{{row.postDate }}</td>
                 <td>{{row.coralType}}</td>
                 <td>{{row.coralSpecies}}</td>
                 <td>{{row.sector}}</td>
@@ -88,7 +79,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <table class="table table-condensed ">
                         <tbody>
                             <tr *ngFor="let disease of row.diseases">
-                                <td nowrap>{{disease.name}}</td>
+                                <td nowrap>{{disease.nombre}}</td>
                                 <td nowrap>{{disease.percentage}} %</td>
                             </tr>
                         </tbody>
@@ -98,7 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <table class="table table-condensed">
                         <tbody>
                             <tr *ngFor="let bleaching of row.bleaching">
-                                <td nowrap>{{bleaching.name}}</td>
+                                <td nowrap>{{bleaching.nombre}}</td>
                                 <td nowrap>{{bleaching.percentage}} %</td>
                             </tr>
                         </tbody>
@@ -112,8 +103,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 </div>
 <div class="row">
     <div class="col-xs-12 center-block centered text-center">
-        <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize" class="pagination-md"
-            [boundaryLinks]="true" [rotate]="true" (numPages)="numPages = $event" [previousText]="'Anterior'" [nextText]="'Siguiente'"></pagination>
+        <pagination [totalItems]="bigTotalItems" [itemsPerPage]="itemsPerPage" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize" class="pagination-md"
+            [boundaryLinks]="true" [rotate]="true" (pageChanged)="changePage($event)" [previousText]="'Anterior'" [nextText]="'Siguiente'"></pagination>
     </div>
 </div>
 
@@ -132,9 +123,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <img [src]="photo" style="width: 100%">
                         <div class="carousel-caption">
                             <h4>Fotografía {{index + 1}}</h4>
+                             {{photo}}
                         </div>
                     </slide>
                 </carousel>
+               
             </div>
         </div>
     </div>

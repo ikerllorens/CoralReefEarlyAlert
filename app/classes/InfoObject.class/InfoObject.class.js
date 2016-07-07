@@ -17,23 +17,35 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var SearchPostResponse, DiseasesBlechingObject;
+    var SearchPostTable, DiseasesBlechingObject, SearchPostResponse, SearchPostRequest;
     return {
         setters:[],
         execute: function() {
-            SearchPostResponse = (function () {
-                function SearchPostResponse() {
+            SearchPostTable = (function () {
+                function SearchPostTable() {
                 }
-                return SearchPostResponse;
+                return SearchPostTable;
             }());
-            exports_1("SearchPostResponse", SearchPostResponse);
+            exports_1("SearchPostTable", SearchPostTable);
             DiseasesBlechingObject = (function () {
                 function DiseasesBlechingObject() {
                 }
                 return DiseasesBlechingObject;
             }());
             exports_1("DiseasesBlechingObject", DiseasesBlechingObject);
+            SearchPostResponse = (function () {
+                function SearchPostResponse() {
+                }
+                return SearchPostResponse;
+            }());
+            exports_1("SearchPostResponse", SearchPostResponse);
+            SearchPostRequest = (function () {
+                function SearchPostRequest() {
+                }
+                return SearchPostRequest;
+            }());
+            exports_1("SearchPostRequest", SearchPostRequest);
         }
     }
 });
-//# sourceMappingURL=InfoObject.js.map
+//# sourceMappingURL=InfoObject.class.js.map

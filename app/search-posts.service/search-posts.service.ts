@@ -19,8 +19,9 @@ import {Injectable} from '@angular/core'
 import {Http, Response, Headers, RequestOptions} from '@angular/http'
 
 import {Main} from '../main-app/main-app'
-import {MainScreenService} from '../main-app.service/main-app.service'
-import {PostObject, CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, BleachingResponse, DiseasesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse, PostResponse} from '../classes/PostObject.class/PostObject.class'
+//import {MainScreenService} from '../main-app.service/main-app.service'
+import {BleachingResponse, DiseasesResponse, CoralTypeResponse, CoralSpeciesRequest, CoralSpeciesResponse, SectorsResponse, SubsectorsRequest, SubsectorsResponse} from '../classes/PostObject.class/PostObject.class'
+import {SearchPostResponse, SearchPostRequest} from '../classes/InfoObject.class/InfoObject.class'
 
 import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable'
@@ -39,13 +40,20 @@ export class SearchPostsService {
     private subsectorObservable: Subject<SubsectorsResponse> = new Subject<SubsectorsResponse>()
     subsectorObsevable$: Observable<SubsectorsResponse> = this.subsectorObservable.asObservable()
 
-    private numberOfPagesObservable: Subject<number> = new Subject<number>()
-    numberOfPagesObservable$: Observable<number> = this.numberOfPagesObservable.asObservable()
+    private bleachingObservable: Subject<BleachingResponse> = new Subject<BleachingResponse>()
+    bleachingObservable$: Observable<BleachingResponse> = this.bleachingObservable.asObservable()
+    private diseasesObservable: Subject<DiseasesResponse> = new Subject<DiseasesResponse>()
+    diseasesObservable$: Observable<DiseasesResponse> = this.diseasesObservable.asObservable()
+
+
+    private postsTableObservable: Subject<SearchPostResponse> = new Subject<SearchPostResponse>()
+    postsTableObservable$: Observable<SearchPostResponse> = this.postsTableObservable.asObservable()
 
     constructor(private http: Http) {
         console.info('search-posts module loaded')
     }
 
+    // TODO: utilizar los métodos de NewPostService
     public getCoralTypes() {
 
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
@@ -113,23 +121,66 @@ export class SearchPostsService {
             })
     }
 
+    getBleaching() {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+
+        this.http.get(Main.serverUrl + 'getCatBlanq.php', options)
+            .map(this.extractData)
+            .subscribe(bleachings => {
+
+                if (bleachings.success) {
+                    this.bleachingObservable.next(bleachings)
+                } else {
+                    console.error("Could not fetch bleaching because: " + bleachings.reason)
+                }
+            })
+    }
+
+    getDiseases() {
+        let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+        let options = new RequestOptions({ headers: headers });
+
+        this.http.get(Main.serverUrl + 'getEnfermedades.php', options)
+            .map(this.extractData)
+            .subscribe(diseases => {
+
+                if (diseases.success) {
+                    this.diseasesObservable.next(diseases)
+                } else {
+                    console.error("Could not fetch diseases because: " + diseases.reason)
+                }
+            })
+    }
+
     private extractData(res: Response) {
         console.info('Response: ' + res.text())
         let responseJSON = res.json();
         return responseJSON;
     }
 
-    getTableData() {
+    getTableData(page: number, startDate: Date, endDate: Date, TipCoral: number[], Especie: number[], Sector: number[], SubSector: number[]) {
+        let body: SearchPostRequest = {
+            "curpage": page,
+            "inicio": "",
+            "final": "",
+            "TipCoral": TipCoral,
+            "Especie": Especie,
+            "Sector": Sector,
+            "SubSector": SubSector
+        }
+
         let headers = new Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
         let options = new RequestOptions({ headers: headers });
-        this.http.get(Main.serverUrl + 'pagination.php', options)
+        console.info('Request: ' + JSON.stringify(body))
+        this.http.post(Main.serverUrl + 'buscar.php', JSON.stringify(body), options)
             .map(this.extractData)
             .subscribe(tableResponse => {
                 if (tableResponse.success) {
-                    this.numberOfPagesObservable.next(tableResponse.paginas)
+                    this.postsTableObservable.next(tableResponse)
                 } else {
                     console.error('Could not fetch Posts because: ' + tableResponse.reason)
-                }         
-        })
+                }
+            })
     }
 }

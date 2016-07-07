@@ -58,10 +58,15 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../c
                     this.sectorsObservable$ = this.sectorsObservable.asObservable();
                     this.subsectorObservable = new Subject_1.Subject();
                     this.subsectorObsevable$ = this.subsectorObservable.asObservable();
-                    this.numberOfPagesObservable = new Subject_1.Subject();
-                    this.numberOfPagesObservable$ = this.numberOfPagesObservable.asObservable();
+                    this.bleachingObservable = new Subject_1.Subject();
+                    this.bleachingObservable$ = this.bleachingObservable.asObservable();
+                    this.diseasesObservable = new Subject_1.Subject();
+                    this.diseasesObservable$ = this.diseasesObservable.asObservable();
+                    this.postsTableObservable = new Subject_1.Subject();
+                    this.postsTableObservable$ = this.postsTableObservable.asObservable();
                     console.info('search-posts module loaded');
                 }
+                // TODO: utilizar los métodos de NewPostService
                 SearchPostsService.prototype.getCoralTypes = function () {
                     var _this = this;
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
@@ -125,20 +130,60 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', '../c
                         }
                     });
                 };
+                SearchPostsService.prototype.getBleaching = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'getCatBlanq.php', options)
+                        .map(this.extractData)
+                        .subscribe(function (bleachings) {
+                        if (bleachings.success) {
+                            _this.bleachingObservable.next(bleachings);
+                        }
+                        else {
+                            console.error("Could not fetch bleaching because: " + bleachings.reason);
+                        }
+                    });
+                };
+                SearchPostsService.prototype.getDiseases = function () {
+                    var _this = this;
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    this.http.get(main_app_1.Main.serverUrl + 'getEnfermedades.php', options)
+                        .map(this.extractData)
+                        .subscribe(function (diseases) {
+                        if (diseases.success) {
+                            _this.diseasesObservable.next(diseases);
+                        }
+                        else {
+                            console.error("Could not fetch diseases because: " + diseases.reason);
+                        }
+                    });
+                };
                 SearchPostsService.prototype.extractData = function (res) {
                     console.info('Response: ' + res.text());
                     var responseJSON = res.json();
                     return responseJSON;
                 };
-                SearchPostsService.prototype.getTableData = function () {
+                SearchPostsService.prototype.getTableData = function (page, startDate, endDate, TipCoral, Especie, Sector, SubSector) {
                     var _this = this;
+                    var body = {
+                        "curpage": page,
+                        "inicio": "",
+                        "final": "",
+                        "TipCoral": TipCoral,
+                        "Especie": Especie,
+                        "Sector": Sector,
+                        "SubSector": SubSector
+                    };
                     var headers = new http_1.Headers({ 'Content-Type': 'application/json;charset=UTF-8' });
                     var options = new http_1.RequestOptions({ headers: headers });
-                    this.http.get(main_app_1.Main.serverUrl + 'pagination.php', options)
+                    console.info('Request: ' + JSON.stringify(body));
+                    this.http.post(main_app_1.Main.serverUrl + 'buscar.php', JSON.stringify(body), options)
                         .map(this.extractData)
                         .subscribe(function (tableResponse) {
                         if (tableResponse.success) {
-                            _this.numberOfPagesObservable.next(tableResponse.paginas);
+                            _this.postsTableObservable.next(tableResponse);
                         }
                         else {
                             console.error('Could not fetch Posts because: ' + tableResponse.reason);

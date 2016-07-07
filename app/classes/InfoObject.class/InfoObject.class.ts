@@ -16,7 +16,7 @@
  */
 
 
-export class SearchPostResponse {
+export class SearchPostTable {
     postDate: Date
     coralType: string
     coralSpecies: string
@@ -24,11 +24,27 @@ export class SearchPostResponse {
     subsector: string
     diseases: DiseasesBlechingObject[]
     bleaching: DiseasesBlechingObject[]
-    photos: string[]
+    fotos: string[]
     comments: string
 }
 
 export class DiseasesBlechingObject {
-    name: string
-    percentage: number
+    nombre: string
+    percentage: string
+}
+
+export class SearchPostResponse {
+    success: boolean
+    datos: SearchPostTable[]
+    paginas: number
+}
+
+export class SearchPostRequest {
+    curpage: number
+    inicio: string
+    final: string
+    TipCoral: number[]
+    Especie: number[]
+    Sector: number[]
+    SubSector: number[]
 }
