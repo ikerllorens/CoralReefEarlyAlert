@@ -94,6 +94,8 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
                 };
                 UserAddScreen.prototype.userAdded = function (userAddResponse) {
                     if (userAddResponse.success) {
+                        alert("El usuario fue agregado satisfactoriamente");
+                        this.router.navigate(['Home']);
                     }
                     else {
                         console.info("Failed to add user because: " + userAddResponse.reason);

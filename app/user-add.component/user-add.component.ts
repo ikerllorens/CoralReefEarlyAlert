@@ -79,7 +79,8 @@ export class UserAddScreen implements OnInit {
     
     private userAdded(userAddResponse: UserAddResponse)  {
         if (userAddResponse.success) {
-            
+            alert("El usuario fue agregado satisfactoriamente")
+            this.router.navigate(['Home'])
         } else {
             console.info("Failed to add user because: " + userAddResponse.reason)
         }

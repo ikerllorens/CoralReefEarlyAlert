@@ -112,6 +112,8 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     });
                     this.newPostService.postObservable$.subscribe(function (postID) {
                         _this.uploadPhotos(postID.idPost);
+                        alert('Se publicó la reservación con éxito!');
+                        _this.router.navigate(['Home']);
                     });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
@@ -242,6 +244,7 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     core_1.Component({
                         selector: 'new-post',
                         templateUrl: 'app/new-post.component/new-post.component.html',
+                        styles: ["fileUpload {\n    position: relative;\n    overflow: hidden;\n    margin: 10px;\n}\n.fileUpload input.upload {\n    position: absolute;\n    top: 0;\n    right: 0;\n    margin: 0;\n    padding: 0;\n    font-size: 20px;\n    cursor: pointer;\n    opacity: 0;\n    filter: alpha(opacity=0);\n}"],
                         providers: [new_post_service_1.NewPostService],
                         directives: [router_deprecated_1.ROUTER_DIRECTIVES, ng2_select_1.SELECT_DIRECTIVES, ng2_file_upload_1.FILE_UPLOAD_DIRECTIVES]
                     }), 

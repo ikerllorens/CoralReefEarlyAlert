@@ -33,6 +33,22 @@ import {FILE_UPLOAD_DIRECTIVES, FileUploader} from 'ng2-file-upload/ng2-file-upl
 @Component({
     selector: 'new-post',
     templateUrl: 'app/new-post.component/new-post.component.html',
+    styles: [`fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}`],
     providers: [NewPostService],
     directives: [ROUTER_DIRECTIVES, SELECT_DIRECTIVES, FILE_UPLOAD_DIRECTIVES]
 })
@@ -117,6 +133,8 @@ export class NewPostScreen implements OnInit {
         this.newPostService.postObservable$.subscribe(
             postID => {
                 this.uploadPhotos(postID.idPost)
+                alert('Se publicó la reservación con éxito!')
+                this.router.navigate(['Home'])
             })
     }
 
@@ -131,7 +149,7 @@ export class NewPostScreen implements OnInit {
             console.log(item.file.name)
         };
 
-        
+
     }
 
     public addBleaching() {
@@ -262,7 +280,7 @@ export class NewPostScreen implements OnInit {
 
     private uploadPhotos(idPost: number) {
         this.uploader.onBeforeUploadItem = (item: any) => {
-            item.file.name = idPost +"_postID_" + item.file.name
+            item.file.name = idPost + "_postID_" + item.file.name
         }
         this.uploader.uploadAll()
     }
