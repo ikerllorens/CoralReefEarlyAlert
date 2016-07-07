@@ -56,6 +56,8 @@ export class SearchPostsScreen implements OnInit {
     
     startDate: string = ""
     endDate: string = ""
+    
+    public activeFilters: boolean = true
 
     constructor(private searchPostsService: SearchPostsService, private mainScreenService: MainScreenService) {
         console.info('search-posts module loaded')
@@ -144,6 +146,17 @@ export class SearchPostsScreen implements OnInit {
     
     applyFilters() {
             this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters)
+    }
+    
+    clearFilter() {
+        //Limpiar selección
+       
+        this.activeFilters = false
+        this.coralTypeFilters = []
+        this.coralSpeciesFilters = []
+        this.sectorsFilters = []
+        this.subSectorsFilters = []
+        this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters)
     }
 
     public populateTable() {

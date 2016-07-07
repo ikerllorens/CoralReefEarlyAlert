@@ -69,6 +69,7 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                     this.bigTotalItems = 0;
                     this.startDate = "";
                     this.endDate = "";
+                    this.activeFilters = true;
                     console.info('search-posts module loaded');
                     this.searchPostsService.coralTypesObservable$.subscribe(function (items) {
                         _this.coralTypes = items.datos;
@@ -140,6 +141,15 @@ System.register(['@angular/core', 'ng2-bootstrap/ng2-bootstrap', '../main-app.se
                     this.searchPostsService.getTableData(pagenumber.page, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters);
                 };
                 SearchPostsScreen.prototype.applyFilters = function () {
+                    this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters);
+                };
+                SearchPostsScreen.prototype.clearFilter = function () {
+                    //Limpiar selección
+                    this.activeFilters = false;
+                    this.coralTypeFilters = [];
+                    this.coralSpeciesFilters = [];
+                    this.sectorsFilters = [];
+                    this.subSectorsFilters = [];
                     this.searchPostsService.getTableData(1, new Date('2016-06-28 15:56:14'), new Date('2016-06-28 15:56:14'), this.coralTypeFilters, this.coralSpeciesFilters, this.sectorsFilters, this.subSectorsFilters);
                 };
                 SearchPostsScreen.prototype.populateTable = function () {
