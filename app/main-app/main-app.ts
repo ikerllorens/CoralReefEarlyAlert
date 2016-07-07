@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewContainerRef} from "@angular/core";
 
 //import {ROUTER_DIRECTIVES, Router} from '@angular/router';
 /*
@@ -18,6 +18,7 @@ import {LoginScreen} from '../login-screen.component/login-screen.component';
 import {HomeScreen} from '../home-screen.component/home-screen.component';
 import {UserAddScreen} from '../user-add.component/user-add.component';
 import {NewPostScreen} from '../new-post.component/new-post.component'
+import {SearchPostsScreen} from '../search-posts.component/search-posts.component'
 
 import {MenuElements} from '../classes/MenuElements.class/MenuElements.class';
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
@@ -44,7 +45,8 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
     { path: '/', name: 'Home', component: HomeScreen, useAsDefault: true },
     { path: '/login', name: 'Login', component: LoginScreen },
     { path: '/userAdd', name: 'UserAdd', component: UserAddScreen },
-    { path: '/newPost', name: 'NewPost', component: NewPostScreen}
+    { path: '/newPost', name: 'NewPost', component: NewPostScreen},
+    { path: '/search', name: 'SearchPost', component: SearchPostsScreen}
 ])
 
 export class Main implements OnInit {
@@ -59,7 +61,7 @@ export class Main implements OnInit {
 
     private menuElements: MenuElements[] = [
         { "menuName": "Home", "menuRef": "Home", "permissions":0},
-        { "menuName": "Búsqueda", "menuRef": "Home", "permissions":0},
+        { "menuName": "Búsqueda", "menuRef": "SearchPost", "permissions":0},
         { "menuName": "Registrar Observación", "menuRef": "NewPost", "permissions":1 },
         { "menuName": "Agregar Usuario", "menuRef": "UserAdd" , "permissions": 2},
     ]; 
@@ -70,9 +72,9 @@ export class Main implements OnInit {
 
 
 
-    constructor(private mainScreenService: MainScreenService) {
+    constructor(private mainScreenService: MainScreenService, viewContainerRef:ViewContainerRef) {
         console.info('main-app module loaded');
-
+        this.viewContainerRef = viewContainerRef;
         
         //        mainScreenService.loginInfo.subscribe()
         this.mainScreenService.loginInfoObservable$.subscribe(

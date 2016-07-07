@@ -22,6 +22,7 @@ System.register(['@angular/platform-browser-dynamic', '../main-app/main-app', '@
                 http_1 = http_1_1;
             }],
         execute: function() {
+            //enableProdMode()
             platform_browser_dynamic_1.bootstrap(main_app_1.Main, [router_deprecated_1.ROUTER_PROVIDERS, http_1.HTTP_BINDINGS]);
         }
     }

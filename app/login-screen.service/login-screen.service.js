@@ -70,6 +70,7 @@ System.register(['@angular/core', '@angular/http', '../main-app/main-app', 'rxjs
                 LoginScreenService.prototype.extractData = function (res) {
                     console.warn(res.text());
                     var responseJSON = res.json();
+                    console.info(res.text());
                     return responseJSON;
                 };
                 LoginScreenService.prototype.handleError = function (error) {

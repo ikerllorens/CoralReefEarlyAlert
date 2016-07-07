@@ -53,6 +53,7 @@ export class LoginScreenService {
     private extractData(res: Response) {
         console.warn(res.text())
         let responseJSON = res.json();
+        console.info(res.text())
         return responseJSON;
     }
 
