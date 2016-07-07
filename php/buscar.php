@@ -179,12 +179,18 @@ if ($conn->connect_error) {
         $sql3 = "SELECT Enfermedad.nombre As nombre, por AS percentage FROM Post_has_Enfermedad RIGHT JOIN Enfermedad ON Enfermedad.id = Post_has_Enfermedad.Enfermedad_id WHERE Post_id = " . $row['id'];
         $result3 = $conn->query($sql3);
         while ($rowEnf = $result3->fetch_assoc()) {
+            if($rowEnf['percentage']== -1){
+                $rowEnf['percentage']="S/D";
+            }
             $enfermedad[] = $rowEnf;
         }
 
         $sql4 = "SELECT CatBlanq.nombre As nombre, por AS percentage FROM Post_has_CatBlanq RIGHT JOIN CatBlanq ON CatBlanq.id = Post_has_CatBlanq.CatBlanq_id WHERE Post_id = " . $row['id'];
         $result4 = $conn->query($sql4);
         while ($rowCat = $result4->fetch_assoc()) {
+            if($rowCat['percentage']== -1){
+                $rowCat['percentage']="S/D";
+            }
             $catblanq[] = $rowCat;
         }
 
