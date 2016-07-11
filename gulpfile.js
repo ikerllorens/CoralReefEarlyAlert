@@ -41,6 +41,11 @@ gulp.task('icon', function() {
     .pipe(gulp.dest('build/img'));
 });
 
+gulp.task('php', function() {
+  return gulp.src('php/**/*.php')
+    .pipe(gulp.dest('build/php'));
+});
+
 gulp.task('json', function() {
     return gulp.src('package.json')
             .pipe(gulp.dest('build'));
@@ -56,7 +61,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('default', ['clean'], function() {
-  gulp.start('scripts', 'html', 'images', 'json', 'css', 'icon');
+  gulp.start('scripts', 'html', 'images', 'json', 'css', 'icon', 'php');
 });
 
 gulp.task('scripts-size', function () {

@@ -112,11 +112,10 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     });
                     this.newPostService.postObservable$.subscribe(function (postID) {
                         _this.uploadPhotos(postID.idPost);
-                        alert('Se publicó la reservación con éxito!');
-                        _this.router.navigate(['Home']);
                     });
                 }
                 NewPostScreen.prototype.ngOnInit = function () {
+                    var _this = this;
                     this.newPostService.getCoralTypes();
                     this.newPostService.getBleaching();
                     this.newPostService.getDiseases();
@@ -124,6 +123,10 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     this.uploader.onCompleteItem = function (item, response, status, headers) {
                         console.log("item uploaded" + response);
                         console.log(item.file.name);
+                    };
+                    this.uploader.onCompleteAll = function () {
+                        alert('Se publicó la observación con éxito!');
+                        _this.router.navigate(['Home']);
                     };
                 };
                 NewPostScreen.prototype.addBleaching = function () {
@@ -228,6 +231,16 @@ System.register(['@angular/core', '../main-app.service/main-app.service', '../ne
                     if (!this.valueSector.id) {
                         event.preventDefault();
                         alert('Por favor ingresa un sector');
+                        return;
+                    }
+                    if (!this.valueSubsector.id) {
+                        event.preventDefault();
+                        alert('Por favor ingresa un subsector');
+                        return;
+                    }
+                    if (!this.valueSpecies.id) {
+                        event.preventDefault();
+                        alert('Por favor ingresa una especie');
                         return;
                     }
                     var postPackage = new PostObject_class_1.PostObject(token, this.valueType.id, this.valueSpecies.id, this.valueSector.id, this.valueSubsector.id, bleachingPack, diseasesPack, this.comments);

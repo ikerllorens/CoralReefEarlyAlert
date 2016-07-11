@@ -133,8 +133,6 @@ export class NewPostScreen implements OnInit {
         this.newPostService.postObservable$.subscribe(
             postID => {
                 this.uploadPhotos(postID.idPost)
-                alert('Se publicó la reservación con éxito!')
-                this.router.navigate(['Home'])
             })
     }
 
@@ -149,7 +147,10 @@ export class NewPostScreen implements OnInit {
             console.log(item.file.name)
         };
 
-
+        this.uploader.onCompleteAll = () => {
+            alert('Se publicó la observación con éxito!')
+            this.router.navigate(['Home'])
+        }
     }
 
     public addBleaching() {
@@ -269,6 +270,16 @@ export class NewPostScreen implements OnInit {
         if (!this.valueSector.id) {
             event.preventDefault()
             alert('Por favor ingresa un sector')
+            return
+        }
+        if (!this.valueSubsector.id) {
+            event.preventDefault()
+            alert('Por favor ingresa un subsector')
+            return
+        }
+        if (!this.valueSpecies.id) {
+            event.preventDefault()
+            alert('Por favor ingresa una especie')
             return
         }
 

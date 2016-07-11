@@ -60,6 +60,12 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
                     this.name = "";
                     this.surname = "";
                     this.userType = 1;
+                    this.minimumLenUsername = 8;
+                    this.minimumLenPassword = 8;
+                    this.correctUsername = false;
+                    this.emptyUsername = true;
+                    this.emptyPassword = true;
+                    this.validLoginFields = false;
                     /*
                      * Variable de control que evita que se pueda realizar alguna acción en lo que se
                      * comprueba si el usuario es administrador con el servidor. Est variable cambiara a true
@@ -99,6 +105,26 @@ System.register(['@angular/core', '@angular/router-deprecated', '../main-app.ser
                     }
                     else {
                         console.info("Failed to add user because: " + userAddResponse.reason);
+                    }
+                };
+                UserAddScreen.prototype.onFieldUpdate = function () {
+                    if (this.username.length < this.minimumLenUsername) {
+                        this.emptyUsername = true;
+                    }
+                    else {
+                        this.emptyUsername = false;
+                    }
+                    if (this.password.length < this.minimumLenPassword) {
+                        this.emptyPassword = true;
+                    }
+                    else {
+                        this.emptyPassword = false;
+                    }
+                    if ((this.emptyUsername === false) && (this.emptyPassword === false)) {
+                        this.validLoginFields = true;
+                    }
+                    else {
+                        this.validLoginFields = false;
                     }
                 };
                 UserAddScreen = __decorate([

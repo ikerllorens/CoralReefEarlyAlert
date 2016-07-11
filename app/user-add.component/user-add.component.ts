@@ -35,27 +35,36 @@ export class UserAddScreen implements OnInit {
     private username: string = ""
     private password: string = ""
     private name: string = ""
-    private surname: string =""
+    private surname: string = ""
     private userType: number = 1
+
+    minimumLenUsername: number = 8;
+    minimumLenPassword: number = 8;
     
+      correctUsername = false;
+    emptyUsername = true;
+    emptyPassword = true;
+    
+    validLoginFields = false;
+
     /*
      * Variable de control que evita que se pueda realizar alguna acción en lo que se 
      * comprueba si el usuario es administrador con el servidor. Est variable cambiara a true
      * en caso de que al recibir la respuesta del servidor el usuario sea administrador
      * de otro modo se le redirecciona a Home
      */
-    private editing: boolean = false; 
-    
-    constructor(private mainScreenService: MainScreenService,  private userAddService: UserAddService, private router: Router) {
+    private editing: boolean = false;
+
+    constructor(private mainScreenService: MainScreenService, private userAddService: UserAddService, private router: Router) {
         console.info("user-add module loaded")
         this.userAddService.userAddObservable$.subscribe(
             userAddResponse => this.userAdded(userAddResponse)
         )
         // TODO: Subscribir a main screen Service
-        
+
     }
-    
-    ngOnInit () {
+
+    ngOnInit() {
         let loginInfo = this.mainScreenService.getLoginInfo();
         if (loginInfo.userType == 2) { //2 = administrador          
             console.info("Admin detected")
@@ -66,8 +75,8 @@ export class UserAddScreen implements OnInit {
             //this.router.navigate(['Home']);
         }
     }
-    
-    addUserButtonClicked (event) {
+
+    addUserButtonClicked(event) {
         if (this.mainScreenService.getLoginInfo().userType == 2) {
             //this.router.navigate(['Home'])
             this.userAddService.addUser(this.username, this.password, this.name, this.surname, this.userType)
@@ -76,13 +85,33 @@ export class UserAddScreen implements OnInit {
             event.preventDefault()
         }
     }
-    
-    private userAdded(userAddResponse: UserAddResponse)  {
+
+    private userAdded(userAddResponse: UserAddResponse) {
         if (userAddResponse.success) {
             alert("El usuario fue agregado satisfactoriamente")
             this.router.navigate(['Home'])
         } else {
             console.info("Failed to add user because: " + userAddResponse.reason)
+        }
+    }
+
+    onFieldUpdate(): void {
+        if (this.username.length < this.minimumLenUsername) {
+            this.emptyUsername = true
+        } else {
+            this.emptyUsername = false
+        }
+
+        if (this.password.length < this.minimumLenPassword) {
+            this.emptyPassword = true
+        } else {
+            this.emptyPassword = false
+        }
+
+        if ((this.emptyUsername === false) && (this.emptyPassword === false)) {
+            this.validLoginFields = true;
+        } else {
+            this.validLoginFields = false;
         }
     }
 }
