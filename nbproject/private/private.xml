@@ -4,17 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/main-app/main-app.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/gulpfile.js</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/php/config.php</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/new-post.component/new-post.component.html</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/boot/boot.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/user-add.component/user-add.component.html</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/search-posts.service/search-posts.service.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/new-post.component/new-post.component.ts</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/css/ng2-select.css</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/new-post.service/new-post.service.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/search-posts.component/search-posts.component.html</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/stats-screen.service/stats-screen.service.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/user-add.component/user-add.component.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/stats-screen.component/stats-screen.component.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/stats-screen.component/stats-screen.component.html</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/classes/StatsObject.class/StatsObject.class.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/user-add.service/user-add.service.ts</file>
             <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/main-app/main-app.html</file>
-            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/app/search-posts.component/search-posts.component.ts</file>
+            <file>file:/Users/ikerllorens/Documents/SS/CoralReefEarlyAlert/index.html</file>
         </group>
     </open-files>
 </project-private>
