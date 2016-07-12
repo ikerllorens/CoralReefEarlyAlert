@@ -19,6 +19,7 @@ import {HomeScreen} from '../home-screen.component/home-screen.component';
 import {UserAddScreen} from '../user-add.component/user-add.component';
 import {NewPostScreen} from '../new-post.component/new-post.component'
 import {SearchPostsScreen} from '../search-posts.component/search-posts.component'
+import {StatsScreen} from '../stats-screen.component/stats-screen.component'
 
 import {MenuElements} from '../classes/MenuElements.class/MenuElements.class';
 import {DROPDOWN_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
@@ -46,7 +47,8 @@ import {LoginResponse} from '../classes/LoginObject.class/LoginObject.class'
     { path: '/login', name: 'Login', component: LoginScreen },
     { path: '/userAdd', name: 'UserAdd', component: UserAddScreen },
     { path: '/newPost', name: 'NewPost', component: NewPostScreen},
-    { path: '/search', name: 'SearchPost', component: SearchPostsScreen}
+    { path: '/search', name: 'SearchPost', component: SearchPostsScreen},
+    { path: '/stats', name: 'Stats', component: StatsScreen}
 ])
 
 export class Main implements OnInit {

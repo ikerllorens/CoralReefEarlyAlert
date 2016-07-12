@@ -5,12 +5,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
-<div class= "row">
-    <div>
-        <a href="http://communicationsceak.wix.com/ceaorg"><img class="col-xs-2 col-md-2"  src="img/cea.png"></a>
-        <div class="col-xs-6 col-md-8"></div>
-    </div>
-</div>
 <nav class="navbar navbar-default "  style="background: #2D93D4">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -19,7 +13,7 @@ and open the template in the editor.
                 <span class="icon-bar" style="background:  whitesmoke"></span>
                 <span class="icon-bar" style="background:  whitesmoke"></span>                        
             </button>
-            <a class="navbar-brand" href="#" style="color: whitesmoke ">Alerta Temprana</a>
+            <a class="navbar-brand" style="color: whitesmoke "><img src="img/ojo.png" style="width:45px;float: left;"> ALERTA TEMPRANA</a>
         </div>
         <div class="collapse navbar-collapse " [class.in]="navBarToggle">
 
@@ -35,7 +29,7 @@ and open the template in the editor.
                         <span style="margin-right: 5px" class="glyphicon glyphicon-user"></span><span> {{name}} </span> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="simple-dropdown">
-                        <li><a role="button" class="dropdown-item" ><span class="glyphicon glyphicon-equalizer"> </span> Estadísticas</a></li>
+                        <li><a role="button" class="dropdown-item" [routerLink]="['Stats']"><span class="glyphicon glyphicon-equalizer"> </span> Estadísticas</a></li>
                         <br>
                         <li><a role="button" class="dropdown-item" (click)="logOut()"><span class="glyphicon glyphicon-log-out"> </span> Cerrar Sesión</a></li>
                         <!--                        <li> <a class="dropdown-item" (click)="logOut()">Cerrar Sesión</li>-->
