@@ -5,20 +5,19 @@
  */
 
 
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'data-card',
-  templateUrl: 'app/data-card.component/data-card.component.html'
-  //styleUrls: ['app/data-card.component/data-card.component.css']
+    selector: 'data-card',
+    templateUrl: 'app/data-card.component/data-card.component.html'
 })
 
 export class DataCard {
-	id_registro: String;
-	fecha: String;
-	inst: String;
-	
-  	constructor() {
-    	console.info('Data Card Component Mounted Successfully');
-  	}
+   @Input() coralSpecie: string;
+    @Input() coralPhotoUrl: string = 'img/cea.png'
+    @Input() sector: string;
+
+    constructor() {
+        console.info('Data Card Component Mounted Successfully');
+    }
 }

@@ -15,32 +15,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+<div class="container-fluid">
+    <div class="row hidden-xs">
+        <div *ngFor="let item of tableRows" class="col-xs-3">
+            <data-card [coralSpecie]="item.coralSpecies"  [coralPhotoUrl]="item.fotos[0].ruta" [sector]="item.sector">Loading...</data-card>
+        </div>
+    </div>
 
-
-<div class="row">
-    <div class="col-xs-0 col-sm-2"></div>
-    <h1 class="col-xs-12 col-sm-8" style="text-align: center">{{title}}</h1>
-</div>
-<div class="row hidden-xs">
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-3">
-        <data-card>Loading...</data-card>
-    </div>
-</div>
-
-<div class="row visible-xs-inline-block">
-    <div class="col-xs-6 ">
-        <data-card>Loading...</data-card>
-    </div>
-    <div class="col-xs-6">
-        <data-card>Loading...</data-card>
+    <div class="row visible-xs-inline-block">
+        <div *ngFor="let item of tableRows" class="col-xs-6">
+            <data-card [coralSpecie]="item.coralSpecies"  [coralPhotoUrl]="item.fotos[0].ruta" [sector]="item.sector">Loading...</data-card>
+        </div>
     </div>
 </div>

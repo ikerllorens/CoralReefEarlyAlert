@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-System.register(['@angular/core', '../data-card.component/data-card.component'], function(exports_1, context_1) {
+System.register(['@angular/core', '../data-card.component/data-card.component', '../home-screen.service/home-screen.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -26,7 +26,7 @@ System.register(['@angular/core', '../data-card.component/data-card.component'],
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, data_card_component_1;
+    var core_1, data_card_component_1, home_screen_service_1;
     var HomeScreen;
     return {
         setters:[
@@ -35,18 +35,31 @@ System.register(['@angular/core', '../data-card.component/data-card.component'],
             },
             function (data_card_component_1_1) {
                 data_card_component_1 = data_card_component_1_1;
+            },
+            function (home_screen_service_1_1) {
+                home_screen_service_1 = home_screen_service_1_1;
             }],
         execute: function() {
             HomeScreen = (function () {
-                function HomeScreen() {
+                function HomeScreen(homeScreenService) {
+                    var _this = this;
+                    this.homeScreenService = homeScreenService;
+                    this.tableRows = [];
+                    this.homeScreenService.postsTableObservable$.subscribe(function (tableData) {
+                        _this.tableRows = tableData.datos;
+                    });
                 }
+                HomeScreen.prototype.ngOnInit = function () {
+                    this.homeScreenService.getPosts();
+                };
                 HomeScreen = __decorate([
                     core_1.Component({
                         selector: 'home-screen',
                         directives: [data_card_component_1.DataCard],
+                        providers: [home_screen_service_1.HomeScreenService],
                         templateUrl: 'app/home-screen.component/home-screen.component.html'
                     }), 
-                    __metadata('design:paramtypes', [])
+                    __metadata('design:paramtypes', [home_screen_service_1.HomeScreenService])
                 ], HomeScreen);
                 return HomeScreen;
             }());

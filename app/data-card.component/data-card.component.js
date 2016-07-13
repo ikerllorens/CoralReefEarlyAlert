@@ -25,8 +25,21 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             DataCard = (function () {
                 function DataCard() {
+                    this.coralPhotoUrl = 'img/cea.png';
                     console.info('Data Card Component Mounted Successfully');
                 }
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], DataCard.prototype, "coralSpecie", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], DataCard.prototype, "coralPhotoUrl", void 0);
+                __decorate([
+                    core_1.Input(), 
+                    __metadata('design:type', String)
+                ], DataCard.prototype, "sector", void 0);
                 DataCard = __decorate([
                     core_1.Component({
                         selector: 'data-card',

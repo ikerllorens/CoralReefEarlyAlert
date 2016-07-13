@@ -6,18 +6,15 @@ and open the template in the editor.
 -->
 <div class="well">
     <div class="row">
-        <img class="col-xs-12 col-md-12" src="img/cea.png">
+        <img class="col-xs-12 col-md-12" [src]="coralPhotoUrl">
     </div>
     <div class="row">
-        <div class="col-xs-4 text-right">ID: </div>
-        <div class="col-xs-8"> {{ id_registro }} </div>
+        <div class="col-xs-4 ">Especie: </div>
+        <div class="col-xs-8"> {{ coralSpecie }} </div>
     </div>
+   
     <div class="row">
-        <div class="col-xs-12"><span class="badge">Fecha:</span>Una fecha</div>
-        <!-- <div class="col-xs-10">Una fecha</div> -->
-    </div>
-    <div>
-        <div class="col-xs-2">Inst: </div>
-        <div class="col-xs-10">Una Inst</div>
+        <div class="col-xs-4">Sector: </div>
+        <div class="col-xs-8">{{sector}}</div>
     </div>
 </div>

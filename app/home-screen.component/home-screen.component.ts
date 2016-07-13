@@ -15,17 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
 import {DataCard} from '../data-card.component/data-card.component';
 
-@Component ({
+import {HomeScreenService} from '../home-screen.service/home-screen.service'
+
+import { SearchPostTable} from '../classes/InfoObject.class/InfoObject.class'
+
+
+@Component({
     selector: 'home-screen',
-    directives: [DataCard],
+    directives:  [DataCard],
+    providers: [HomeScreenService],
     templateUrl: 'app/home-screen.component/home-screen.component.html'
 })
 
-export class HomeScreen {
-    
-    
+export class HomeScreen implements OnInit {
+    public tableRows: SearchPostTable[] = []
+
+    constructor(private homeScreenService: HomeScreenService) {
+        this.homeScreenService.postsTableObservable$.subscribe(
+            tableData => {
+                this.tableRows = tableData.datos
+            })
+    }
+
+    ngOnInit() {
+        this.homeScreenService.getPosts()
+    }
 }
 
