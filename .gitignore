@@ -6,3 +6,8 @@ bootstrap.css
 uploads
 *.zip
 *.png
+app/*/*.js
+app/**/*.js
+app1.0/**/*.js
+*.map
+typings
