@@ -1,0 +1,15 @@
+
+<div *ngFor="let card of posts">
+<mdl-card class="demo-card-image home-card" mdl-shadow="2">
+  <mdl-card-media>
+    <img [src]="'http://triumphare.com/uploads/'+card.fotos[0].ruta" alt="img/cea.png" style="
+    max-width: 100%;
+    max-height: 50%;
+"/>
+  </mdl-card-media>
+  <mdl-card-title mdl-card-expand><h2 mdl-card-title-text>{{card.coralSpecies}}</h2></mdl-card-title>
+  <mdl-card-supporting-text>
+      Avistado en {{ card.sector }}
+  </mdl-card-supporting-text>
+</mdl-card>
+</div>

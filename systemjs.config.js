@@ -9,7 +9,8 @@
     '@angular':                   'node_modules/@angular',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs',
-    'angular2-mdl':               'node_modules/angular2-mdl'
+    'angular2-mdl':               'node_modules/angular2-mdl',
+    '@angular2-mdl-ext/select':   'node_modules/@angular2-mdl-ext/select'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
@@ -42,7 +43,8 @@
   // Add package entries for angular packages
   ngPackageNames.forEach(setPackageConfig);
 
-  packages['angular2-mdl'] = { main: 'components/index.js'}
+  packages['angular2-mdl'] = { main: 'bundle/angular2-mdl.js'}
+  packages['@angular2-mdl-ext/select'] = { main: 'index.umd.js', defaultExtension: 'js'}
 
   var config = {
     map: map,

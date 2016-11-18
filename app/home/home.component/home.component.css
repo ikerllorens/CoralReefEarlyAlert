@@ -1,0 +1,7 @@
+.home-card {
+width: 320px;
+    height: 320px;
+    float: left;
+    margin: 1rem;
+    position: relative;
+  }

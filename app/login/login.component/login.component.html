@@ -1,0 +1,31 @@
+<mdl-card mdl-shadow="2" class="login-card" style="margin: auto;">
+  <mdl-card-title>
+    <h2 mdl-card-title-text>Bienvenido</h2>
+  </mdl-card-title>
+  <mdl-card-media class="login-image" style="background-color: transparent; text-align: center;">
+    <img src="img/cea.png" alt="img/cea.png" style="width: 200px; height: 200px;"/>
+  </mdl-card-media>
+  <mdl-card-supporting-text>
+    <form [formGroup] ="form">
+      <mdl-textfield
+      label="Email"
+      name="username"
+      type="text"
+      formControlName="username"
+      floating-label
+      pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$"
+      error-msg="Introduce un e-mail válido!"></mdl-textfield>
+      <mdl-textfield
+      label="Contraseña"
+      name="password"
+      type="password"
+      formControlName="password"
+      floating-label></mdl-textfield>
+    </form>
+  </mdl-card-supporting-text>
+  <mdl-card-actions mdl-card-border>
+    <button mdl-button mdl-button-type="raised" mdl-colored="primary" mdl-ripple [disabled]="!form.valid" (click)="login()">
+      Iniciar Sesión
+    </button>
+  </mdl-card-actions>
+</mdl-card>

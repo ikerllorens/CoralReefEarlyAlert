@@ -1,1 +1,21 @@
-Hola probando Angular
+<mdl-layout mdl-layout-fixed-header mdl-layout-fixed-drawer mdl-layout-mode="waterfall">
+  <mdl-layout-header>
+    <mdl-layout-header-row>
+      <mdl-layout-title>
+        <a class="navbar-brand" style="color: whitesmoke "><img src="img/ojo.png" style="width:45px;float: left;">&nbsp;&nbsp;&nbsp;Alerta Temprana</a>
+      </mdl-layout-title>
+    </mdl-layout-header-row>
+  </mdl-layout-header>
+  <mdl-layout-drawer>
+    <mdl-layout-title>Menú</mdl-layout-title>
+    <mdl-layout-title [hidden]="!loggedIn">Hola {{usersName}}!</mdl-layout-title>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" role="button" routerLink="/login" [hidden]="loggedIn">Iniciar Sesión</a>
+      <a class="mdl-navigation__link" role="button" routerLink="/search">Búsqueda</a>
+      <a class="mdl-navigation__link" role="button" routerLink="/" [hidden]="!loggedIn" (click)="this.staticsService.logOut()">Cerrar sesión</a>
+    </nav>
+  </mdl-layout-drawer>
+  <mdl-layout-content>
+    <router-outlet></router-outlet>
+  </mdl-layout-content>
+</mdl-layout>

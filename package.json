@@ -36,7 +36,8 @@
         "rxjs": "5.0.0-beta.12",
         "zone.js": "^0.6.26",
 
-      "angular2-mdl": "2.4.0"
+      "angular2-mdl": "",
+      "@angular2-mdl-ext/select": "" 
     },
     "devDependencies": {
       "concurrently": "^2.0.0",

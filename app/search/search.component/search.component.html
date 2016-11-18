@@ -1,0 +1,8 @@
+
+<mdl-select >
+   <mdl-option *ngFor="let p of options" [value]="p.id">{{p.name}}</mdl-option>
+ </mdl-select>
+
+<div style="width:100%;overflow-x: scroll;">
+<mdl-table mdl-shadow="2" [table-model]="postsTable"></mdl-table>
+</div>
