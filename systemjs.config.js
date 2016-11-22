@@ -10,13 +10,13 @@
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'rxjs':                       'node_modules/rxjs',
     'angular2-mdl':               'node_modules/angular2-mdl',
-    '@angular2-mdl-ext/select':   'node_modules/@angular2-mdl-ext/select'
+    'ng2-material-select':        'node_modules/ng2-material-select'
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     'app':                        { main: 'main.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' }
   };
   var ngPackageNames = [
     'common',
@@ -44,7 +44,8 @@
   ngPackageNames.forEach(setPackageConfig);
 
   packages['angular2-mdl'] = { main: 'bundle/angular2-mdl.js'}
-  packages['@angular2-mdl-ext/select'] = { main: 'index.umd.js', defaultExtension: 'js'}
+  packages['ng2-material-select'] = { main: 'dist/ng2-select.bundle.js', defaultExtension: 'js'}
+  //packages['@angular2-mdl-ext/select'] = { main: 'index.umd.js', defaultExtension: 'js'}
 
   var config = {
     map: map,

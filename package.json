@@ -9,7 +9,10 @@
     "browser"
   ],
   "author": "Iker Llorens",
-  "contributors": ["Iker Llorens", "Alan Espinosa"],
+  "contributors": [
+    "Iker Llorens",
+    "Alan Espinosa"
+  ],
   "scripts": {
     "start": "concurrently \"npm run tsc:w\" \"npm run lite\"",
     "build": "gulp default",
@@ -17,9 +20,10 @@
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"},
-    "dependencies": {
-      "@angular/common": "~2.1.2",
+    "typings": "typings"
+  },
+  "dependencies": {
+    "@angular/common": "~2.1.2",
     "@angular/compiler": "~2.1.2",
     "@angular/core": "~2.1.2",
     "@angular/forms": "~2.1.2",
@@ -28,37 +32,35 @@
     "@angular/platform-browser-dynamic": "~2.1.2",
     "@angular/router": "~3.1.2",
     "@angular/upgrade": "~2.1.2",
-
     "angular-in-memory-web-api": "~0.1.13",
-        "systemjs": "0.19.40",
-        "core-js": "^2.4.1",
-        "reflect-metadata": "^0.1.8",
-        "rxjs": "5.0.0-beta.12",
-        "zone.js": "^0.6.26",
-
-      "angular2-mdl": "",
-      "@angular2-mdl-ext/select": "" 
-    },
-    "devDependencies": {
-      "concurrently": "^2.0.0",
-      "del": "",
-      "firebase-tools": "",
-      "gulp": "^3.9.1",
-      "gulp-concat": "^2.4.3",
-      "gulp-htmlmin": "",
-      "gulp-imagemin": "",
-      "gulp-less": "^2.0.1",
-      "gulp-minify-css": "^0.4.3",
-      "gulp-notify": "^2.2.0",
-      "gulp-rename": "^1.2.0",
-      "gulp-shell": "^0.5.2",
-      "gulp-traceur": "^0.17.2",
-      "gulp-uglify": "^1.1.0",
-      "gulp-watch": "^1.0",
-      "gulp-webserver": "^0.9.1",
-      "lite-server": "^2.2.2",
-      "run-sequence": "^1.2.2",
-      "typescript": "2.0.0",
-      "typings": "^1.0.4"
-    }
+    "angular2-mdl": "",
+    "core-js": "^2.4.1",
+    "ng2-material-select": "^0.1.4",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-beta.12",
+    "systemjs": "0.19.40",
+    "zone.js": "^0.6.26"
+  },
+  "devDependencies": {
+    "concurrently": "^2.0.0",
+    "del": "",
+    "firebase-tools": "",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.4.3",
+    "gulp-htmlmin": "",
+    "gulp-imagemin": "",
+    "gulp-less": "^2.0.1",
+    "gulp-minify-css": "^0.4.3",
+    "gulp-notify": "^2.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-shell": "^0.5.2",
+    "gulp-traceur": "^0.17.2",
+    "gulp-uglify": "^1.1.0",
+    "gulp-watch": "^1.0",
+    "gulp-webserver": "^0.9.1",
+    "lite-server": "^2.2.2",
+    "run-sequence": "^1.2.2",
+    "typescript": "2.0.0",
+    "typings": "^1.0.4"
+  }
 }
